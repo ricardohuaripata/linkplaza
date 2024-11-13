@@ -11,12 +11,12 @@ export const routes: Routes = [
   },
   {
     title: 'Sign in | LinkPlaza',
-    path: 'signin',
+    path: 'auth/signin',
     component: SignInComponent,
   },
   {
     title: 'Sign up | LinkPlaza',
-    path: 'signup',
+    path: 'auth/signup',
     component: SignUpComponent,
   },
 ];

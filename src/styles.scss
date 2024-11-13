@@ -3,9 +3,17 @@
 @tailwind utilities;
 
 .input {
-  @apply py-4 px-2 bg-neutral-200 rounded-lg border-2 hover:border-neutral-400;
+  @apply p-3 bg-neutral-200 rounded-lg text-black placeholder:text-black border-2 focus:outline-offset-4;
 }
 
 .button {
-  @apply p-3 bg-purple-700 text-white font-semibold rounded-full;
+  @apply p-3 bg-purple-700 text-white font-semibold rounded-full disabled:bg-neutral-400 disabled:text-neutral-600;
+}
+
+.invalid-input {
+  @apply border-red-700 text-red-700;
+}
+
+.invalid-input-message {
+  @apply mt-1 mx-2 text-red-700;
 }

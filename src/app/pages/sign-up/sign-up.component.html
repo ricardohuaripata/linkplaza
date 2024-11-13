@@ -3,17 +3,41 @@
         <div class="flex flex-col justify-center gap-10 w-full max-w-xl">
             <div class="text-center">
                 <h1 class="text-4xl md:text-5xl font-bold">Join LinkPlaza</h1>
-                <p class="text-lg text-gray-700 mt-4">Sign up for free!</p>
+                <p class="text-lg mt-4">Sign up for free!</p>
             </div>
 
-            <form class="flex flex-col gap-2">
-                <input type="text" placeholder="Email" class="input">
-                <input type="password" placeholder="Password" class="input">
-                <button type="submit" class="button text-lg mt-4">Create account</button>
+            <form [formGroup]="signUpForm" (submit)="onSubmit()" class="flex flex-col gap-4">
+                <div>
+                    <input type="text" formControlName="email" autocomplete="email" placeholder="Email"
+                        class="input w-full"
+                        [ngClass]="{'invalid-input': signUpForm.get('email')?.hasError('invalidEmail') && signUpForm.get('email')?.touched}">
+                    @if (signUpForm.get('email')?.hasError('invalidEmail') && signUpForm.get('email')?.touched) {
+                    <p class="invalid-input-message">* Please enter a valid email.</p>
+                    }
+                </div>
+                <div>
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                        autocomplete="new-password" placeholder="Password" class="input w-full"
+                        [ngClass]="{'invalid-input': signUpForm.get('password')?.hasError('invalidPassword') && signUpForm.get('password')?.touched}">
+                    @if (signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched)
+                    {
+                    <p class="invalid-input-message">* Password must be at least 8 characters long.</p>
+                    }
+                    @if (signUpForm.get('password')?.hasError('invalidPassword') && signUpForm.get('password')?.touched)
+                    {
+                    <p class="invalid-input-message">* Password include at least one uppercase letter, one lowercase
+                        letter,
+                        one number, and one special character.</p>
+                    }
+                </div>
+                <div class="flex gap-1"><input type="checkbox" (click)="togglePasswordVisibility()"><label
+                        for="showPassword">Show password</label></div>
+                <button type="submit" class="button text-lg mt-4" [disabled]="this.signUpForm.invalid">Create
+                    account</button>
             </form>
 
             <div class="flex flex-wrap gap-1 items-center justify-center text-center">
-                <p class="text-gray-700">Already have an account?</p>
+                <p class="text-gray-500">Already have an account?</p>
                 <a href="/signin" class="text-purple-700 underline">Log in</a>
             </div>
         </div>
