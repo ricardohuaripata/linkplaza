@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input {
+  @apply py-4 px-2 bg-neutral-200 rounded-lg border-2 hover:border-neutral-400;
+}
+
+.button {
+  @apply p-3 bg-purple-700 text-white font-semibold rounded-full;
+}
