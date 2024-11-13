@@ -15,15 +15,17 @@ export class AuthService {
     this.ENDPOINT = '/api/v1/auth';
   }
 
-  signIn(body: any): Observable<any> {
-    return this.http.post<any>(this.API_URL + this.ENDPOINT + '/signin', body, {
-      observe: 'response',
-    });
+  signIn(requestBody: any): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/signin',
+      requestBody
+    );
   }
 
-  register(body: any): Observable<any> {
-    return this.http.post<any>(this.API_URL + this.ENDPOINT + '/signup', body, {
-      observe: 'response',
-    });
+  register(requestBody: any): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/signup',
+      requestBody
+    );
   }
 }

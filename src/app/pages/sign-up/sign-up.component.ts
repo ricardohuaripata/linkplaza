@@ -22,6 +22,8 @@ export class SignUpComponent implements OnDestroy {
   showPassword: boolean = false;
   signUpForm: FormGroup;
   private subscription: Subscription = new Subscription();
+  feedbackMessage?: string;
+  disableForm: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -68,18 +70,24 @@ export class SignUpComponent implements OnDestroy {
   }
 
   onSubmit() {
-    const body: any = {
+    this.disableForm = true;
+
+    const requestBody: any = {
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
     };
 
     this.subscription.add(
-      this.authService.register(body).subscribe({
+      this.authService.register(requestBody).subscribe({
         next: (response: any) => {
-          this.router.navigate(['/auth/signup']);
+          this.router.navigate(['/auth/signin']);
+          console.log(response);
         },
         error: (event) => {
-          alert('Oops! Something went wrong...');
+          this.feedbackMessage = event.error.message;
+          setTimeout(() => {
+            this.disableForm = false;
+          }, 3000);
         },
       })
     );
