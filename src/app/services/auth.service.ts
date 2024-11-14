@@ -23,7 +23,7 @@ export class AuthService {
     );
   }
 
-  register(requestBody: any): Observable<any> {
+  signUp(requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/signup',
       requestBody,

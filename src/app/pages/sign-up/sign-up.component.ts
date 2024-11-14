@@ -10,7 +10,6 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +29,6 @@ export class SignUpComponent implements OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private cookieService: CookieService
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, this.emailValidator]],
@@ -80,7 +78,7 @@ export class SignUpComponent implements OnDestroy {
     };
 
     this.subscription.add(
-      this.authService.register(requestBody).subscribe({
+      this.authService.signUp(requestBody).subscribe({
         next: (response: any) => {
           this.router.navigate(['/admin']);
           console.log(response);

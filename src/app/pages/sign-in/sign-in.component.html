@@ -1,1 +1,48 @@
-<p>sign-in works!</p>
+<div class="flex h-screen">
+    <main class="flex justify-center py-14 px-6 md:px-14 w-full lg:w-1/2">
+        <div class="flex flex-col justify-center gap-10 w-full max-w-xl">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold">Welcome back!</h1>
+                <p class="text-lg mt-4">Sign in to your account</p>
+            </div>
+
+            @if (feedbackMessage) {
+            <div class="flex items-center p-4 text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Error: </span> {{feedbackMessage}}
+                </div>
+            </div>
+            }
+
+            <form [formGroup]="signInForm" (submit)="onSubmit()" class="flex flex-col gap-4">
+                <div>
+                    <input type="text" formControlName="email" autocomplete="email" placeholder="Email"
+                        class="input w-full">
+                </div>
+                <div>
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                        autocomplete="current-password" placeholder="Password" class="input w-full">
+                </div>
+                <div class="flex gap-1"><input type="checkbox" (click)="togglePasswordVisibility()"><label
+                        for="showPassword">Show password</label></div>
+                <button type="submit" class="button text-lg mt-4"
+                    [disabled]="this.signInForm.invalid || this.disableForm">Sign in</button>
+            </form>
+
+            <div class="flex flex-wrap gap-1 items-center justify-center text-center">
+                <p class="text-gray-500">Don't have an account?</p>
+                <a href="/signup" class="text-purple-700 underline">Sign up</a>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="hidden lg:block w-1/2 banner-signin"></div>
+
+</div>
