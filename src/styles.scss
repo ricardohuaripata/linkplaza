@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .input {
-  @apply p-3 bg-neutral-200 rounded-lg text-black placeholder:text-black border-2 focus:outline-offset-4;
+  @apply p-3 bg-neutral-100 rounded-lg text-black placeholder:text-black border focus:outline-offset-4;
 }
 
 .button {
-  @apply p-3 bg-purple-700 text-white font-semibold rounded-full disabled:bg-neutral-400 disabled:text-neutral-600;
+  @apply p-3 bg-purple-700 text-white font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
 }
 
 .invalid-input {

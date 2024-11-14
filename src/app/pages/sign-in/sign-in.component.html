@@ -3,7 +3,7 @@
         <div class="flex flex-col justify-center gap-10 w-full max-w-xl">
             <div class="text-center">
                 <h1 class="text-4xl md:text-5xl font-extrabold">Welcome back!</h1>
-                <p class="text-lg mt-4">Sign in to your account</p>
+                <p class="text-xl mt-4">Sign in to your account</p>
             </div>
 
             @if (feedbackMessage) {
@@ -31,13 +31,13 @@
                 </div>
                 <div class="flex gap-1"><input type="checkbox" (click)="togglePasswordVisibility()"><label
                         for="showPassword">Show password</label></div>
-                <button type="submit" class="button text-lg mt-4"
+                <button type="submit" class="button text-xl mt-4"
                     [disabled]="this.signInForm.invalid || this.disableForm">Sign in</button>
             </form>
 
             <div class="flex flex-wrap gap-1 items-center justify-center text-center">
-                <p class="text-gray-500">Don't have an account?</p>
-                <a href="/signup" class="text-purple-700 underline">Sign up</a>
+                <p>Don't have an account?</p>
+                <a routerLink="/signup" class="text-purple-700 underline">Sign up</a>
             </div>
         </div>
 
