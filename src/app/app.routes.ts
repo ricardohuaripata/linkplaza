@@ -11,18 +11,23 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    title: 'Sign in | LinkPlaza',
+    path: 'admin',
+    title: 'Welcome | LinkPlaza',
+    component: HomeComponent,
+  },
+  {
     path: 'auth/signin',
+    title: 'Sign in | LinkPlaza',
     component: SignInComponent,
   },
   {
-    title: 'Sign up | LinkPlaza',
     path: 'auth/signup',
+    title: 'Sign up | LinkPlaza',
     component: SignUpComponent,
   },
   {
-    title: 'Not found | LinkPlaza',
     path: '**',
+    title: 'Not found | LinkPlaza',
     component: NotFoundComponent,
   },
 ];

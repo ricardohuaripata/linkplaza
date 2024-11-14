@@ -10,6 +10,7 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,14 +22,15 @@ import { Router } from '@angular/router';
 export class SignUpComponent implements OnDestroy {
   showPassword: boolean = false;
   signUpForm: FormGroup;
-  private subscription: Subscription = new Subscription();
   feedbackMessage?: string;
   disableForm: boolean = false;
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, this.emailValidator]],
@@ -80,7 +82,7 @@ export class SignUpComponent implements OnDestroy {
     this.subscription.add(
       this.authService.register(requestBody).subscribe({
         next: (response: any) => {
-          this.router.navigate(['/auth/signin']);
+          this.router.navigate(['/admin']);
           console.log(response);
         },
         error: (event) => {

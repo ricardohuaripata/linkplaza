@@ -18,14 +18,16 @@ export class AuthService {
   signIn(requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/signin',
-      requestBody
+      requestBody,
+      { withCredentials: true }
     );
   }
 
   register(requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/signup',
-      requestBody
+      requestBody,
+      { withCredentials: true }
     );
   }
 }
