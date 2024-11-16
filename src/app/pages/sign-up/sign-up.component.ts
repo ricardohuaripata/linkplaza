@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Subscription } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,12 +23,14 @@ export class SignUpComponent implements OnDestroy {
   signUpForm: FormGroup;
   feedbackMessage?: string;
   disableForm: boolean = false;
+  urlParam?: string;
   private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, this.emailValidator]],
@@ -37,6 +39,11 @@ export class SignUpComponent implements OnDestroy {
         [Validators.required, Validators.minLength(8), this.passwordValidator],
       ],
     });
+
+    this.route.queryParams.subscribe(params => {
+      this.urlParam = params['url'];
+    });
+
   }
 
   togglePasswordVisibility() {
