@@ -1,6 +1,29 @@
-<div class="flex justify-center">
-    <div class="my-20 px-6">
-        <h1 class="text-2xl md:text-4xl font-semibold mb-5">The page you're looking for doesn't exist.</h1>
-        <p class="text-lg">Want this to be your page? <a routerLink="/signup" class="text-purple-700 underline">Create your account now.</a></p>
+<div class="h-screen relative" style="background-color: #254F1A;">
+    <div class="px-3 absolute w-full max-w-screen-2xl top-4 sm:top-12 left-1/2 transform -translate-x-1/2">
+        <div class="flex justify-between items-center p-3 bg-white rounded-full">
+            <div class="py-2 pl-3 sm:pl-6 pr-2">
+                <a routerLink="/">
+                    <h1 class="text-xl sm:text-3xl font-semibold max-sm:hidden">LinkPlaza</h1>
+                    <svg class="w-7 sm:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        xml:space="preserve">
+                        <path
+                            d="m13.511 5.853 4.005-4.117 2.325 2.381-4.201 4.005h5.909v3.305h-5.937l4.229 4.108-2.325 2.334-5.741-5.769-5.741 5.769-2.325-2.325 4.229-4.108H2V8.122h5.909L3.708 4.117l2.325-2.381 4.005 4.117V0h3.473v5.853zM10.038 16.16h3.473v7.842h-3.473V16.16z">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a routerLink="/signin"
+                    class="px-4 py-3 sm:px-6 sm:py-5 bg-neutral-200 hover:bg-neutral-300 rounded-lg font-semibold sm:text-lg text-nowrap">Sign
+                    in</a>
+                <a routerLink="/signup"
+                    class="px-4 py-3 sm:px-6 sm:py-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-full font-semibold sm:text-lg text-nowrap">Sign
+                    up free</a>
+            </div>
+        </div>
+
+
     </div>
+
+
 </div>
