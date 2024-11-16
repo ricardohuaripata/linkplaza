@@ -20,27 +20,32 @@ export class PageService {
   }
   // authenticacion required
   createPage(requestBody: any): Observable<any> {
-    return this.http.post<any>(this.API_URL + this.ENDPOINT, requestBody);
+    return this.http.post<any>(this.API_URL + this.ENDPOINT, requestBody, {
+      withCredentials: true,
+    });
   }
   // authenticacion required
   updatePage(id: number, requestBody: any): Observable<any> {
     return this.http.patch<any>(
       this.API_URL + this.ENDPOINT + '/' + id,
-      requestBody
+      requestBody,
+      { withCredentials: true }
     );
   }
   // authenticacion required
   addSocialLink(id: number, requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/' + id + '/social-link',
-      requestBody
+      requestBody,
+      { withCredentials: true }
     );
   }
   // authenticacion required
   addCustomLink(id: number, requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/' + id + '/custom-link',
-      requestBody
+      requestBody,
+      { withCredentials: true }
     );
   }
 }
