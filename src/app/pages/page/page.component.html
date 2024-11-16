@@ -1,0 +1,10 @@
+@if (page) {
+    @if (page.userVerified) {
+    <h1>{{page.url}}</h1>
+    } @else {
+    <h1>This profile is not yet verified. Please check back soon.</h1>
+}
+
+} @else {
+<app-not-found />
+}

@@ -16,4 +16,5 @@ export interface Page {
   dateLastModified?: string;
   socialLinks?: SocialLink[];
   customLinks?: CustomLink[];
+  userVerified: boolean;
 }
