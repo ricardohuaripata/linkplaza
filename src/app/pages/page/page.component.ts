@@ -36,7 +36,9 @@ export class PageComponent implements OnInit, OnDestroy {
 
               if (this.page) {
                 const seoConfig: SeoConfig = {
-                  page_title: this.page.title ? this.page.title : this.page.url,
+                  page_title: this.page.title
+                    ? this.page.title + ' | LinkPlaza'
+                    : this.page.url + ' | LinkPlaza',
                   page_description: this.page.bio
                     ? this.page.bio
                     : 'Hey visit now my page and check my bio!',
@@ -45,7 +47,7 @@ export class PageComponent implements OnInit, OnDestroy {
                     environment.BASE_URL + '/img/LinkPlaza-Preview.jpg',
                 };
 
-                this.seo.setPageTitle(seoConfig.page_title + ' | LinkPlaza');
+                this.seo.setPageTitle(seoConfig.page_title);
                 this.seo.setCanonicalURL(seoConfig.page_url);
                 this.seo.setIndexFollow(true);
                 this.seo.setSocialMetaTags(seoConfig);

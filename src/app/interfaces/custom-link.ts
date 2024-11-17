@@ -3,5 +3,5 @@ export interface CustomLink {
   url: string;
   title: string;
   position: number;
-  isActive: boolean;
+  active: boolean;
 }

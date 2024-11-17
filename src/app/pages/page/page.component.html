@@ -1,8 +1,64 @@
 @if (page) {
-    @if (page.userVerified) {
-    <h1>{{page.url}}</h1>
-    } @else {
-    <h1>This profile is not yet verified. Please check back soon.</h1>
+@if (page.userVerified) {
+<main class="min-h-screen py-16 px-6 bg-neutral-300">
+    <div class="max-w-screen-sm mx-auto text-center">
+        <div class="flex flex-col items-center">
+            <div class="mb-5">
+                @if (page.pictureUrl) {
+                <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
+                    class="aspect-square w-24 object-cover rounded-full">
+
+                } @else {
+                <div
+                    class="bg-gray-500 aspect-square w-24 rounded-full flex justify-center items-center text-3xl text-white font-medium">
+                    {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
+                }
+            </div>
+
+            <h1 class="text-xl sm:text-2xl font-bold">{{page.title ? page.title : '@' + page.url}}</h1>
+
+            @if (page.bio) {
+            <p class="text-base sm:text-lg font-medium text-balance">{{page.bio}}</p>
+            }
+
+        </div>
+
+        @if (page.socialLinks && page.socialLinks.length > 0) {
+        <div class="flex flex-wrap justify-center items-center mt-5">
+            @for (socialLink of page.socialLinks; track $index) {
+            @if (socialLink.active) {
+            <a [href]="socialLink.socialPlatform.domainUrl + socialLink.url" [title]="socialLink.socialPlatform.name"
+                target="_blank" class="p-2 hover:scale-110 transition-transform">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
+                    <path [attr.d]="socialLink.socialPlatform.icon"></path>
+
+                </svg>
+            </a>
+            }
+            }
+
+        </div>
+        }
+
+        @if (page.customLinks && page.customLinks.length > 0) {
+        <div class="flex flex-col gap-4 mt-8">
+            @for (customLink of page.customLinks; track $index) {
+            @if (customLink.active) {
+            <a [href]="customLink.url" title="Go to site"
+                class="py-5 px-10 bg-black text-white text-base sm:text-lg font-medium break-words"
+                target="_blank">{{customLink.title}}</a>
+            }
+            }
+        </div>
+        }
+
+
+    </div>
+
+</main>
+
+} @else {
+<h1>This profile is not yet verified. Please check back soon.</h1>
 }
 
 } @else {

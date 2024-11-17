@@ -5,5 +5,5 @@ export interface SocialLink {
   socialPlatform: SocialPlatform;
   url: string;
   position: number;
-  isActive: boolean;
+  active: boolean;
 }
