@@ -7,11 +7,12 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 import { environment } from '../../../environments/environment.development';
 import { SeoConfig } from '../../interfaces/seo-config';
 import { SeoService } from '../../services/seo.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [NotFoundComponent],
+  imports: [NotFoundComponent, CommonModule],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',
 })
