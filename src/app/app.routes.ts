@@ -5,6 +5,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NewPageComponent } from './pages/new-page/new-page.component';
 import { PageComponent } from './pages/page/page.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
     path: 'new-page',
     title: 'New page | LinkPlaza',
     component: NewPageComponent,
+  },
+  {
+    path: 'admin',
+    title: 'Admin | LinkPlaza',
+    component: AdminComponent,
   },
   {
     path: 'page/:url',
