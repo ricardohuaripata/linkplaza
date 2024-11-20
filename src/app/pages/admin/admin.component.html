@@ -1,7 +1,7 @@
 @if (authUser && targetPage) {
 
-<div class="bg-zinc-300">
-    <div class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-200">
+<div class="bg-gradient-to-r from-sky-500 to-indigo-500">
+    <div class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-100">
         <!-- Profile info section -->
         <section class="flex flex-col items-center text-center">
             <div class="mb-5">
@@ -22,6 +22,37 @@
             <p class="text-base sm:text-lg font-medium text-balance">{{targetPage.bio? targetPage.bio : 'No bio'}}</p>
 
             <button type="button" class="button w-full mt-5 text-xl" (click)="openEditPageModal = true">Edit</button>
+        </section>
+
+        <section class="mt-10">
+            <div class="flex flex-col gap-4 overflow-auto">
+                @for (socialLink of targetPage.socialLinks; track $index) {
+                <div class="flex justify-between items-center gap-3">
+                    <div>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class=" " role="img" aria-hidden="false" aria-labelledby="ltclid911_title ">
+                            <title id="ltclid911_title">Move</title>
+                            <path fill="currentColor"
+                                d="M5 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm6-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-1 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm1-11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
+                            <path [attr.d]="socialLink.socialPlatform.icon"></path>
+                        </svg>
+                        <p class="text-sm sm:text-lg font-medium">{{socialLink.socialPlatform.name}}</p>
+                    </button>
+                    <label class="cursor-pointer">
+                        <input type="checkbox" [value]="socialLink.active" class="sr-only peer" [checked]="socialLink.active" (click)="toggleSocialLinkActiveStatus(socialLink)" [disabled]="disableForm">
+                        <div
+                            class="relative w-11 h-6 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-900">
+                        </div>
+                    </label>
+
+                </div>
+                }
+            </div>
         </section>
 
 

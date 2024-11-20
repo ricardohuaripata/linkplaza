@@ -18,6 +18,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PageService } from '../../services/page/page.service';
+import { SocialLink } from '../../interfaces/social-link';
 
 @Component({
   selector: 'app-admin',
@@ -90,6 +91,26 @@ export class AdminComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.disableForm = false;
           }, 3000);
+        },
+      })
+    );
+  }
+
+  toggleSocialLinkActiveStatus(socialLink: SocialLink) {
+    this.disableForm = true;
+
+    const requestBody: any = {
+      active: !socialLink.active,
+    };
+
+    this.subscription.add(
+      this.pageService.updateSocialLink(socialLink.id, requestBody).subscribe({
+        next: (response: any) => {
+          this.targetPage = response.data;
+          this.disableForm = false;
+        },
+        error: (event) => {
+          this.disableForm = false;
         },
       })
     );

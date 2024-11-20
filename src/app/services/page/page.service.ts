@@ -33,17 +33,25 @@ export class PageService {
     );
   }
   // authenticacion required
-  addSocialLink(id: number, requestBody: any): Observable<any> {
+  addSocialLink(pageId: number, requestBody: any): Observable<any> {
     return this.http.post<any>(
-      this.API_URL + this.ENDPOINT + '/' + id + '/social-link',
+      this.API_URL + this.ENDPOINT + '/' + pageId + '/social-link',
       requestBody,
       { withCredentials: true }
     );
   }
   // authenticacion required
-  addCustomLink(id: number, requestBody: any): Observable<any> {
+  addCustomLink(pageId: number, requestBody: any): Observable<any> {
     return this.http.post<any>(
-      this.API_URL + this.ENDPOINT + '/' + id + '/custom-link',
+      this.API_URL + this.ENDPOINT + '/' + pageId + '/custom-link',
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+  // authenticacion required
+  updateSocialLink(id: number, requestBody: any): Observable<any> {
+    return this.http.patch<any>(
+      this.API_URL + this.ENDPOINT + '/social-link/' + id,
       requestBody,
       { withCredentials: true }
     );
