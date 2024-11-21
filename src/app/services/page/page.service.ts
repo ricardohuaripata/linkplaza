@@ -56,4 +56,12 @@ export class PageService {
       { withCredentials: true }
     );
   }
+  // authenticacion required
+  sortSocialLinks(pageId: number, requestBody: any): Observable<any> {
+    return this.http.put<any>(
+      this.API_URL + this.ENDPOINT + '/' + pageId + '/social-link/sort',
+      requestBody,
+      { withCredentials: true }
+    );
+  }
 }

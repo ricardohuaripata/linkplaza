@@ -35,6 +35,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   editPageForm: FormGroup;
   disableForm: boolean = false;
   editPageFormSubmitFeedbackMessage?: string;
+  loading: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -111,6 +112,56 @@ export class AdminComponent implements OnInit, OnDestroy {
         },
         error: (event) => {
           this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  setSocialLinkPosition(page: Page, socialLink: SocialLink, event: Event) {
+    this.disableForm = true;
+    this.loading = true;
+
+    const selectedIndex = (event.target as HTMLSelectElement).value;
+    let idsBefore: number[] = [];
+    let idsAfter: number[] = [];
+
+    for (let i = 0; i < page.socialLinks!.length; i++) {
+      idsBefore.push(page.socialLinks![i].id);
+      idsAfter.push(page.socialLinks![i].id);
+    }
+
+    console.log('Antes: ');
+    console.log(idsBefore);
+
+    let a = idsBefore.indexOf(socialLink.id);
+    let b = idsBefore[parseInt(selectedIndex)];
+
+    idsAfter[a] = b;
+    idsAfter[parseInt(selectedIndex)] = socialLink.id;
+
+    console.log(
+      'posicion selecionada: ' +
+        selectedIndex +
+        ' para el socialLink con id ' +
+        socialLink.id
+    );
+    console.log('Despues: ');
+    console.log(idsAfter);
+
+    const requestBody: any = {
+      ids: idsAfter,
+    };
+
+    this.subscription.add(
+      this.pageService.sortSocialLinks(page.id, requestBody).subscribe({
+        next: (response: any) => {
+          this.targetPage = response.data;
+          this.disableForm = false;
+          this.loading = false;
+        },
+        error: (event) => {
+          this.disableForm = false;
+          this.loading = false;
         },
       })
     );
