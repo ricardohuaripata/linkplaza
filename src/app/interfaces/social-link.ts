@@ -6,4 +6,5 @@ export interface SocialLink {
   url: string;
   position: number;
   active: boolean;
+  dateCreated?: string;
 }

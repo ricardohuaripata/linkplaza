@@ -4,4 +4,5 @@ export interface CustomLink {
   title: string;
   position: number;
   active: boolean;
+  dateCreated?: string;
 }

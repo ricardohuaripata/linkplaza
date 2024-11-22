@@ -18,6 +18,11 @@ export class PageService {
   getPageByUrl(url: string): Observable<any> {
     return this.http.get<any>(this.API_URL + this.ENDPOINT + '/' + url);
   }
+
+  getSocialPlatforms(): Observable<any> {
+    return this.http.get<any>(this.API_URL + '/api/v1/social-platform');
+  }
+
   // authenticacion required
   createPage(requestBody: any): Observable<any> {
     return this.http.post<any>(this.API_URL + this.ENDPOINT, requestBody, {
