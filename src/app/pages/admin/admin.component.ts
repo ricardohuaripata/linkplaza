@@ -11,20 +11,18 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { User } from '../../interfaces/user';
 import { Page } from '../../interfaces/page';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { PageService } from '../../services/page/page.service';
-import { SocialLink } from '../../interfaces/social-link';
-import { SocialPlatform } from '../../interfaces/social-platform';
+import { SocialLinksComponent } from './components/social-links/social-links.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SocialLinksComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
@@ -33,16 +31,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   authUser?: User;
   targetPage?: Page;
   openEditPageModal: boolean = false;
-  openAddSocialLinkModal: boolean = false;
-  openEditSocialLinkModal: boolean = false;
   editPageForm: FormGroup;
-  addSocialLinkForm: FormGroup;
-  editSocialLinkForm: FormGroup;
   disableForm: boolean = false;
   editPageFormSubmitFeedbackMessage?: string;
-  addSocialLinkFormSubmitFeedbackMessage?: string;
-  loading: boolean = false;
-  socialPlatforms?: SocialPlatform[];
 
   constructor(
     private userService: UserService,
@@ -55,27 +46,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       bio: ['', Validators.maxLength(256)],
       pictureUrl: ['', Validators.maxLength(3200)],
     });
-
-    this.addSocialLinkForm = this.fb.group({
-      socialPlatform: [null, [Validators.required]],
-      url: [
-        '',
-        [Validators.required, Validators.maxLength(3200), this.urlValidator],
-      ],
-    });
-
-    this.editSocialLinkForm = this.fb.group({
-      socialLink: [null, [Validators.required]],
-      url: ['', [Validators.maxLength(3200), this.urlValidator]],
-    });
-  }
-
-  urlValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const url = control.value;
-    if (url && url.trim() !== url) {
-      return { invalidUrl: true };
-    }
-    return null;
   }
 
   ngOnInit(): void {
@@ -120,161 +90,6 @@ export class AdminComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.disableForm = false;
           }, 3000);
-        },
-      })
-    );
-  }
-
-  onOpenAddSocialLinkModal() {
-    this.openAddSocialLinkModal = true;
-
-    if (!this.socialPlatforms) {
-      this.subscription.add(
-        this.pageService.getSocialPlatforms().subscribe({
-          next: (response: any) => {
-            this.socialPlatforms = response.data;
-          },
-          error: (event) => {},
-        })
-      );
-    }
-  }
-
-  onOpenEditSocialLinkModal(socialLink: SocialLink) {
-    this.editSocialLinkForm.setValue({
-      socialLink: socialLink,
-      url: socialLink.url,
-    });
-    this.openEditSocialLinkModal = true;
-  }
-
-  onAddSocialLinkFormSubmit(pageId: number) {
-    this.disableForm = true;
-
-    const requestBody: any = {
-      socialPlatformId: this.addSocialLinkForm.value.socialPlatform.id,
-      url: this.addSocialLinkForm.value.url,
-    };
-
-    this.subscription.add(
-      this.pageService.addSocialLink(pageId, requestBody).subscribe({
-        next: (response: any) => {
-          this.targetPage = response.data;
-          this.disableForm = false;
-          this.openAddSocialLinkModal = false;
-          this.addSocialLinkForm.get('socialPlatform')?.setValue(null);
-          this.addSocialLinkForm.get('url')?.setValue('');
-          if (this.addSocialLinkFormSubmitFeedbackMessage) {
-            this.addSocialLinkFormSubmitFeedbackMessage = undefined;
-          }
-        },
-        error: (event) => {
-          this.addSocialLinkFormSubmitFeedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
-        },
-      })
-    );
-  }
-
-  onEditSocialLinkFormSubmit() {
-    this.disableForm = true;
-
-    const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
-
-    const requestBody: any = {
-      url: this.editSocialLinkForm.value.url,
-    };
-
-    this.subscription.add(
-      this.pageService.updateSocialLink(socialLinkId, requestBody).subscribe({
-        next: (response: any) => {
-          this.targetPage = response.data;
-          this.disableForm = false;
-          this.openEditSocialLinkModal = false;
-        },
-        error: (event) => {
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
-        },
-      })
-    );
-  }
-
-  removeSocialLink() {
-    this.disableForm = true;
-
-    const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
-
-    this.subscription.add(
-      this.pageService.deleteSocialLink(socialLinkId).subscribe({
-        next: (response: any) => {
-          this.targetPage = response.data;
-          this.disableForm = false;
-          this.openEditSocialLinkModal = false;
-        },
-        error: (event) => {
-          this.disableForm = false;
-        },
-      })
-    );
-  }
-
-  toggleSocialLinkActiveStatus(socialLink: SocialLink) {
-    this.disableForm = true;
-
-    const requestBody: any = {
-      active: !socialLink.active,
-    };
-
-    this.subscription.add(
-      this.pageService.updateSocialLink(socialLink.id, requestBody).subscribe({
-        next: (response: any) => {
-          this.targetPage = response.data;
-          this.disableForm = false;
-        },
-        error: (event) => {
-          this.disableForm = false;
-        },
-      })
-    );
-  }
-
-  setSocialLinkPosition(page: Page, socialLink: SocialLink, event: Event) {
-    this.disableForm = true;
-    this.loading = true;
-
-    const selectedIndex = (event.target as HTMLSelectElement).value;
-    let idsBefore: number[] = [];
-    let idsAfter: number[] = [];
-
-    for (let i = 0; i < page.socialLinks!.length; i++) {
-      idsBefore.push(page.socialLinks![i].id);
-      idsAfter.push(page.socialLinks![i].id);
-    }
-
-    let a = idsBefore.indexOf(socialLink.id);
-    let b = idsBefore[parseInt(selectedIndex)];
-
-    idsAfter[a] = b;
-    idsAfter[parseInt(selectedIndex)] = socialLink.id;
-
-    const requestBody: any = {
-      ids: idsAfter,
-    };
-
-    this.subscription.add(
-      this.pageService.sortSocialLinks(page.id, requestBody).subscribe({
-        next: (response: any) => {
-          this.targetPage = response.data;
-          this.disableForm = false;
-          this.loading = false;
-        },
-        error: (event) => {
-          this.disableForm = false;
-          this.loading = false;
         },
       })
     );

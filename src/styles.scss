@@ -21,3 +21,11 @@
 .invalid-input-message {
   @apply mt-1 mx-2 text-red-700;
 }
+
+.modal {
+  @apply fixed inset-0 z-10 bg-black bg-opacity-50 overflow-auto;
+}
+
+.modal-content {
+  @apply flex min-h-full items-center justify-center p-4;
+}
