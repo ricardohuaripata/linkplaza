@@ -54,7 +54,8 @@
                         </option>
                     </select>
 
-                    <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full">
+                    <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full"
+                        (click)="onOpenEditSocialLinkModal(socialLink)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
                             <path [attr.d]="socialLink.socialPlatform.icon"></path>
                         </svg>
@@ -91,8 +92,8 @@
                 class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
                 <div class="flex justify-between items-center gap-2">
                     <h2 class="text-lg font-medium">Name, bio and picture to display</h2>
-                    <button type="button" (click)="openEditPageModal = false" class="hover:bg-slate-200 rounded-md p-1"> <svg
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    <button type="button" (click)="openEditPageModal = false" class="hover:bg-slate-200 rounded-md p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-7">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -246,6 +247,57 @@
     </div>
 
     }
+
+    @if (openEditSocialLinkModal) {
+    <!-- Modal -->
+    <div class="fixed inset-0 z-10 bg-black bg-opacity-50 overflow-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+
+            <form [formGroup]="editSocialLinkForm" (submit)="onEditSocialLinkFormSubmit()"
+                class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
+                <div class="flex justify-between items-center gap-2">
+                    <h2 class="text-lg font-medium">Edit social link</h2>
+                    <button type="button" (click)="openEditSocialLinkModal = false"
+                        class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg></button>
+
+                </div>
+
+                <div>
+                    <input type="text" placeholder="Enter your username" formControlName="url" class="input w-full"
+                        [ngClass]="{'invalid-input': editSocialLinkForm.get('url')?.hasError('maxlength') || 
+                            editSocialLinkForm.get('url')?.hasError('invalidUrl') && editSocialLinkForm.get('url')?.touched}">
+                    @if (editSocialLinkForm.get('url')?.hasError('invalidUrl') &&
+                    editSocialLinkForm.get('url')?.touched)
+                    {
+                    <p class="invalid-input-message">* Please enter a valid URL.</p>
+                    }
+                    @if (editSocialLinkForm.get('url')?.hasError('maxlength') &&
+                    editSocialLinkForm.get('url')?.touched)
+                    {
+                    <p class="invalid-input-message">* URL cannot be longer than 3200 characters.</p>
+                    }
+
+                </div>
+
+                @if (editSocialLinkForm.get('socialLink')?.value) {
+                <p class="text-sm overflow-auto">{{editSocialLinkForm.get('socialLink')?.value.socialPlatform.domainUrl
+                    +
+                    editSocialLinkForm.get('url')?.value}}</p>
+                }
+
+                <button type="submit" class="button w-full text-lg font-semibold"
+                    [disabled]="this.editSocialLinkForm.invalid || this.disableForm">Edit</button>
+            </form>
+
+        </div>
+    </div>
+
+    }
+
 
 </div>
 }

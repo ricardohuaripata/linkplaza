@@ -34,8 +34,10 @@ export class AdminComponent implements OnInit, OnDestroy {
   targetPage?: Page;
   openEditPageModal: boolean = false;
   openAddSocialLinkModal: boolean = false;
+  openEditSocialLinkModal: boolean = false;
   editPageForm: FormGroup;
   addSocialLinkForm: FormGroup;
+  editSocialLinkForm: FormGroup;
   disableForm: boolean = false;
   editPageFormSubmitFeedbackMessage?: string;
   addSocialLinkFormSubmitFeedbackMessage?: string;
@@ -60,6 +62,11 @@ export class AdminComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.maxLength(3200), this.urlValidator],
       ],
+    });
+
+    this.editSocialLinkForm = this.fb.group({
+      socialLink: [null, [Validators.required]],
+      url: ['', [Validators.maxLength(3200), this.urlValidator]],
     });
   }
 
@@ -104,9 +111,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.pageService.updatePage(id, requestBody).subscribe({
         next: (response: any) => {
+          this.targetPage = response.data;
           this.disableForm = false;
           this.openEditPageModal = false;
-          this.targetPage = response.data;
         },
         error: (event) => {
           this.editPageFormSubmitFeedbackMessage = event.error.message;
@@ -126,12 +133,19 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.pageService.getSocialPlatforms().subscribe({
           next: (response: any) => {
             this.socialPlatforms = response.data;
-            console.log(this.socialPlatforms);
           },
           error: (event) => {},
         })
       );
     }
+  }
+
+  onOpenEditSocialLinkModal(socialLink: SocialLink) {
+    this.openEditSocialLinkModal = true;
+    this.editSocialLinkForm.setValue({
+      socialLink: socialLink,
+      url: socialLink.url,
+    });
   }
 
   onAddSocialLinkFormSubmit(pageId: number) {
@@ -145,12 +159,37 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.pageService.addSocialLink(pageId, requestBody).subscribe({
         next: (response: any) => {
+          this.targetPage = response.data;
           this.disableForm = false;
           this.openAddSocialLinkModal = false;
-          this.targetPage = response.data;
         },
         error: (event) => {
           this.addSocialLinkFormSubmitFeedbackMessage = event.error.message;
+          setTimeout(() => {
+            this.disableForm = false;
+          }, 3000);
+        },
+      })
+    );
+  }
+
+  onEditSocialLinkFormSubmit() {
+    this.disableForm = true;
+
+    const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
+
+    const requestBody: any = {
+      url: this.editSocialLinkForm.value.url,
+    };
+
+    this.subscription.add(
+      this.pageService.updateSocialLink(socialLinkId, requestBody).subscribe({
+        next: (response: any) => {
+          this.targetPage = response.data;
+          this.disableForm = false;
+          this.openEditSocialLinkModal = false;
+        },
+        error: (event) => {
           setTimeout(() => {
             this.disableForm = false;
           }, 3000);
