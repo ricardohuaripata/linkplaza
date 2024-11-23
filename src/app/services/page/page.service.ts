@@ -69,4 +69,11 @@ export class PageService {
       { withCredentials: true }
     );
   }
+  // authenticacion required
+  deleteSocialLink(id: number): Observable<any> {
+    return this.http.delete<any>(
+      this.API_URL + this.ENDPOINT + '/social-link/' + id,
+      { withCredentials: true }
+    );
+  }
 }

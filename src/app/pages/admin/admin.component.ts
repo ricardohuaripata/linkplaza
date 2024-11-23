@@ -141,11 +141,11 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   onOpenEditSocialLinkModal(socialLink: SocialLink) {
-    this.openEditSocialLinkModal = true;
     this.editSocialLinkForm.setValue({
       socialLink: socialLink,
       url: socialLink.url,
     });
+    this.openEditSocialLinkModal = true;
   }
 
   onAddSocialLinkFormSubmit(pageId: number) {
@@ -162,6 +162,11 @@ export class AdminComponent implements OnInit, OnDestroy {
           this.targetPage = response.data;
           this.disableForm = false;
           this.openAddSocialLinkModal = false;
+          this.addSocialLinkForm.get('socialPlatform')?.setValue(null);
+          this.addSocialLinkForm.get('url')?.setValue('');
+          if (this.addSocialLinkFormSubmitFeedbackMessage) {
+            this.addSocialLinkFormSubmitFeedbackMessage = undefined;
+          }
         },
         error: (event) => {
           this.addSocialLinkFormSubmitFeedbackMessage = event.error.message;
@@ -193,6 +198,25 @@ export class AdminComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.disableForm = false;
           }, 3000);
+        },
+      })
+    );
+  }
+
+  removeSocialLink() {
+    this.disableForm = true;
+
+    const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
+
+    this.subscription.add(
+      this.pageService.deleteSocialLink(socialLinkId).subscribe({
+        next: (response: any) => {
+          this.targetPage = response.data;
+          this.disableForm = false;
+          this.openEditSocialLinkModal = false;
+        },
+        error: (event) => {
+          this.disableForm = false;
         },
       })
     );

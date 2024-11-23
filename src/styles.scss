@@ -10,6 +10,10 @@
   @apply p-3 bg-purple-700 text-white font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
 }
 
+.button-secondary {
+  @apply p-3 bg-white border-2 text-black font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
+}
+
 .invalid-input {
   @apply border-red-700 text-red-700;
 }
