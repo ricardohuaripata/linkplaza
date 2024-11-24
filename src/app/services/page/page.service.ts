@@ -62,6 +62,14 @@ export class PageService {
     );
   }
   // authenticacion required
+  updateCustomLink(id: number, requestBody: any): Observable<any> {
+    return this.http.patch<any>(
+      this.API_URL + this.ENDPOINT + '/custom-link/' + id,
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+  // authenticacion required
   sortSocialLinks(pageId: number, requestBody: any): Observable<any> {
     return this.http.put<any>(
       this.API_URL + this.ENDPOINT + '/' + pageId + '/social-link/sort',
@@ -70,9 +78,24 @@ export class PageService {
     );
   }
   // authenticacion required
+  sortCustomLinks(pageId: number, requestBody: any): Observable<any> {
+    return this.http.put<any>(
+      this.API_URL + this.ENDPOINT + '/' + pageId + '/custom-link/sort',
+      requestBody,
+      { withCredentials: true }
+    );
+  }
+  // authenticacion required
   deleteSocialLink(id: number): Observable<any> {
     return this.http.delete<any>(
       this.API_URL + this.ENDPOINT + '/social-link/' + id,
+      { withCredentials: true }
+    );
+  }
+  // authenticacion required
+  deleteCustomLink(id: number): Observable<any> {
+    return this.http.delete<any>(
+      this.API_URL + this.ENDPOINT + '/custom-link/' + id,
       { withCredentials: true }
     );
   }

@@ -18,11 +18,17 @@ import {
 } from '@angular/forms';
 import { PageService } from '../../services/page/page.service';
 import { SocialLinksComponent } from './components/social-links/social-links.component';
+import { CustomLinksComponent } from './components/custom-links/custom-links.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, SocialLinksComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    SocialLinksComponent,
+    CustomLinksComponent,
+  ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
