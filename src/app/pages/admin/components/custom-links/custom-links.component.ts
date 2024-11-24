@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 export class CustomLinksComponent {
   @Input() page!: Page;
   disableForm: boolean = false;
-  loading: boolean = false;
 
   addCustomLinkForm: FormGroup;
   editCustomLinkForm: FormGroup;
@@ -154,7 +153,6 @@ export class CustomLinksComponent {
 
   setCustomLinkPosition(page: Page, customLink: CustomLink, event: Event) {
     this.disableForm = true;
-    this.loading = true;
 
     const selectedIndex = (event.target as HTMLSelectElement).value;
     let idsBefore: number[] = [];
@@ -180,11 +178,9 @@ export class CustomLinksComponent {
         next: (response: any) => {
           this.page = response.data;
           this.disableForm = false;
-          this.loading = false;
         },
         error: (event) => {
           this.disableForm = false;
-          this.loading = false;
         },
       })
     );

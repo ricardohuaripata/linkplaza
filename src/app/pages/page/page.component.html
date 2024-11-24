@@ -5,7 +5,7 @@
     <div class="max-w-screen-sm mx-auto text-center">
         <!-- Profile info section -->
         <section class="flex flex-col items-center">
-            <div class="mb-5">
+            <div class="mb-4">
                 @if (page.pictureUrl) {
                 <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
                     class="aspect-square w-24 object-cover rounded-full">
@@ -20,7 +20,7 @@
             <h1 class="text-xl sm:text-2xl font-bold">{{page.title ? page.title : '@' + page.url}}</h1>
 
             @if (page.bio) {
-            <p class="text-base sm:text-lg font-medium text-balance">{{page.bio}}</p>
+            <p class="text-base sm:text-lg font-medium text-balance mt-1">{{page.bio}}</p>
             }
 
         </section>

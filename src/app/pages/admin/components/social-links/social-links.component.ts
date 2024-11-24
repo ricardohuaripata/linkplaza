@@ -23,7 +23,6 @@ import { Page } from '../../../../interfaces/page';
 export class SocialLinksComponent implements OnDestroy {
   @Input() page!: Page;
   disableForm: boolean = false;
-  loading: boolean = false;
 
   addSocialLinkForm: FormGroup;
   editSocialLinkForm: FormGroup;
@@ -160,7 +159,6 @@ export class SocialLinksComponent implements OnDestroy {
 
   setSocialLinkPosition(page: Page, socialLink: SocialLink, event: Event) {
     this.disableForm = true;
-    this.loading = true;
 
     const selectedIndex = (event.target as HTMLSelectElement).value;
     let idsBefore: number[] = [];
@@ -186,11 +184,9 @@ export class SocialLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.page = response.data;
           this.disableForm = false;
-          this.loading = false;
         },
         error: (event) => {
           this.disableForm = false;
-          this.loading = false;
         },
       })
     );
