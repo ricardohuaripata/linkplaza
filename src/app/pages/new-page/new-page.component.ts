@@ -34,6 +34,8 @@ export class NewPageComponent implements OnDestroy {
         '',
         [
           Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(64),
           this.characterPatternValidator,
           this.noDotAtEdgesValidator,
         ],

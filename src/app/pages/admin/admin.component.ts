@@ -19,6 +19,7 @@ import {
 import { PageService } from '../../services/page/page.service';
 import { SocialLinksComponent } from './components/social-links/social-links.component';
 import { CustomLinksComponent } from './components/custom-links/custom-links.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -45,7 +46,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private pageService: PageService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.editPageForm = this.fb.group({
       title: ['', Validators.maxLength(32)],
@@ -63,11 +65,15 @@ export class AdminComponent implements OnInit, OnDestroy {
             this.authUser = response.data;
             this.targetPage = response.data.pages[0];
 
-            this.editPageForm.setValue({
-              title: this.targetPage?.title,
-              bio: this.targetPage?.bio,
-              pictureUrl: this.targetPage?.pictureUrl,
-            });
+            if (this.targetPage) {
+              this.editPageForm.setValue({
+                title: this.targetPage?.title,
+                bio: this.targetPage?.bio,
+                pictureUrl: this.targetPage?.pictureUrl,
+              });
+            } else {
+              this.router.navigate(['/new-page']);
+            }
           },
           error: (event) => {},
         })

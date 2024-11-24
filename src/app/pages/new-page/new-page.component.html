@@ -27,10 +27,20 @@
                         <input type="text" formControlName="url" placeholder="URL"
                             class="py-3 pr-3 bg-neutral-100 rounded-lg text-black placeholder:text-black border focus:outline-offset-4 w-full"
                             style="padding-left: 10.25rem;"
-                            [ngClass]="{'invalid-input': (newPageForm.get('url')?.hasError('invalidCharacterPattern') || newPageForm.get('url')?.hasError('invalidDotAtEdges')) && newPageForm.get('url')?.touched}">
+                            [ngClass]="{'invalid-input': (newPageForm.get('url')?.hasError('minlength') || newPageForm.get('url')?.hasError('maxlength') || newPageForm.get('url')?.hasError('invalidCharacterPattern') || newPageForm.get('url')?.hasError('invalidDotAtEdges')) && newPageForm.get('url')?.touched}">
                         <span
                             class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">linkplaza.com/page/</span>
                     </div>
+                    @if (newPageForm.get('url')?.hasError('minlength') &&
+                    newPageForm.get('url')?.touched)
+                    {
+                    <p class="invalid-input-message">* URL cannot be shorter than 3 characters.</p>
+                    }
+                    @if (newPageForm.get('url')?.hasError('maxlength') &&
+                    newPageForm.get('url')?.touched)
+                    {
+                    <p class="invalid-input-message">* URL cannot be longer than 64 characters.</p>
+                    }
                     @if (newPageForm.get('url')?.hasError('invalidCharacterPattern') && newPageForm.get('url')?.touched)
                     {
                     <p class="invalid-input-message">* URL may only contain letters, numbers, underscores, and periods.

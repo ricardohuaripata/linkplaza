@@ -87,7 +87,7 @@ export class SignUpComponent implements OnDestroy {
     this.subscription.add(
       this.authService.signUp(requestBody).subscribe({
         next: (response: any) => {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/new-page']);
           console.log(response);
         },
         error: (event) => {
