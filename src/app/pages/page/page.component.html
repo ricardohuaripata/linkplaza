@@ -27,7 +27,7 @@
 
         <!-- Social links section -->
         @if (page.socialLinks && page.socialLinks.length > 0) {
-        <section class="flex flex-wrap justify-center items-center mt-5">
+        <section class="flex flex-wrap justify-center items-center mt-4">
             @for (socialLink of page.socialLinks; track $index) {
             @if (socialLink.active) {
             <a [href]="socialLink.socialPlatform.domainUrl + socialLink.url" [title]="socialLink.socialPlatform.name"

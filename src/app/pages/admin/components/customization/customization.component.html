@@ -1,0 +1,65 @@
+<section class="mt-10">
+    <h2 class="text-xl sm:text-2xl font-semibold mb-2">Customization</h2>
+    <p class="text-pretty">Completely customize your LinkPlaza page. Change your background with colors, gradients and
+        images. Choose a button style, change the typeface and more.</p>
+
+    <form [formGroup]="customizationForm" (submit)="onCustomizationFormSubmit()" class="mt-8">
+        <div class="flex flex-col gap-4 p-1 overflow-auto ">
+
+            <div class="flex flex-col gap-2 font-medium">
+                <label for="backgroundColor">Background color</label>
+                <div class="flex items-center gap-2">
+                    <input type="color" class="input-color" formControlName="backgroundColor">
+                    <input type="text" class="input" [value]="customizationForm.get('backgroundColor')?.value" readonly>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 font-medium">
+                <label for="backgroundColor">Font color</label>
+                <div class="flex items-center gap-2">
+                    <input type="color" class="input-color" formControlName="fontColor">
+                    <input type="text" class="input" [value]="customizationForm.get('fontColor')?.value" readonly>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 font-medium">
+                <label for="backgroundColor">Button background color</label>
+                <div class="flex items-center gap-2">
+                    <input type="color" class="input-color" formControlName="buttonBackgroundColor">
+                    <input type="text" class="input" [value]="customizationForm.get('buttonBackgroundColor')?.value"
+                        readonly>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 font-medium">
+                <label for="backgroundColor">Button font color</label>
+                <div class="flex items-center gap-2">
+                    <input type="color" class="input-color" formControlName="buttonFontColor">
+                    <input type="text" class="input" [value]="customizationForm.get('buttonFontColor')?.value" readonly>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 font-medium">
+                <label for="buttonRounded">Button style</label>
+
+                <div class="flex items-center gap-4">
+                    <button type="button" class="bg-black text-white py-4 px-6 w-full"
+                        (click)="selectButtonStyle(false)"
+                        [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == false}">Straight</button>
+                    <button type="button" class="bg-black text-white py-4 px-6 w-full rounded-full"
+                        (click)="selectButtonStyle(true)"
+                        [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == true}">Rounded</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <button type="submit" class="button w-full mt-8 text-lg sm:text-xl" [disabled]="this.disableForm">Apply
+            changes</button>
+
+    </form>
+
+
+</section>

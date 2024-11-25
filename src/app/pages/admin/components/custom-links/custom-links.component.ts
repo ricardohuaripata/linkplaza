@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Page } from '../../../../interfaces/page';
 import {
   AbstractControl,
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './custom-links.component.html',
   styleUrl: './custom-links.component.scss',
 })
-export class CustomLinksComponent {
+export class CustomLinksComponent implements OnDestroy {
   @Input() page!: Page;
   disableForm: boolean = false;
 

@@ -19,7 +19,8 @@
             <h1 class="text-xl sm:text-2xl font-bold">{{targetPage.title ? targetPage.title : '@' + targetPage.url}}
             </h1>
 
-            <p class="text-base sm:text-lg font-medium text-balance mt-1">{{targetPage.bio? targetPage.bio : 'No bio'}}</p>
+            <p class="text-base sm:text-lg font-medium text-balance mt-1">{{targetPage.bio? targetPage.bio : 'No bio'}}
+            </p>
 
             <button type="button" class="button w-full mt-5 text-lg sm:text-xl"
                 (click)="openEditPageModal = true">Edit</button>
@@ -30,6 +31,9 @@
 
         <!-- Custom links section -->
         <app-custom-links [page]="targetPage" />
+
+        <!-- Customization section -->
+        <app-customization [page]="targetPage" />
 
         @if (openEditPageModal) {
         <!-- Modal -->

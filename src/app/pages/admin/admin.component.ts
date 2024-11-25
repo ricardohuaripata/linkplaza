@@ -20,6 +20,7 @@ import { PageService } from '../../services/page/page.service';
 import { SocialLinksComponent } from './components/social-links/social-links.component';
 import { CustomLinksComponent } from './components/custom-links/custom-links.component';
 import { Router } from '@angular/router';
+import { CustomizationComponent } from "./components/customization/customization.component";
 
 @Component({
   selector: 'app-admin',
@@ -29,7 +30,8 @@ import { Router } from '@angular/router';
     CommonModule,
     SocialLinksComponent,
     CustomLinksComponent,
-  ],
+    CustomizationComponent
+],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
