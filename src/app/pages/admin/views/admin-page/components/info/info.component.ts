@@ -7,8 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Page } from '../../../../interfaces/page';
-import { PageService } from '../../../../services/page/page.service';
+
+import { Page } from '../../../../../../interfaces/page';
+import { PageService } from '../../../../../../services/page/page.service';
+import { UserService } from '../../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-info',
@@ -28,7 +30,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private pageService: PageService, private fb: FormBuilder) {
+  constructor(private pageService: PageService, private fb: FormBuilder, private userService: UserService) {
     this.editPageForm = this.fb.group({
       title: ['', Validators.maxLength(32)],
       bio: ['', Validators.maxLength(256)],
@@ -56,7 +58,7 @@ export class InfoComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.pageService.updatePage(this.page.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openEditPageModal = false;
         },

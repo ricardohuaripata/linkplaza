@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { SocialLink } from '../../../../interfaces/social-link';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,11 +6,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SocialPlatform } from '../../../../interfaces/social-platform';
 import { Subscription } from 'rxjs';
-import { PageService } from '../../../../services/page/page.service';
 import { CommonModule } from '@angular/common';
-import { Page } from '../../../../interfaces/page';
+
+import { Page } from '../../../../../../interfaces/page';
+import { SocialPlatform } from '../../../../../../interfaces/social-platform';
+import { PageService } from '../../../../../../services/page/page.service';
+import { SocialLink } from '../../../../../../interfaces/social-link';
+import { UserService } from '../../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-social-links',
@@ -36,7 +38,11 @@ export class SocialLinksComponent implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private pageService: PageService, private fb: FormBuilder) {
+  constructor(
+    private pageService: PageService,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
     this.addSocialLinkForm = this.fb.group({
       socialPlatform: [null, [Validators.required]],
       url: [
@@ -93,7 +99,7 @@ export class SocialLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.addSocialLink(pageId, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openAddSocialLinkModal = false;
           this.addSocialLinkForm.get('socialPlatform')?.setValue(null);
@@ -124,7 +130,7 @@ export class SocialLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.updateSocialLink(socialLinkId, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openEditSocialLinkModal = false;
         },
@@ -147,7 +153,7 @@ export class SocialLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.updateSocialLink(socialLink.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
         },
         error: (event) => {
@@ -182,7 +188,7 @@ export class SocialLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.sortSocialLinks(page.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
         },
         error: (event) => {
@@ -200,7 +206,7 @@ export class SocialLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.deleteSocialLink(socialLinkId).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openEditSocialLinkModal = false;
         },

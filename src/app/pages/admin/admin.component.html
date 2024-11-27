@@ -1,20 +1,4 @@
-@if (authUser && targetPage) {
-
-<div class="bg-gradient-to-r from-sky-500 to-indigo-500">
-    <main class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-100">
-        <!-- Info section -->
-        <app-info [page]="targetPage" />
-
-        <!-- Social links section -->
-        <app-social-links [page]="targetPage" />
-
-        <!-- Custom links section -->
-        <app-custom-links [page]="targetPage" />
-
-        <!-- Customization section -->
-        <app-customization [page]="targetPage" />
-
-    </main>
-
-</div>
+@if (loggedUser) {
+<app-navigation />
+<router-outlet />
 }

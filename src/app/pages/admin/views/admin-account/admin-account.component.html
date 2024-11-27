@@ -1,0 +1,36 @@
+<div class="sm:ml-64 bg-neutral-200">
+    <main class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-100">
+        <section>
+            <h1 class="font-bold text-xl mb-3">Account</h1>
+            <input type="text" class="input w-full" [value]="loggedUser?.email" readonly>
+
+        </section>
+
+        <section class="mt-8">
+            <h1 class="font-bold text-xl mb-3">Pages</h1>
+
+            <div class="flex flex-col gap-2">
+                @for (page of loggedUser?.pages; track $index) {
+                <button class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg" (click)="switchPage(page)"
+                    title="Switch page">
+                    @if (page.pictureUrl) {
+                    <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
+                        class="aspect-square min-w-10 w-10 object-cover rounded-full">
+
+                    } @else {
+                    <div
+                        class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
+                        {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
+                    }
+                    <span>{{'@' + page.url}}</span>
+
+                </button>
+                }
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>

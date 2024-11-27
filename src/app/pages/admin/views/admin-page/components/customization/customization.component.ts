@@ -1,13 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Page } from '../../../../interfaces/page';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { PageService } from '../../../../services/page/page.service';
+
+import { Page } from '../../../../../../interfaces/page';
+import { PageService } from '../../../../../../services/page/page.service';
+import { UserService } from '../../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-customization',
@@ -24,13 +22,17 @@ export class CustomizationComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private pageService: PageService, private fb: FormBuilder) {
+  constructor(
+    private pageService: PageService,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
     this.customizationForm = this.fb.group({
       backgroundColor: [''],
       fontColor: [''],
       buttonBackgroundColor: [''],
       buttonFontColor: [''],
-      buttonRounded: [null]
+      buttonRounded: [null],
     });
   }
 
@@ -45,8 +47,7 @@ export class CustomizationComponent implements OnInit, OnDestroy {
   }
 
   selectButtonStyle(buttonRounded: boolean) {
-    this.customizationForm.get('buttonRounded')?.setValue(buttonRounded)
-
+    this.customizationForm.get('buttonRounded')?.setValue(buttonRounded);
   }
 
   onCustomizationFormSubmit() {
@@ -63,7 +64,7 @@ export class CustomizationComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.pageService.updatePage(this.page.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
         },
         error: (event) => {

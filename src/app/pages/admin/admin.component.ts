@@ -5,35 +5,23 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import { UserService } from '../../services/user/user.service';
 import { Subscription } from 'rxjs';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+
 import { User } from '../../interfaces/user';
-import { Page } from '../../interfaces/page';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SocialLinksComponent } from './components/social-links/social-links.component';
-import { CustomLinksComponent } from './components/custom-links/custom-links.component';
-import { Router } from '@angular/router';
-import { CustomizationComponent } from './components/customization/customization.component';
-import { InfoComponent } from './components/info/info.component';
+import { UserService } from '../../services/user/user.service';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    SocialLinksComponent,
-    CustomLinksComponent,
-    CustomizationComponent,
-    InfoComponent,
-  ],
+  imports: [RouterOutlet, NavigationComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent implements OnInit, OnDestroy {
-  authUser?: User;
-  targetPage?: Page;
+  loggedUser?: User;
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -48,12 +36,9 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.userService.getUserInfo().subscribe({
           next: (response: any) => {
             console.log(response);
-            this.authUser = response.data;
-            this.targetPage = response.data.pages[0];
-
-            if (!this.targetPage) {
-              this.router.navigate(['/new-page']);
-            }
+            this.loggedUser = response.data;
+            this.userService.setLoggedUser(response.data);
+            this.userService.setTargetPage(response.data.pages[0]);
           },
           error: (event) => {},
         })

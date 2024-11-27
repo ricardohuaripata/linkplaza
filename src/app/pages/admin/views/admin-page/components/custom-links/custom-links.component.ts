@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Page } from '../../../../interfaces/page';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,9 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PageService } from '../../../../services/page/page.service';
-import { CustomLink } from '../../../../interfaces/custom-link';
 import { CommonModule } from '@angular/common';
+
+import { Page } from '../../../../../../interfaces/page';
+import { PageService } from '../../../../../../services/page/page.service';
+import { CustomLink } from '../../../../../../interfaces/custom-link';
+import { UserService } from '../../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-custom-links',
@@ -33,7 +35,11 @@ export class CustomLinksComponent implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private pageService: PageService, private fb: FormBuilder) {
+  constructor(
+    private pageService: PageService,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
     this.addCustomLinkForm = this.fb.group({
       url: [
         '',
@@ -86,7 +92,7 @@ export class CustomLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.addCustomLink(pageId, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openAddCustomLinkModal = false;
           this.addCustomLinkForm.get('url')?.setValue('');
@@ -118,7 +124,7 @@ export class CustomLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.updateCustomLink(customLinkId, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openEditCustomLinkModal = false;
         },
@@ -141,7 +147,7 @@ export class CustomLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.updateCustomLink(customLink.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
         },
         error: (event) => {
@@ -176,7 +182,7 @@ export class CustomLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.sortCustomLinks(page.id, requestBody).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
         },
         error: (event) => {
@@ -194,7 +200,7 @@ export class CustomLinksComponent implements OnDestroy {
     this.subscription.add(
       this.pageService.deleteCustomLink(customLinkId).subscribe({
         next: (response: any) => {
-          this.page = response.data;
+          this.userService.setTargetPage(response.data);
           this.disableForm = false;
           this.openEditCustomLinkModal = false;
         },

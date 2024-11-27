@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../../interfaces/user';
+import { Page } from '../../interfaces/page';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +11,22 @@ import { Observable } from 'rxjs';
 export class UserService {
   private API_URL: string;
   private ENDPOINT: string;
+  private loggedUserSource = new BehaviorSubject<User | undefined>(undefined);
+  private targetPageSource = new BehaviorSubject<Page | undefined>(undefined);
+  loggedUser$ = this.loggedUserSource.asObservable();
+  targetPage$ = this.targetPageSource.asObservable();
 
   constructor(private http: HttpClient) {
     this.API_URL = environment.API_URL;
     this.ENDPOINT = '/api/v1/user';
+  }
+
+  setLoggedUser(user: User | undefined): void {
+    this.loggedUserSource.next(user);
+  }
+
+  setTargetPage(page: Page | undefined): void {
+    this.targetPageSource.next(page);
   }
 
   // authenticacion required

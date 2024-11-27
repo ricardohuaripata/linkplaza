@@ -6,6 +6,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { NewPageComponent } from './pages/new-page/new-page.component';
 import { PageComponent } from './pages/page/page.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { AdminPageComponent } from './pages/admin/views/admin-page/admin-page.component';
+import { AdminAccountComponent } from './pages/admin/views/admin-account/admin-account.component';
 
 export const routes: Routes = [
   {
@@ -30,8 +32,19 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    title: 'Admin | LinkPlaza',
     component: AdminComponent,
+    children: [
+      {
+        path: '',
+        title: 'Admin | LinkPlaza',
+        component: AdminPageComponent,
+      },
+      {
+        path: 'account',
+        title: 'Account | LinkPlaza',
+        component: AdminAccountComponent,
+      },
+    ],
   },
   {
     path: 'page/:url',
