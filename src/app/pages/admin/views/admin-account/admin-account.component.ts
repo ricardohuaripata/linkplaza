@@ -6,11 +6,18 @@ import { User } from '../../../../interfaces/user';
 import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
 import { PageService } from '../../../../services/page/page.service';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, ReactiveFormsModule],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })
@@ -19,13 +26,51 @@ export class AdminAccountComponent {
   targetPage?: Page;
   openPageOptionsModal?: boolean;
   selectedPage?: Page;
+  changePageUrlForm: FormGroup;
+  changePageUrlForm_submitFeedbackMessage?: string;
   disableForm: boolean = false;
   private subscription: Subscription = new Subscription();
 
   constructor(
     private userService: UserService,
-    private pageService: PageService
-  ) {}
+    private pageService: PageService,
+    private fb: FormBuilder
+  ) {
+    this.changePageUrlForm = this.fb.group({
+      url: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(64),
+          this.characterPatternValidator,
+          this.noDotAtEdgesValidator,
+        ],
+      ],
+    });
+  }
+
+  characterPatternValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const url = control.value;
+    const pattern = /^[a-zA-Z0-9_.]+$/;
+    if (url && !pattern.test(url)) {
+      return { invalidCharacterPattern: true };
+    }
+    return null;
+  }
+
+  noDotAtEdgesValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const url = control.value;
+
+    if (url && (url.startsWith('.') || url.endsWith('.'))) {
+      return { invalidDotAtEdges: true };
+    }
+    return null;
+  }
 
   ngOnInit(): void {
     this.subscription.add(
@@ -43,8 +88,46 @@ export class AdminAccountComponent {
   }
 
   onOpenPageOptionsModal(page: Page) {
-    this.openPageOptionsModal = true;
+    if (this.changePageUrlForm_submitFeedbackMessage) {
+      this.changePageUrlForm_submitFeedbackMessage = undefined;
+    }
     this.selectedPage = page;
+    this.changePageUrlForm.setValue({
+      url: page.url,
+    });
+    this.openPageOptionsModal = true;
+  }
+
+  onChangePageUrlFormSubmit() {
+    this.disableForm = true;
+
+    const pageId = this.selectedPage!.id;
+
+    const requestBody: any = {
+      url: this.changePageUrlForm.value.url,
+    };
+
+    this.subscription.add(
+      this.pageService.updatePage(pageId, requestBody).subscribe({
+        next: (response: any) => {
+          const pageIndex = this.loggedUser!.pages!.findIndex(
+            (page) => page.id === pageId
+          );
+          this.loggedUser!.pages![pageIndex] = response.data;
+
+          if (pageId == this.targetPage!.id) {
+            this.userService.setTargetPage(response.data);
+          }
+
+          this.disableForm = false;
+          this.openPageOptionsModal = false;
+        },
+        error: (event) => {
+          this.changePageUrlForm_submitFeedbackMessage = event.error.message;
+          this.disableForm = false;
+        },
+      })
+    );
   }
 
   switchPage() {
