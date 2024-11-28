@@ -38,6 +38,12 @@ export class PageService {
     );
   }
   // authenticacion required
+  deletePage(id: number): Observable<any> {
+    return this.http.delete<any>(this.API_URL + this.ENDPOINT + '/' + id, {
+      withCredentials: true,
+    });
+  }
+  // authenticacion required
   addSocialLink(pageId: number, requestBody: any): Observable<any> {
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/' + pageId + '/social-link',

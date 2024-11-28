@@ -14,6 +14,10 @@
   @apply p-3 bg-white border-2 text-black font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
 }
 
+.button-danger {
+  @apply p-3 bg-white border-2 border-red-700 text-red-700 font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
+}
+
 .invalid-input {
   @apply border-red-700 text-red-700;
 }

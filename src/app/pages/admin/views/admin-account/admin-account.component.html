@@ -11,25 +11,68 @@
 
             <div class="flex flex-col gap-2">
                 @for (page of loggedUser?.pages; track $index) {
-                <button class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg" (click)="switchPage(page)"
-                    title="Switch page">
-                    @if (page.pictureUrl) {
-                    <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
-                        class="aspect-square min-w-10 w-10 object-cover rounded-full">
+                <div class="flex justify-between items-center gap-2 bg-white border p-2 rounded-lg overflow-x-auto"
+                    [ngClass]="{'outline outline-2 outline-purple-700': page.id == targetPage?.id}">
+                    <div class="flex items-center gap-2">
+                        @if (page.pictureUrl) {
+                        <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
+                            class="aspect-square min-w-10 w-10 object-cover rounded-full">
 
-                    } @else {
-                    <div
-                        class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
-                        {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
-                    }
-                    <span>{{'@' + page.url}}</span>
+                        } @else {
+                        <div
+                            class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
+                            {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
+                        }
+                        <span>{{'@' + page.url}}</span>
+                    </div>
 
-                </button>
+
+                    <button type="button" class="p-3 hover:bg-neutral-100 rounded-lg"
+                        (click)="onOpenPageOptionsModal(page)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path
+                                d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                        </svg>
+                    </button>
+
+
+                </div>
                 }
 
             </div>
 
         </section>
+
+        @if (openPageOptionsModal) {
+        <!-- Modal -->
+        <div class="modal">
+            <div class="modal-content">
+
+                <div class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
+                    <div class="flex justify-between items-center gap-2">
+                        <h2 class="text-lg font-medium">Page options</h2>
+                        <button type="button" (click)="openPageOptionsModal = false" [disabled]="this.disableForm"
+                            class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg></button>
+
+                    </div>
+
+                    <button type="button" class="button-secondary w-full text-lg font-semibold" (click)="switchPage()"
+                        [disabled]="this.disableForm">Switch to this
+                        page</button>
+
+                    <button type="button" class="button-danger w-full text-lg font-semibold" (click)="deletePage()"
+                        [disabled]="this.disableForm">Delete page</button>
+                </div>
+
+            </div>
+        </div>
+
+        }
 
     </main>
 
