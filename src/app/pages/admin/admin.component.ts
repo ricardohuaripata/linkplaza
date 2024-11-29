@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 import { User } from '../../interfaces/user';
 import { UserService } from '../../services/user/user.service';
@@ -26,8 +26,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {

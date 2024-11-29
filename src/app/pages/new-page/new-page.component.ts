@@ -1,5 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,14 +9,13 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
+
 import { PageService } from '../../services/page/page.service';
 
 @Component({
   selector: 'app-new-page',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './new-page.component.html',
   styleUrl: './new-page.component.scss',
 })

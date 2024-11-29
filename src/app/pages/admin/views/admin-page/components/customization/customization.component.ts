@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { Page } from '../../../../../../interfaces/page';
@@ -10,7 +10,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 @Component({
   selector: 'app-customization',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './customization.component.html',
   styleUrl: './customization.component.scss',
 })

@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { AuthService } from '../../services/auth/auth.service';
-import { Subscription } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -15,7 +15,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 @Component({
   selector: 'app-info',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
 })
@@ -30,7 +30,11 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private pageService: PageService, private fb: FormBuilder, private userService: UserService) {
+  constructor(
+    private pageService: PageService,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {
     this.editPageForm = this.fb.group({
       title: ['', Validators.maxLength(32)],
       bio: ['', Validators.maxLength(256)],

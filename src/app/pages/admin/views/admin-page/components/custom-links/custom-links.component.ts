@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 
 import { Page } from '../../../../../../interfaces/page';
 import { PageService } from '../../../../../../services/page/page.service';
@@ -17,7 +17,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 @Component({
   selector: 'app-custom-links',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass, NgFor],
   templateUrl: './custom-links.component.html',
   styleUrl: './custom-links.component.scss',
 })

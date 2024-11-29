@@ -1,7 +1,7 @@
-@if (targetPage) {
-
 <div class="sm:ml-64 bg-neutral-200">
     <main class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-100">
+
+        @if (targetPage) {
         <!-- Info section -->
         <app-info [page]="targetPage" />
 
@@ -13,8 +13,17 @@
 
         <!-- Customization section -->
         <app-customization [page]="targetPage" />
+        } @else {
+        <div class="flex justify-center">
+            <div>
+                <h1 class="mb-2">You don't have any pages.</h1>
+                <a routerLink="/new-page" class="text-purple-700 underline font-medium">Create a page now.</a>
+            </div>
+
+        </div>
+
+        }
 
     </main>
 
 </div>
-}

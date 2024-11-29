@@ -9,9 +9,15 @@
         <section class="mt-8">
             <h1 class="font-bold text-xl mb-3">Pages</h1>
 
+            @if (!loggedUser?.pages || loggedUser?.pages?.length == 0) {
+            <h1>You don't have any pages.</h1>
+            <a routerLink="/new-page" class="text-purple-700 underline font-medium">Create a page now.</a>
+            } @else {
+
             <div class="flex flex-col gap-2">
+
                 @for (page of loggedUser?.pages; track $index) {
-                <div class="flex justify-between items-center gap-2 bg-white border p-2 rounded-lg overflow-x-auto"
+                <div class="flex justify-between items-center gap-2 bg-white p-2 rounded-lg overflow-x-auto"
                     [ngClass]="{'outline outline-2 outline-purple-700': page.id == targetPage?.id}">
                     <div class="flex items-center gap-2">
                         @if (page.pictureUrl) {
@@ -41,6 +47,8 @@
                 }
 
             </div>
+            }
+
 
         </section>
 
@@ -109,8 +117,8 @@
                             }
                         </div>
 
-                        <button type="submit" class="button text-lg w-full"
-                            [disabled]="this.changePageUrlForm.invalid || this.disableForm">Change URL</button>
+                        <button type="submit" class="button text-lg w-full" [disabled]="this.changePageUrlForm.invalid || this.disableForm 
+                            || this.changePageUrlForm.get('url')?.value == selectedPage?.url">Change URL</button>
                     </form>
 
                     <button type="button" class="button-secondary text-lg w-full" (click)="switchPage()"

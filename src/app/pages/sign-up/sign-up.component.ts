@@ -1,5 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,14 +9,13 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { AuthService } from '../../services/auth/auth.service';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, RouterLink, NgClass],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
@@ -40,10 +41,9 @@ export class SignUpComponent implements OnDestroy {
       ],
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.urlParam = params['url'];
     });
-
   }
 
   togglePasswordVisibility() {

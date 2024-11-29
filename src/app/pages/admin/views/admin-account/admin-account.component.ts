@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { User } from '../../../../interfaces/user';
 import { UserService } from '../../../../services/user/user.service';
@@ -17,7 +18,7 @@ import {
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule],
+  imports: [NgClass, ReactiveFormsModule, RouterLink],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })

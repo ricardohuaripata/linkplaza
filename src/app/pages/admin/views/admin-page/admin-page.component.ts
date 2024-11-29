@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { Page } from '../../../../interfaces/page';
 import { UserService } from '../../../../services/user/user.service';
@@ -18,6 +18,7 @@ import { SocialLinksComponent } from './components/social-links/social-links.com
     CustomLinksComponent,
     CustomizationComponent,
     InfoComponent,
+    RouterLink
   ],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss',

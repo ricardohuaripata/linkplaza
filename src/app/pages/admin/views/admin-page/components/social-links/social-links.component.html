@@ -124,7 +124,7 @@
                 addSocialLinkForm.get('url')?.value}}</p>
             }
 
-            <button type="submit" class="button w-full text-lg font-semibold"
+            <button type="submit" class="button w-full text-lg"
                 [disabled]="this.addSocialLinkForm.invalid || this.disableForm">Add</button>
         </form>
 
@@ -174,9 +174,9 @@
                 editSocialLinkForm.get('url')?.value}}</p>
             }
 
-            <button type="submit" class="button w-full text-lg font-semibold"
+            <button type="submit" class="button w-full text-lg"
                 [disabled]="this.editSocialLinkForm.invalid || this.disableForm">Edit</button>
-            <button type="button" class="button-secondary w-full text-lg font-semibold" [disabled]="this.disableForm"
+            <button type="button" class="button-secondary w-full text-lg" [disabled]="this.disableForm"
                 (click)="removeSocialLink()">Remove</button>
         </form>
 

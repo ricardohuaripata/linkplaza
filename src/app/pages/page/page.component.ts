@@ -1,18 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PageService } from '../../services/page/page.service';
 import { ActivatedRoute } from '@angular/router';
-import { Page } from '../../interfaces/page';
-import { NotFoundComponent } from '../not-found/not-found.component';
+import { NgClass } from '@angular/common';
+
 import { environment } from '../../../environments/environment.development';
 import { SeoConfig } from '../../interfaces/seo-config';
 import { SeoService } from '../../services/seo.service';
-import { CommonModule } from '@angular/common';
+
+import { PageService } from '../../services/page/page.service';
+import { Page } from '../../interfaces/page';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [NotFoundComponent, CommonModule],
+  imports: [NotFoundComponent, NgClass],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',
 })

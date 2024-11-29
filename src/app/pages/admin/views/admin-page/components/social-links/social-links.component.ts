@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 
 import { Page } from '../../../../../../interfaces/page';
 import { SocialPlatform } from '../../../../../../interfaces/social-platform';
@@ -18,7 +18,7 @@ import { UserService } from '../../../../../../services/user/user.service';
 @Component({
   selector: 'app-social-links',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass, NgFor],
   templateUrl: './social-links.component.html',
   styleUrl: './social-links.component.scss',
 })
