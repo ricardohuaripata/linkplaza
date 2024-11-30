@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { User } from '../../../../interfaces/user';
 import { UserService } from '../../../../services/user/user.service';
@@ -22,20 +22,29 @@ import {
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })
-export class AdminAccountComponent {
+export class AdminAccountComponent implements OnInit, OnDestroy {
   loggedUser?: User;
   targetPage?: Page;
+
   openPageOptionsModal?: boolean;
+  openDeleteAccountWarningModal?: boolean;
+  openDeleteAccountVerificationModal?: boolean;
+
   selectedPage?: Page;
   changePageUrlForm: FormGroup;
   changePageUrlForm_submitFeedbackMessage?: string;
+
+  deleteAccountVerificationForm: FormGroup;
+  deleteAccountVerificationForm_submitFeedbackMessage?: string;
+
   disableForm: boolean = false;
   private subscription: Subscription = new Subscription();
 
   constructor(
     private userService: UserService,
     private pageService: PageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.changePageUrlForm = this.fb.group({
       url: [
@@ -48,6 +57,14 @@ export class AdminAccountComponent {
           this.noDotAtEdgesValidator,
         ],
       ],
+    });
+    this.deleteAccountVerificationForm = this.fb.group({
+      digit1: ['', [Validators.required]],
+      digit2: ['', [Validators.required]],
+      digit3: ['', [Validators.required]],
+      digit4: ['', [Validators.required]],
+      digit5: ['', [Validators.required]],
+      digit6: ['', [Validators.required]],
     });
   }
 
@@ -148,7 +165,52 @@ export class AdminAccountComponent {
           this.disableForm = false;
           this.openPageOptionsModal = false;
         },
-        error: (event) => {},
+        error: (event) => {
+          this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  sendDeleteAccountVerificationCode() {
+    this.disableForm = true;
+
+    this.subscription.add(
+      this.userService.sendDeleteAccountVerificationCode().subscribe({
+        next: (response: any) => {
+          this.disableForm = false;
+          this.openDeleteAccountWarningModal = false;
+          this.openDeleteAccountVerificationModal = true;
+        },
+        error: (event) => {
+          this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  deleteAccount() {
+    this.disableForm = true;
+
+    const verificationCode = Object.values(
+      this.deleteAccountVerificationForm.value
+    ).join('');
+
+    const requestBody: any = {
+      verificationCode: verificationCode,
+    };
+
+    this.subscription.add(
+      this.userService.deleteAccount(requestBody).subscribe({
+        next: (response: any) => {
+          this.router.navigate(['/']);
+        },
+        error: (event) => {
+          this.deleteAccountVerificationForm_submitFeedbackMessage =
+            event.error.message;
+          this.deleteAccountVerificationForm.reset();
+          this.disableForm = false;
+        },
       })
     );
   }

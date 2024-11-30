@@ -35,4 +35,33 @@ export class UserService {
       withCredentials: true,
     });
   }
+  // authenticacion required
+  signOut(): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/account/signout',
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
+  // authenticacion required
+  sendDeleteAccountVerificationCode(): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL +
+        this.ENDPOINT +
+        '/account/send-delete-account-verification-code',
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
+  // authenticacion required
+  deleteAccount(requestBody: any): Observable<any> {
+    return this.http.delete<any>(this.API_URL + this.ENDPOINT + '/account', {
+      withCredentials: true,
+      body: requestBody,
+    });
+  }
 }
