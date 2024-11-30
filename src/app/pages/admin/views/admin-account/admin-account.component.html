@@ -190,7 +190,7 @@
 
                     <div class="flex max-sm:flex-col gap-2 ">
                         <button type="button" class="button-danger w-full" (click)="sendDeleteAccountVerificationCode()"
-                            [disabled]="this.disableForm">Continue</button>
+                            [disabled]="this.disableForm || this.resendCodeCooldown">Continue</button>
                         <button type="button" class="button-secondary w-full"
                             (click)="openDeleteAccountWarningModal = false"
                             [disabled]="this.disableForm">Cancel</button>
@@ -251,6 +251,13 @@
                             <input type="text" formControlName="digit5" maxlength="1" class="input-digit" />
                             <input type="text" formControlName="digit6" maxlength="1" class="input-digit" />
                         </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <button type="button" class="text-sm underline cursor-pointer disabled:cursor-wait"
+                            (click)="resendDeleteAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
+                        </button>
                     </div>
 
                     <button type="submit" class="button-danger w-full"

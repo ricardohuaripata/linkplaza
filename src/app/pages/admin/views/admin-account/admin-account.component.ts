@@ -38,6 +38,9 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   deleteAccountVerificationForm_submitFeedbackMessage?: string;
 
   disableForm: boolean = false;
+  resendCodeCooldown: boolean = false;
+  resendCodeCooldownRemainingTime: number = 20;
+
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -174,6 +177,8 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   sendDeleteAccountVerificationCode() {
     this.disableForm = true;
+    this.resendCodeCooldown = true;
+    this.resendCodeCooldownRemainingTime = 20;
 
     this.subscription.add(
       this.userService.sendDeleteAccountVerificationCode().subscribe({
@@ -181,6 +186,39 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           this.disableForm = false;
           this.openDeleteAccountWarningModal = false;
           this.openDeleteAccountVerificationModal = true;
+
+          const countdown = setInterval(() => {
+            this.resendCodeCooldownRemainingTime--;
+            if (this.resendCodeCooldownRemainingTime <= 0) {
+              clearInterval(countdown);
+              this.resendCodeCooldown = false;
+            }
+          }, 1000);
+        },
+        error: (event) => {
+          this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  resendDeleteAccountVerificationCode() {
+    this.disableForm = true;
+    this.resendCodeCooldown = true;
+    this.resendCodeCooldownRemainingTime = 20;
+
+    this.subscription.add(
+      this.userService.sendDeleteAccountVerificationCode().subscribe({
+        next: (response: any) => {
+          this.disableForm = false;
+
+          const countdown = setInterval(() => {
+            this.resendCodeCooldownRemainingTime--;
+            if (this.resendCodeCooldownRemainingTime <= 0) {
+              clearInterval(countdown);
+              this.resendCodeCooldown = false;
+            }
+          }, 1000);
         },
         error: (event) => {
           this.disableForm = false;
