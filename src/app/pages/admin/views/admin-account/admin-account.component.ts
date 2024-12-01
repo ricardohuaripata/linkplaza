@@ -8,7 +8,11 @@ import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
 import { PageService } from '../../../../services/page/page.service';
 import {
-  AbstractControl,
+  characterPatternValidator,
+  noDotAtEdgesValidator,
+} from '../../../../validators/url-validators';
+
+import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -56,8 +60,8 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(64),
-          this.characterPatternValidator,
-          this.noDotAtEdgesValidator,
+          characterPatternValidator,
+          noDotAtEdgesValidator,
         ],
       ],
     });
@@ -69,28 +73,6 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
       digit5: ['', [Validators.required]],
       digit6: ['', [Validators.required]],
     });
-  }
-
-  characterPatternValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const url = control.value;
-    const pattern = /^[a-zA-Z0-9_.]+$/;
-    if (url && !pattern.test(url)) {
-      return { invalidCharacterPattern: true };
-    }
-    return null;
-  }
-
-  noDotAtEdgesValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const url = control.value;
-
-    if (url && (url.startsWith('.') || url.endsWith('.'))) {
-      return { invalidDotAtEdges: true };
-    }
-    return null;
   }
 
   ngOnInit(): void {

@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -13,6 +12,7 @@ import { Page } from '../../../../../../interfaces/page';
 import { PageService } from '../../../../../../services/page/page.service';
 import { CustomLink } from '../../../../../../interfaces/custom-link';
 import { UserService } from '../../../../../../services/user/user.service';
+import { urlValidator } from '../../../../../../validators/url-validators';
 
 @Component({
   selector: 'app-custom-links',
@@ -43,26 +43,16 @@ export class CustomLinksComponent implements OnDestroy {
     this.addCustomLinkForm = this.fb.group({
       url: [
         '',
-        [Validators.required, Validators.maxLength(3200), this.urlValidator],
+        [Validators.required, Validators.maxLength(3200), urlValidator],
       ],
       title: ['', [Validators.required, Validators.maxLength(128)]],
     });
 
     this.editCustomLinkForm = this.fb.group({
       customLink: [null, [Validators.required]],
-      url: ['', [Validators.maxLength(3200), this.urlValidator]],
+      url: ['', [Validators.maxLength(3200), urlValidator]],
       title: ['', [Validators.maxLength(128)]],
     });
-  }
-
-  urlValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const url = control.value;
-    const urlPattern =
-      /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/[^\s]*)?$/i;
-    if (url && !urlPattern.test(url)) {
-      return { invalidUrl: true };
-    }
-    return null;
   }
 
   onOpenEditCustomLinkModal(customLink: CustomLink) {

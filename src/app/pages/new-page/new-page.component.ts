@@ -3,7 +3,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -11,6 +10,10 @@ import {
 } from '@angular/forms';
 
 import { PageService } from '../../services/page/page.service';
+import {
+  characterPatternValidator,
+  noDotAtEdgesValidator,
+} from '../../validators/url-validators';
 
 @Component({
   selector: 'app-new-page',
@@ -37,33 +40,11 @@ export class NewPageComponent implements OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(64),
-          this.characterPatternValidator,
-          this.noDotAtEdgesValidator,
+          characterPatternValidator,
+          noDotAtEdgesValidator,
         ],
       ],
     });
-  }
-
-  characterPatternValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const url = control.value;
-    const pattern = /^[a-zA-Z0-9_.]+$/;
-    if (url && !pattern.test(url)) {
-      return { invalidCharacterPattern: true };
-    }
-    return null;
-  }
-
-  noDotAtEdgesValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const url = control.value;
-
-    if (url && (url.startsWith('.') || url.endsWith('.'))) {
-      return { invalidDotAtEdges: true };
-    }
-    return null;
   }
 
   onSubmit() {

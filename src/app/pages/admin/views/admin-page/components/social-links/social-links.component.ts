@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -14,6 +13,7 @@ import { SocialPlatform } from '../../../../../../interfaces/social-platform';
 import { PageService } from '../../../../../../services/page/page.service';
 import { SocialLink } from '../../../../../../interfaces/social-link';
 import { UserService } from '../../../../../../services/user/user.service';
+import { urlValidator } from '../../../../../../validators/url-validators';
 
 @Component({
   selector: 'app-social-links',
@@ -47,22 +47,14 @@ export class SocialLinksComponent implements OnDestroy {
       socialPlatform: [null, [Validators.required]],
       url: [
         '',
-        [Validators.required, Validators.maxLength(3200), this.urlValidator],
+        [Validators.required, Validators.maxLength(3200), urlValidator],
       ],
     });
 
     this.editSocialLinkForm = this.fb.group({
       socialLink: [null, [Validators.required]],
-      url: ['', [Validators.maxLength(3200), this.urlValidator]],
+      url: ['', [Validators.maxLength(3200), urlValidator]],
     });
-  }
-
-  urlValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const url = control.value;
-    if (url && url.trim() !== url) {
-      return { invalidUrl: true };
-    }
-    return null;
   }
 
   onOpenAddSocialLinkModal() {
