@@ -133,15 +133,15 @@
                             }
                         </div>
 
-                        <button type="submit" class="button text-lg w-full" [disabled]="this.changePageUrlForm.invalid || this.disableForm 
+                        <button type="submit" class="button w-full" [disabled]="this.changePageUrlForm.invalid || this.disableForm 
                             || this.changePageUrlForm.get('url')?.value == selectedPage?.url">Change URL</button>
                     </form>
 
-                    <button type="button" class="button-secondary text-lg w-full" (click)="switchPage()"
+                    <button type="button" class="button-secondary w-full" (click)="switchPage()"
                         [disabled]="this.disableForm">Switch to this
                         page</button>
 
-                    <button type="button" class="button-danger text-lg w-full" (click)="deletePage()"
+                    <button type="button" class="button-danger w-full" (click)="deletePage()"
                         [disabled]="this.disableForm">Delete page</button>
                 </div>
 

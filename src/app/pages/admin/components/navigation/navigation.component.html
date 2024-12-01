@@ -15,7 +15,7 @@
          <span>Sign out</span>
       </button>
 
-      <a routerLink="/admin/analytics" class="flex flex-col items-center">
+      <a routerLink="/admin/analytics" class="flex flex-col items-center" routerLinkActive="text-purple-700">
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
             <path
                d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
@@ -23,7 +23,7 @@
          <span>Analytics</span>
       </a>
 
-      <a routerLink="/admin/account" class="flex flex-col items-center">
+      <a routerLink="/admin/account" class="flex flex-col items-center" routerLinkActive="text-purple-700">
          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
             <path
                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
@@ -35,7 +35,8 @@
       <a routerLink="/admin">
          @if (targetPage.pictureUrl) {
          <img [src]="targetPage.pictureUrl" [alt]="targetPage.url + ' profile picture'"
-            class="aspect-square min-w-10 w-10 object-cover rounded-full">
+            class="aspect-square min-w-10 w-10 object-cover rounded-full m-1"
+            routerLinkActive="ring-2 ring-purple-500 ring-offset-2" [routerLinkActiveOptions]="{ exact: true }">
 
          } @else {
          <div
@@ -75,7 +76,8 @@
             </button>
          </li>
          <li>
-            <a routerLink="/admin/analytics" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg">
+            <a routerLink="/admin/analytics" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg"
+               routerLinkActive="text-purple-700">
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                   <path
                      d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
@@ -84,7 +86,8 @@
             </a>
          </li>
          <li>
-            <a routerLink="/admin/account" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg">
+            <a routerLink="/admin/account" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg"
+               routerLinkActive="text-purple-700">
                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
                   <path
                      d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
@@ -94,7 +97,8 @@
          </li>
          @if (targetPage) {
          <li>
-            <a routerLink="/admin" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg">
+            <a routerLink="/admin" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg"
+               routerLinkActive="text-purple-700" [routerLinkActiveOptions]="{ exact: true }">
                @if (targetPage.pictureUrl) {
                <img [src]="targetPage.pictureUrl" [alt]="targetPage.url + ' profile picture'"
                   class="aspect-square min-w-10 w-10 object-cover rounded-full">
