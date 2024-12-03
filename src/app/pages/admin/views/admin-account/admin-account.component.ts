@@ -33,6 +33,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   openPageOptionsModal?: boolean;
   openDeleteAccountWarningModal?: boolean;
   openDeleteAccountVerificationModal?: boolean;
+  openAccountVerificationModal?: boolean;
 
   selectedPage?: Page;
   changePageUrlForm: FormGroup;
@@ -40,6 +41,9 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   deleteAccountVerificationForm: FormGroup;
   deleteAccountVerificationForm_submitFeedbackMessage?: string;
+
+  accountVerificationForm: FormGroup;
+  accountVerificationForm_submitFeedbackMessage?: string;
 
   disableForm: boolean = false;
   resendCodeCooldown: boolean = false;
@@ -66,6 +70,14 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
       ],
     });
     this.deleteAccountVerificationForm = this.fb.group({
+      digit1: ['', [Validators.required]],
+      digit2: ['', [Validators.required]],
+      digit3: ['', [Validators.required]],
+      digit4: ['', [Validators.required]],
+      digit5: ['', [Validators.required]],
+      digit6: ['', [Validators.required]],
+    });
+    this.accountVerificationForm = this.fb.group({
       digit1: ['', [Validators.required]],
       digit2: ['', [Validators.required]],
       digit3: ['', [Validators.required]],
@@ -184,31 +196,6 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     );
   }
 
-  resendDeleteAccountVerificationCode() {
-    this.disableForm = true;
-    this.resendCodeCooldown = true;
-    this.resendCodeCooldownRemainingTime = 20;
-
-    this.subscription.add(
-      this.userService.sendDeleteAccountVerificationCode().subscribe({
-        next: (response: any) => {
-          this.disableForm = false;
-
-          const countdown = setInterval(() => {
-            this.resendCodeCooldownRemainingTime--;
-            if (this.resendCodeCooldownRemainingTime <= 0) {
-              clearInterval(countdown);
-              this.resendCodeCooldown = false;
-            }
-          }, 1000);
-        },
-        error: (event) => {
-          this.disableForm = false;
-        },
-      })
-    );
-  }
-
   deleteAccount() {
     this.disableForm = true;
 
@@ -229,6 +216,60 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           this.deleteAccountVerificationForm_submitFeedbackMessage =
             event.error.message;
           this.deleteAccountVerificationForm.reset();
+          this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  sendAccountVerificationCode() {
+    this.disableForm = true;
+    this.resendCodeCooldown = true;
+    this.resendCodeCooldownRemainingTime = 20;
+
+    this.subscription.add(
+      this.userService.sendAccountVerificationCode().subscribe({
+        next: (response: any) => {
+          this.disableForm = false;
+          this.openAccountVerificationModal = true;
+
+          const countdown = setInterval(() => {
+            this.resendCodeCooldownRemainingTime--;
+            if (this.resendCodeCooldownRemainingTime <= 0) {
+              clearInterval(countdown);
+              this.resendCodeCooldown = false;
+            }
+          }, 1000);
+        },
+        error: (event) => {
+          this.disableForm = false;
+        },
+      })
+    );
+  }
+
+  verifyAccount() {
+    this.disableForm = true;
+
+    const verificationCode = Object.values(
+      this.accountVerificationForm.value
+    ).join('');
+
+    const requestBody: any = {
+      verificationCode: verificationCode,
+    };
+
+    this.subscription.add(
+      this.userService.verifyAccount(requestBody).subscribe({
+        next: (response: any) => {
+          this.userService.setLoggedUser(response.data);
+          this.disableForm = false;
+          this.openAccountVerificationModal = false;
+        },
+        error: (event) => {
+          this.accountVerificationForm_submitFeedbackMessage =
+            event.error.message;
+          this.accountVerificationForm.reset();
           this.disableForm = false;
         },
       })

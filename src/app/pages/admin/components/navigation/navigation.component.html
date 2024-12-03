@@ -40,7 +40,8 @@
 
          } @else {
          <div
-            class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
+            class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium m-1"
+            routerLinkActive="ring-2 ring-purple-500 ring-offset-2" [routerLinkActiveOptions]="{ exact: true }">
             {{targetPage.url.substring(0,1).toLocaleUpperCase()}}</div>
          }
 
@@ -97,8 +98,7 @@
          </li>
          @if (targetPage) {
          <li>
-            <a routerLink="/admin" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg"
-               routerLinkActive="text-purple-700" [routerLinkActiveOptions]="{ exact: true }">
+            <a routerLink="/admin" class="flex items-center gap-2 hover:bg-neutral-200 p-2 rounded-lg">
                @if (targetPage.pictureUrl) {
                <img [src]="targetPage.pictureUrl" [alt]="targetPage.url + ' profile picture'"
                   class="aspect-square min-w-10 w-10 object-cover rounded-full">
@@ -108,7 +108,8 @@
                   class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
                   {{targetPage.url.substring(0,1).toLocaleUpperCase()}}</div>
                }
-               <span>{{'@' + targetPage.url}}</span>
+               <span routerLinkActive="text-purple-700" [routerLinkActiveOptions]="{ exact: true }">{{'@' +
+                  targetPage.url}}</span>
 
             </a>
          </li>

@@ -1,5 +1,25 @@
 <div class="sm:ml-64 bg-neutral-200">
     <main class="max-w-screen-sm mx-auto py-16 px-6 min-h-screen bg-neutral-100">
+        @if (!loggedUser?.emailVerified) {
+        <div class="mb-6 p-4 text-yellow-800 rounded-lg bg-yellow-50" role="alert">
+            <div class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <h3 class="font-medium">Account not verified</h3>
+            </div>
+            <div class="my-2 text-sm">You will need to <button class="underline font-medium"
+                    (click)="sendAccountVerificationCode()"
+                    [disabled]="this.disableForm || this.resendCodeCooldown">verify your
+                    account</button> to publish your pages and make them visible
+                to any visitors.</div>
+
+        </div>
+        }
+
         <section>
             <h1 class="font-bold text-xl mb-3">My information</h1>
             <div class="flex flex-col gap-1">
@@ -10,12 +30,11 @@
 
         </section>
 
-        <section class="mt-8">
-            <h1 class="font-bold text-xl mb-3">Pages</h1>
+        <section class="mt-8 flex flex-col gap-3">
+            <h1 class="font-bold text-xl">Pages</h1>
 
             @if (!loggedUser?.pages || loggedUser?.pages?.length == 0) {
-            <h1>You don't have any pages.</h1>
-            <a routerLink="/new-page" class="text-purple-700 underline font-medium">Create a page now.</a>
+            <p class="text-sm">You don't have any pages.</p>
             } @else {
 
             <div class="flex flex-col gap-2">
@@ -53,6 +72,7 @@
             </div>
             }
 
+            <a routerLink="/new-page" class="button-secondary text-center w-full">Create a new page</a>
 
         </section>
 
@@ -86,7 +106,7 @@
                     </div>
 
                     <form [formGroup]="changePageUrlForm" (submit)="onChangePageUrlFormSubmit()"
-                        class="flex flex-col gap-2">
+                        class="flex flex-col gap-3">
                         @if (changePageUrlForm_submitFeedbackMessage) {
                         <div class="flex items-center p-4 text-red-800 border border-red-300 rounded-lg bg-red-50"
                             role="alert">
@@ -101,10 +121,10 @@
                             </div>
                         </div>
                         }
-                        <div>
+                        <div class="text-sm">
                             <div class="relative">
                                 <input type="text" formControlName="url" placeholder="URL" class="input w-full"
-                                    style="padding-left: 10.25rem;"
+                                    style="padding-left: 9rem;"
                                     [ngClass]="{'invalid-input': (changePageUrlForm.get('url')?.hasError('minlength') || changePageUrlForm.get('url')?.hasError('maxlength') || changePageUrlForm.get('url')?.hasError('invalidCharacterPattern') || changePageUrlForm.get('url')?.hasError('invalidDotAtEdges')) && changePageUrlForm.get('url')?.touched}">
                                 <span
                                     class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">linkplaza.com/page/</span>
@@ -168,7 +188,7 @@
 
                     </div>
 
-                    <div class="p-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50" role="alert">
+                    <div class="p-4 text-yellow-800 rounded-lg bg-yellow-50" role="alert">
                         <div class="flex items-center">
                             <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -254,8 +274,8 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <button type="button" class="text-sm underline cursor-pointer disabled:cursor-wait"
-                            (click)="resendDeleteAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
+                        <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
+                            (click)="sendDeleteAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
                             {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
                         </button>
                     </div>
@@ -263,6 +283,73 @@
                     <button type="submit" class="button-danger w-full"
                         [disabled]=" this.deleteAccountVerificationForm.invalid || this.disableForm">Delete
                         account</button>
+                </form>
+
+            </div>
+
+        </div>
+        }
+
+        @if (openAccountVerificationModal) {
+        <!-- Modal -->
+        <div class="modal">
+            <div class="modal-content">
+
+                <form [formGroup]="accountVerificationForm" (submit)="verifyAccount()"
+                    class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
+                    <div class="flex justify-between items-center gap-2">
+                        <h2 class="text-lg font-medium">Verify your account</h2>
+                        <button type="button" (click)="openAccountVerificationModal = false"
+                            [disabled]="this.disableForm" class="hover:bg-slate-200 rounded-md p-1"> <svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-7">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg></button>
+
+                    </div>
+
+                    @if (accountVerificationForm_submitFeedbackMessage) {
+                    <div class="flex items-center p-4 text-red-800 border border-red-300 rounded-lg bg-red-50"
+                        role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div class="text-sm">
+                            <span class="font-medium">Error: </span>
+                            {{accountVerificationForm_submitFeedbackMessage}}
+                        </div>
+                    </div>
+                    }
+
+                    <div>
+                        <h3 class="font-medium">Please enter your 6-digit code to verify your account.</h3>
+                        <p class="text-gray-700 text-sm">Code sent to your email address.</p>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <div class="flex gap-2 overflow-x-auto p-1">
+                            <input type="text" formControlName="digit1" maxlength="1" class="input-digit" />
+                            <input type="text" formControlName="digit2" maxlength="1" class="input-digit" />
+                            <input type="text" formControlName="digit3" maxlength="1" class="input-digit" />
+                            <input type="text" formControlName="digit4" maxlength="1" class="input-digit" />
+                            <input type="text" formControlName="digit5" maxlength="1" class="input-digit" />
+                            <input type="text" formControlName="digit6" maxlength="1" class="input-digit" />
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
+                            (click)="sendAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
+                        </button>
+                    </div>
+
+                    <button type="submit" class="button w-full"
+                        [disabled]=" this.accountVerificationForm.invalid || this.disableForm">Verify</button>
                 </form>
 
             </div>

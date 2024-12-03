@@ -64,4 +64,24 @@ export class UserService {
       body: requestBody,
     });
   }
+  // authenticacion required
+  sendAccountVerificationCode(): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/account/send-account-verification-code',
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
+  // authenticacion required
+  verifyAccount(requestBody: any): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/account/verify',
+      requestBody,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }
