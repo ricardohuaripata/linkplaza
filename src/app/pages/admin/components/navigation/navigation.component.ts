@@ -14,6 +14,9 @@ import { UserService } from '../../../../services/user/user.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
   targetPage?: Page;
+  disableForm: boolean = false;
+  openSignOutModal?: boolean;
+
   private subscription: Subscription = new Subscription();
 
   constructor(private userService: UserService, private router: Router) {}
@@ -27,9 +30,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   signOut() {
+    this.disableForm = true;
+
     this.subscription.add(
       this.userService.signOut().subscribe({
         next: (response: any) => {
+          this.userService.setLoggedUser(undefined);
           this.router.navigate(['/']);
         },
         error: (event) => {},

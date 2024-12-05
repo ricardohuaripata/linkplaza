@@ -210,6 +210,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.userService.deleteAccount(requestBody).subscribe({
         next: (response: any) => {
+          this.userService.setLoggedUser(undefined);
           this.router.navigate(['/']);
         },
         error: (event) => {
