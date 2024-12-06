@@ -1,0 +1,39 @@
+<div class="sm:ml-64 min-h-screen bg-neutral-100">
+
+    <header class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+        <h1 class="font-bold text-2xl sm:text-3xl mb-3">Analytics</h1>
+        <select class="p-3 rounded-lg border">
+            <option value="7">Last 7 days</option>
+            <option value="28">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+        </select>
+
+    </header>
+
+    <main class="px-4 flex flex-col gap-4">
+        <section class="bg-white rounded-2xl p-6 sm:p-8">
+            <h2 class="text-xl sm:text-2xl font-semibold mb-4">Lifetime</h2>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                <div><strong>85</strong> views</div>
+                <div><strong>9</strong> clicks</div>
+                <div><strong>32</strong> unique views</div>
+                <div><strong>7</strong> unique clicks</div>
+            </div>
+
+        </section>
+
+        <section class="bg-white rounded-2xl p-6 sm:p-8 ">
+            <h2 class="text-xl sm:text-2xl font-semibold mb-8">Activity</h2>
+            <div class="overflow-auto">
+                <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
+                    style="width: 100%; height: 500px; display: block;" class="min-w-64" />
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+
+</div>

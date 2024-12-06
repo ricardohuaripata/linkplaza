@@ -8,6 +8,7 @@ import { PageComponent } from './pages/page/page.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { AdminPageComponent } from './pages/admin/views/admin-page/admin-page.component';
 import { AdminAccountComponent } from './pages/admin/views/admin-account/admin-account.component';
+import { AdminAnalyticsComponent } from './pages/admin/views/admin-analytics/admin-analytics.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,11 @@ export const routes: Routes = [
         path: 'account',
         title: 'Account | LinkPlaza',
         component: AdminAccountComponent,
+      },
+      {
+        path: 'analytics',
+        title: 'Analytics | LinkPlaza',
+        component: AdminAnalyticsComponent,
       },
     ],
   },
