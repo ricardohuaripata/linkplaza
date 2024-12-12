@@ -46,8 +46,8 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
       })
     );
 
-    if (this.targetPage) {
-      if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.targetPage) {
         const today = new Date();
         const startDate = new Date(today);
         startDate.setDate(today.getDate() - 7);

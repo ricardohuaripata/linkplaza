@@ -1,7 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { NgClass } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 
 import { environment } from '../../../environments/environment.development';
 import { SeoConfig } from '../../interfaces/seo-config';
@@ -10,6 +16,7 @@ import { SeoService } from '../../services/seo.service';
 import { PageService } from '../../services/page/page.service';
 import { Page } from '../../interfaces/page';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { AnalyticService } from '../../services/analytic/analytic.service';
 
 @Component({
   selector: 'app-page',
@@ -26,7 +33,9 @@ export class PageComponent implements OnInit, OnDestroy {
   constructor(
     private pageService: PageService,
     private route: ActivatedRoute,
-    private seo: SeoService
+    private seo: SeoService,
+    private analyticService: AnalyticService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.route.params.subscribe((params) => {
       this.pageUrl = params['url'];
@@ -67,7 +76,16 @@ export class PageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // registrar visita
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.page) {
+        this.subscription.add(
+          this.analyticService.logVisit(this.page.id).subscribe()
+        );
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

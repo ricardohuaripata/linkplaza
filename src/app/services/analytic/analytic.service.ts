@@ -29,4 +29,17 @@ export class AnalyticService {
       headers,
     });
   }
+
+  logVisit(pageId: number): Observable<any> {
+    const params = { pageId };
+    const headers = { Authorization: this.API_KEY };
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/visit',
+      {},
+      {
+        params,
+        headers,
+      }
+    );
+  }
 }

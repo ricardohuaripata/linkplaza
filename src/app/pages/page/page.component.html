@@ -1,7 +1,9 @@
 @if (page) {
 @if (page.userVerified) {
-<main class="min-h-screen py-16 px-6"
-    [style]="{'background-color': page.backgroundColor? page.backgroundColor : '#ffffff', 'color': page.fontColor? page.fontColor : '#000000'}">
+<main class="min-h-screen py-16 px-6" [style]="{
+    backgroundColor: page.backgroundColor || '#ffffff',
+    color: page.fontColor || '#000000'
+  }">
     <div class="max-w-screen-sm mx-auto text-center">
         <!-- Profile info section -->
         <section class="flex flex-col items-center">
@@ -31,7 +33,7 @@
             @for (socialLink of page.socialLinks; track $index) {
             @if (socialLink.active) {
             <a [href]="socialLink.socialPlatform.domainUrl + socialLink.url" [title]="socialLink.socialPlatform.name"
-                target="_blank" class="p-2 hover:scale-110 transition-transform">
+                target="_blank" class="p-2 hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
                     <path [attr.d]="socialLink.socialPlatform.icon"></path>
 
@@ -49,9 +51,11 @@
             @for (customLink of page.customLinks; track $index) {
             @if (customLink.active) {
             <a [href]="customLink.url" title="Go to site"
-                class="py-5 px-10 text-base sm:text-lg font-medium break-words"
-                [ngClass]="page.buttonRounded? 'rounded-full': ''" target="_blank"
-                [style]="{'background-color': page.buttonBackgroundColor? page.buttonBackgroundColor : '#000000', 'color': page.buttonFontColor? page.buttonFontColor : '#ffffff'}">{{customLink.title}}</a>
+                class="py-5 px-10 text-base sm:text-lg font-medium break-words hover:scale-105"
+                [ngClass]="page.buttonRounded? 'rounded-full': ''" target="_blank" [style]="{
+                    backgroundColor: page.buttonBackgroundColor || '#000000',
+                    color: page.buttonFontColor || '#ffffff'
+                  }">{{customLink.title}}</a>
             }
             }
         </section>
