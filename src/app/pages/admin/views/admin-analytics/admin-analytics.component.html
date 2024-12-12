@@ -1,10 +1,12 @@
 <div class="sm:ml-64 min-h-screen bg-neutral-100">
+    @if (targetPage) {
 
-    <header class="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+    <header class="px-4 pb-4 pt-8 flex flex-col sm:flex-row sm:justify-between sm:items-center">
         <h1 class="font-bold text-2xl sm:text-3xl mb-3">Analytics</h1>
-        <select class="p-3 rounded-lg border">
-            <option value="7">Last 7 days</option>
-            <option value="28">Last 30 days</option>
+        <select (change)="selectDateRange($event)" [disabled]="disableForm"
+            class="p-3 rounded-lg disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-400">
+            <option value="7" selected>Last 7 days</option>
+            <option value="28">Last 28 days</option>
             <option value="90">Last 90 days</option>
         </select>
 
@@ -14,10 +16,21 @@
         <section class="bg-white rounded-2xl p-6 sm:p-8">
             <h2 class="text-xl sm:text-2xl font-semibold mb-4">Lifetime</h2>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                <div><strong>85</strong> views</div>
-                <div><strong>9</strong> clicks</div>
-                <div><strong>32</strong> unique views</div>
-                <div><strong>7</strong> unique clicks</div>
+                @if (chartOptions) {
+                <div><strong>{{totalViews}}</strong> views</div>
+                <div></div>
+                <div><strong>{{totalUniqueViews}}</strong> unique views</div>
+                <div></div>
+                } @else {
+                <div class="h-6 rounded-lg bg-neutral-200 animate-pulse">
+                </div>
+                <div class="h-6 rounded-lg bg-neutral-200 animate-pulse">
+                </div>
+                <div class="h-6 rounded-lg bg-neutral-200 animate-pulse">
+                </div>
+                <div class="h-6 rounded-lg bg-neutral-200 animate-pulse">
+                </div>
+                }
             </div>
 
         </section>
@@ -25,13 +38,33 @@
         <section class="bg-white rounded-2xl p-6 sm:p-8 ">
             <h2 class="text-xl sm:text-2xl font-semibold mb-8">Activity</h2>
             <div class="overflow-auto">
+                @if (chartOptions) {
                 <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions"
                     style="width: 100%; height: 500px; display: block;" class="min-w-64" />
+                } @else {
+                <div role="status" class="w-full h-[500px] rounded-lg bg-neutral-200 animate-pulse">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                }
+
             </div>
 
         </section>
 
     </main>
+
+    } @else {
+    <div class="py-16 px-6 ">
+        <div class="flex justify-center">
+            <div>
+                <h1>You don't have any pages.</h1>
+                <a routerLink="/new-page" class="text-purple-700 underline font-medium">Create a page now.</a>
+            </div>
+
+        </div>
+    </div>
+
+    }
 
 
 
