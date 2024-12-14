@@ -24,7 +24,7 @@ export class AnalyticService {
   ): Observable<any> {
     const params = { pageId, startDate, endDate };
     const headers = { Authorization: this.API_KEY };
-    return this.http.get<any>(this.API_URL + this.ENDPOINT + '/visit', {
+    return this.http.get<any>(this.API_URL + this.ENDPOINT, {
       params,
       headers,
     });
@@ -35,6 +35,18 @@ export class AnalyticService {
     const headers = { Authorization: this.API_KEY };
     return this.http.post<any>(
       this.API_URL + this.ENDPOINT + '/visit',
+      {},
+      {
+        params,
+        headers,
+      }
+    );
+  }
+  logCustomLinkClick(customLinkId: number): Observable<any> {
+    const params = { customLinkId };
+    const headers = { Authorization: this.API_KEY };
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/custom-link-click',
       {},
       {
         params,

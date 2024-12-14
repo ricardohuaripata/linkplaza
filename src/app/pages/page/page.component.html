@@ -50,7 +50,7 @@
         <section class="flex flex-col gap-4 mt-8">
             @for (customLink of page.customLinks; track $index) {
             @if (customLink.active) {
-            <a [href]="customLink.url" title="Go to site"
+            <a (click)="onClickCustomLink(customLink.id)" [href]="customLink.url" title="Go to site"
                 class="py-5 px-10 text-base sm:text-lg font-medium break-words hover:scale-105"
                 [ngClass]="page.buttonRounded? 'rounded-full': ''" target="_blank" [style]="{
                     backgroundColor: page.buttonBackgroundColor || '#000000',

@@ -29,6 +29,8 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
   targetPage?: Page;
   totalViews: number = 0;
   totalUniqueViews: number = 0;
+  totalClicks: number = 0;
+  totalUniqueClicks: number = 0;
 
   Highcharts: typeof Highcharts = Highcharts;
 
@@ -63,6 +65,8 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
               next: (response: any) => {
                 this.totalViews = response.totalViews;
                 this.totalUniqueViews = response.totalUniqueViews;
+                this.totalClicks = response.totalClicks;
+                this.totalUniqueClicks = response.totalUniqueClicks;
 
                 const dates = response.timeseries.map(
                   (entry: any) => entry.date
@@ -72,6 +76,12 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                 );
                 const uniqueViews = response.timeseries.map(
                   (entry: any) => entry.uniqueViews
+                );
+                const clicks = response.timeseries.map(
+                  (entry: any) => entry.clicks
+                );
+                const uniqueClicks = response.timeseries.map(
+                  (entry: any) => entry.uniqueClicks
                 );
 
                 // actualizar grafico con los datos obtenidos
@@ -103,6 +113,16 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                       data: uniqueViews,
                       type: 'spline',
                       name: 'Unique views',
+                    },
+                    {
+                      data: clicks,
+                      type: 'spline',
+                      name: 'Clicks',
+                    },
+                    {
+                      data: uniqueClicks,
+                      type: 'spline',
+                      name: 'Unique clicks',
                     },
                   ],
                 };
@@ -147,6 +167,8 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
             next: (response: any) => {
               this.totalViews = response.totalViews;
               this.totalUniqueViews = response.totalUniqueViews;
+              this.totalClicks = response.totalClicks;
+              this.totalUniqueClicks = response.totalUniqueClicks;
 
               const dates = response.timeseries.map((entry: any) => entry.date);
               const views = response.timeseries.map(
@@ -154,6 +176,12 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
               );
               const uniqueViews = response.timeseries.map(
                 (entry: any) => entry.uniqueViews
+              );
+              const clicks = response.timeseries.map(
+                (entry: any) => entry.clicks
+              );
+              const uniqueClicks = response.timeseries.map(
+                (entry: any) => entry.uniqueClicks
               );
 
               this.chartOptions = {
@@ -184,6 +212,16 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                     data: uniqueViews,
                     type: 'spline',
                     name: 'Unique views',
+                  },
+                  {
+                    data: clicks,
+                    type: 'spline',
+                    name: 'Clicks',
+                  },
+                  {
+                    data: uniqueClicks,
+                    type: 'spline',
+                    name: 'Unique clicks',
                   },
                 ],
               };
