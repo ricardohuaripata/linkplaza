@@ -12,7 +12,7 @@
 
     </header>
 
-    <main class="px-4 flex flex-col gap-4">
+    <main class="px-4 pb-4 space-y-4">
         <section class="bg-white rounded-2xl p-6 sm:p-8">
             <h2 class="text-xl sm:text-2xl font-semibold mb-4">Lifetime</h2>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
@@ -49,6 +49,31 @@
 
             </div>
 
+        </section>
+
+        <section class="bg-white rounded-2xl p-6 sm:p-8 ">
+            <h2 class="text-xl sm:text-2xl font-semibold mb-4">Custom links</h2>
+
+            <div class="h-80 space-y-3 overflow-auto">
+                @for (customLinkAnalytic of customLinkAnalytics; track $index) {
+                <div class="flex items-center justify-between gap-6 p-4 border rounded-xl max-sm:text-sm overflow-auto">
+                    <div class="flex items-center gap-3">
+                        <div class="p-3 sm:p-4 rounded-xl bg-neutral-100"><svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 16 16">
+                                <path
+                                    d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9q-.13 0-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
+                                <path
+                                    d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4 4 0 0 1-.82 1H12a3 3 0 1 0 0-6z" />
+                            </svg></div>
+                        <p>{{customLinkAnalytic.customLink.title}}</p>
+                    </div>
+                    <div class="flex flex-col text-nowrap">
+                        <span><strong>{{customLinkAnalytic.clicks}}</strong> clicks</span>
+                        <span><strong>{{customLinkAnalytic.uniqueClicks}}</strong> unique clicks</span>
+                    </div>
+                </div>
+                }
+            </div>
         </section>
 
     </main>

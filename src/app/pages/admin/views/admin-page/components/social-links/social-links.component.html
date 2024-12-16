@@ -12,7 +12,7 @@
 
             <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full"
                 (click)="onOpenEditSocialLinkModal(socialLink)" [disabled]="this.disableForm">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="min-w-8 w-8" viewBox="0 0 16 16">
                     <path [attr.d]="socialLink.socialPlatform.icon"></path>
                 </svg>
                 <p class="text-sm sm:text-lg font-medium">{{socialLink.socialPlatform.name}}</p>

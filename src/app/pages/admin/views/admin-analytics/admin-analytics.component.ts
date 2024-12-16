@@ -14,6 +14,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
 import { RouterLink } from '@angular/router';
+import { CustomLink } from '../../../../interfaces/custom-link';
+
+interface CustomLinkAnalytic {
+  customLink: CustomLink;
+  clicks: number;
+  uniqueClicks: number;
+}
 
 @Component({
   selector: 'app-admin-analytics',
@@ -31,6 +38,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
   totalUniqueViews: number = 0;
   totalClicks: number = 0;
   totalUniqueClicks: number = 0;
+  customLinkAnalytics: CustomLinkAnalytic[] = [];
 
   Highcharts: typeof Highcharts = Highcharts;
 
@@ -67,6 +75,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                 this.totalUniqueViews = response.totalUniqueViews;
                 this.totalClicks = response.totalClicks;
                 this.totalUniqueClicks = response.totalUniqueClicks;
+                this.customLinkAnalytics = response.customLinkAnalytics;
 
                 const dates = response.timeseries.map(
                   (entry: any) => entry.date
@@ -169,6 +178,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
               this.totalUniqueViews = response.totalUniqueViews;
               this.totalClicks = response.totalClicks;
               this.totalUniqueClicks = response.totalUniqueClicks;
+              this.customLinkAnalytics = response.customLinkAnalytics;
 
               const dates = response.timeseries.map((entry: any) => entry.date);
               const views = response.timeseries.map(
