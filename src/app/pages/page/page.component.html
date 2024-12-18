@@ -32,8 +32,8 @@
         <section class="flex flex-wrap justify-center items-center mt-4">
             @for (socialLink of page.socialLinks; track $index) {
             @if (socialLink.active) {
-            <a [href]="socialLink.socialPlatform.domainUrl + socialLink.url" [title]="socialLink.socialPlatform.name"
-                target="_blank" class="p-2 hover:scale-110">
+            <a (click)="onClickSocialLink(socialLink.id)" [href]="socialLink.socialPlatform.domainUrl + socialLink.url"
+                [title]="socialLink.socialPlatform.name" target="_blank" class="p-2 hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8" viewBox="0 0 16 16">
                     <path [attr.d]="socialLink.socialPlatform.icon"></path>
 

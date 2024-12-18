@@ -87,6 +87,12 @@ export class PageComponent implements OnInit, OnDestroy {
     }
   }
 
+  onClickSocialLink(socialLinkId: number) {
+    this.subscription.add(
+      this.analyticService.logSocialLinkClick(socialLinkId).subscribe()
+    );
+  }
+
   onClickCustomLink(customLinkId: number) {
     this.subscription.add(
       this.analyticService.logCustomLinkClick(customLinkId).subscribe()

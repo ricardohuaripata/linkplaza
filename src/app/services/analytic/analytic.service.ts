@@ -42,6 +42,18 @@ export class AnalyticService {
       }
     );
   }
+  logSocialLinkClick(socialLinkId: number): Observable<any> {
+    const params = { socialLinkId };
+    const headers = { Authorization: this.API_KEY };
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/social-link-click',
+      {},
+      {
+        params,
+        headers,
+      }
+    );
+  }
   logCustomLinkClick(customLinkId: number): Observable<any> {
     const params = { customLinkId };
     const headers = { Authorization: this.API_KEY };

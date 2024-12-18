@@ -5,16 +5,24 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
-import { Subscription } from 'rxjs';
+
 import { AnalyticService } from '../../../../services/analytic/analytic.service';
-import { isPlatformBrowser } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
-import { RouterLink } from '@angular/router';
 import { CustomLink } from '../../../../interfaces/custom-link';
+import { SocialLink } from '../../../../interfaces/social-link';
+
+interface SocialLinkAnalytic {
+  socialLink: SocialLink;
+  clicks: number;
+  uniqueClicks: number;
+}
 
 interface CustomLinkAnalytic {
   customLink: CustomLink;
@@ -36,8 +44,11 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
   targetPage?: Page;
   totalViews: number = 0;
   totalUniqueViews: number = 0;
-  totalClicks: number = 0;
-  totalUniqueClicks: number = 0;
+  totalSocialLinkClicks: number = 0;
+  totalSocialLinkUniqueClicks: number = 0;
+  totalCustomLinkClicks: number = 0;
+  totalCustomLinkUniqueClicks: number = 0;
+  socialLinkAnalytics: SocialLinkAnalytic[] = [];
   customLinkAnalytics: CustomLinkAnalytic[] = [];
 
   Highcharts: typeof Highcharts = Highcharts;
@@ -73,8 +84,13 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
               next: (response: any) => {
                 this.totalViews = response.totalViews;
                 this.totalUniqueViews = response.totalUniqueViews;
-                this.totalClicks = response.totalClicks;
-                this.totalUniqueClicks = response.totalUniqueClicks;
+                this.totalSocialLinkClicks = response.totalSocialLinkClicks;
+                this.totalSocialLinkUniqueClicks =
+                  response.totalSocialLinkUniqueClicks;
+                this.totalCustomLinkClicks = response.totalCustomLinkClicks;
+                this.totalCustomLinkUniqueClicks =
+                  response.totalCustomLinkUniqueClicks;
+                this.socialLinkAnalytics = response.socialLinkAnalytics;
                 this.customLinkAnalytics = response.customLinkAnalytics;
 
                 const dates = response.timeseries.map(
@@ -86,11 +102,17 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                 const uniqueViews = response.timeseries.map(
                   (entry: any) => entry.uniqueViews
                 );
-                const clicks = response.timeseries.map(
-                  (entry: any) => entry.clicks
+                const socialLinkClicks = response.timeseries.map(
+                  (entry: any) => entry.socialLinkClicks
                 );
-                const uniqueClicks = response.timeseries.map(
-                  (entry: any) => entry.uniqueClicks
+                const socialLinkUniqueClicks = response.timeseries.map(
+                  (entry: any) => entry.socialLinkUniqueClicks
+                );
+                const customLinkClicks = response.timeseries.map(
+                  (entry: any) => entry.customLinkClicks
+                );
+                const customLinkUniqueClicks = response.timeseries.map(
+                  (entry: any) => entry.customLinkUniqueClicks
                 );
 
                 // actualizar grafico con los datos obtenidos
@@ -124,14 +146,24 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                       name: 'Unique views',
                     },
                     {
-                      data: clicks,
+                      data: socialLinkClicks,
                       type: 'spline',
-                      name: 'Clicks',
+                      name: 'Social link clicks',
                     },
                     {
-                      data: uniqueClicks,
+                      data: socialLinkUniqueClicks,
                       type: 'spline',
-                      name: 'Unique clicks',
+                      name: 'Unique social link clicks',
+                    },
+                    {
+                      data: customLinkClicks,
+                      type: 'spline',
+                      name: 'Custom link clicks',
+                    },
+                    {
+                      data: customLinkUniqueClicks,
+                      type: 'spline',
+                      name: 'Unique custom link clicks',
                     },
                   ],
                 };
@@ -176,8 +208,13 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
             next: (response: any) => {
               this.totalViews = response.totalViews;
               this.totalUniqueViews = response.totalUniqueViews;
-              this.totalClicks = response.totalClicks;
-              this.totalUniqueClicks = response.totalUniqueClicks;
+              this.totalSocialLinkClicks = response.totalSocialLinkClicks;
+              this.totalSocialLinkUniqueClicks =
+                response.totalSocialLinkUniqueClicks;
+              this.totalCustomLinkClicks = response.totalCustomLinkClicks;
+              this.totalCustomLinkUniqueClicks =
+                response.totalCustomLinkUniqueClicks;
+              this.socialLinkAnalytics = response.socialLinkAnalytics;
               this.customLinkAnalytics = response.customLinkAnalytics;
 
               const dates = response.timeseries.map((entry: any) => entry.date);
@@ -187,13 +224,20 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
               const uniqueViews = response.timeseries.map(
                 (entry: any) => entry.uniqueViews
               );
-              const clicks = response.timeseries.map(
-                (entry: any) => entry.clicks
+              const socialLinkClicks = response.timeseries.map(
+                (entry: any) => entry.socialLinkClicks
               );
-              const uniqueClicks = response.timeseries.map(
-                (entry: any) => entry.uniqueClicks
+              const socialLinkUniqueClicks = response.timeseries.map(
+                (entry: any) => entry.socialLinkUniqueClicks
+              );
+              const customLinkClicks = response.timeseries.map(
+                (entry: any) => entry.customLinkClicks
+              );
+              const customLinkUniqueClicks = response.timeseries.map(
+                (entry: any) => entry.customLinkUniqueClicks
               );
 
+              // actualizar grafico con los datos obtenidos
               this.chartOptions = {
                 title: {
                   text: undefined,
@@ -224,14 +268,24 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
                     name: 'Unique views',
                   },
                   {
-                    data: clicks,
+                    data: socialLinkClicks,
                     type: 'spline',
-                    name: 'Clicks',
+                    name: 'Social link clicks',
                   },
                   {
-                    data: uniqueClicks,
+                    data: socialLinkUniqueClicks,
                     type: 'spline',
-                    name: 'Unique clicks',
+                    name: 'Unique social link clicks',
+                  },
+                  {
+                    data: customLinkClicks,
+                    type: 'spline',
+                    name: 'Custom link clicks',
+                  },
+                  {
+                    data: customLinkUniqueClicks,
+                    type: 'spline',
+                    name: 'Unique custom link clicks',
                   },
                 ],
               };
