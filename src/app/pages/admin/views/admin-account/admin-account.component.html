@@ -78,14 +78,21 @@
 
         <section class="mt-8">
             <h1 class="font-bold text-xl mb-3">Account</h1>
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-lg">
+                    <p class="font-medium">Change password</p>
+                    <p>You can change the password for this account here.</p>
+                    <button type="button" class="button-secondary w-full mt-6"
+                        (click)="openChangePasswordModal = true">Change password</button>
+                </div>
 
-            <div class="bg-white p-6 rounded-lg">
-                <p class="font-medium">Delete forever</p>
-                <p>Permanently delete your account and all your LinkPlaza pages.</p>
-                <button type="button" class="button-danger w-full mt-6"
-                    (click)="openDeleteAccountWarningModal = true">Delete account</button>
+                <div class="bg-white p-6 rounded-lg">
+                    <p class="font-medium">Delete forever</p>
+                    <p>Permanently delete your account and all your LinkPlaza pages.</p>
+                    <button type="button" class="button-danger w-full mt-6"
+                        (click)="openDeleteAccountWarningModal = true">Delete account</button>
+                </div>
             </div>
-
         </section>
 
         @if (openPageOptionsModal) {
@@ -279,8 +286,7 @@
                     <div class="flex justify-center">
                         <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
                             (click)="sendDeleteAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
-                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend
-                            code' }}
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
                         </button>
                     </div>
 
@@ -348,8 +354,7 @@
                     <div class="flex justify-center">
                         <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
                             (click)="sendAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
-                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend
-                            code' }}
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
                         </button>
                     </div>
 
@@ -360,6 +365,10 @@
             </div>
 
         </div>
+        }
+
+        @if (openChangePasswordModal) {
+        <app-change-password (closeModal)="openChangePasswordModal = false" />
         }
 
     </main>

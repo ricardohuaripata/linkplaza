@@ -3,6 +3,13 @@ import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+
 import { User } from '../../../../interfaces/user';
 import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
@@ -12,30 +19,26 @@ import {
   noDotAtEdgesValidator,
 } from '../../../../validators/url-validators';
 
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, RouterLink],
+  imports: [NgClass, ReactiveFormsModule, RouterLink, ChangePasswordComponent],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })
 export class AdminAccountComponent implements OnInit, OnDestroy {
   loggedUser?: User;
   targetPage?: Page;
+  selectedPage?: Page;
 
   openPageOptionsModal?: boolean;
   openDeleteAccountWarningModal?: boolean;
   openDeleteAccountVerificationModal?: boolean;
   openAccountVerificationModal?: boolean;
+  openChangePasswordModal?: boolean;
 
-  selectedPage?: Page;
   changePageUrlForm: FormGroup;
   changePageUrlForm_submitFeedbackMessage?: string;
 

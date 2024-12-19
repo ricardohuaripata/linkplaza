@@ -84,4 +84,14 @@ export class UserService {
       }
     );
   }
+  // authenticacion required
+  changePassword(requestBody: any): Observable<any> {
+    return this.http.patch<any>(
+      this.API_URL + this.ENDPOINT + '/account/password',
+      requestBody,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

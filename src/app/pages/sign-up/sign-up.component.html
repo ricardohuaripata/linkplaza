@@ -34,7 +34,7 @@
                 <div>
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
                         autocomplete="new-password" placeholder="Password" class="input w-full"
-                        [ngClass]="{'invalid-input': signUpForm.get('password')?.hasError('invalidPassword') && signUpForm.get('password')?.touched}">
+                        [ngClass]="{'invalid-input': (signUpForm.get('password')?.hasError('minlength') || signUpForm.get('password')?.hasError('invalidPassword')) && signUpForm.get('password')?.touched}">
                     @if (signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched)
                     {
                     <p class="invalid-input-message">* Password must be at least 8 characters long.</p>

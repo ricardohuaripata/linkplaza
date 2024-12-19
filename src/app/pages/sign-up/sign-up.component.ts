@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -11,6 +10,10 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '../../services/auth/auth.service';
+import {
+  emailValidator,
+  passwordValidator,
+} from '../../validators/user-validators';
 
 @Component({
   selector: 'app-sign-up',
@@ -34,10 +37,10 @@ export class SignUpComponent implements OnDestroy {
     private route: ActivatedRoute
   ) {
     this.signUpForm = this.fb.group({
-      email: ['', [Validators.required, this.emailValidator]],
+      email: ['', [Validators.required, emailValidator]],
       password: [
         '',
-        [Validators.required, Validators.minLength(8), this.passwordValidator],
+        [Validators.required, Validators.minLength(8), passwordValidator],
       ],
     });
 
@@ -48,32 +51,6 @@ export class SignUpComponent implements OnDestroy {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-  }
-
-  emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const email = control.value;
-    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (email && !pattern.test(email)) {
-      return { invalidEmail: true };
-    }
-    return null;
-  }
-
-  passwordValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    const password = control.value;
-    // verifica al menos una letra minúscula, una letra mayúscula, un número y un carácter especial
-    if (
-      password &&
-      (!/(?=.*[a-z])/.test(password) ||
-        !/(?=.*[A-Z])/.test(password) ||
-        !/(?=.*\d)/.test(password) ||
-        !/(?=.*[!@#$%^&*()\-_=+{};:,<.>ยง?\\|[\]\/~`"'])/.test(password))
-    ) {
-      return { invalidPassword: true };
-    }
-    return null;
   }
 
   onSubmit() {
