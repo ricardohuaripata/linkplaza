@@ -161,6 +161,9 @@
                         [disabled]="this.disableForm">Switch to this
                         page</button>
 
+                    <a [href]="'page/' + selectedPage?.url" target="_blank"
+                        class="button-secondary w-full text-center">Go to page</a>
+
                     <button type="button" class="button-danger w-full" (click)="deletePage()"
                         [disabled]="this.disableForm">Delete page</button>
                 </div>
@@ -276,7 +279,8 @@
                     <div class="flex justify-center">
                         <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
                             (click)="sendDeleteAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
-                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend
+                            code' }}
                         </button>
                     </div>
 
@@ -344,7 +348,8 @@
                     <div class="flex justify-center">
                         <button type="button" class="text-sm underline cursor-pointer disabled:cursor-not-allowed"
                             (click)="sendAccountVerificationCode()" [disabled]="this.resendCodeCooldown">
-                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend code' }}
+                            {{ resendCodeCooldown ? 'Resend code in ' + resendCodeCooldownRemainingTime + 's' : 'Resend
+                            code' }}
                         </button>
                     </div>
 
