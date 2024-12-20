@@ -22,11 +22,35 @@
 
         <section>
             <h1 class="font-bold text-xl mb-3">My information</h1>
-            <div class="flex flex-col gap-1">
-                <label for="email" class="text-sm">Email</label>
-                <input type="text" class="input w-full" [value]="loggedUser?.email" readonly>
-            </div>
 
+            <form [formGroup]="changeEmailForm" (submit)="onChangeEmailFormSubmit()">
+                @if (changeEmailForm_submitFeedbackMessage) {
+                <div class="flex items-center p-4 text-red-800 rounded-lg bg-red-50 mb-3" role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div class="text-sm">
+                        <span class="font-medium">Error: </span> {{changeEmailForm_submitFeedbackMessage}}
+                    </div>
+                </div>
+                }
+
+                <div class="flex flex-col gap-1">
+                    <label for="email" class="text-sm">Email</label>
+                    <input type="text" class="input w-full" formControlName="email"
+                        [ngClass]="{'invalid-input': changeEmailForm.get('email')?.hasError('invalidEmail') && changeEmailForm.get('email')?.dirty}">
+                    @if (changeEmailForm.get('email')?.hasError('invalidEmail') &&
+                    changeEmailForm.get('email')?.dirty) {
+                    <p class="invalid-input-message">* Please enter a valid email.</p>
+                    }
+                </div>
+
+                <button type="submit" class="button w-full mt-3"
+                    [disabled]="this.disableForm  || this.changeEmailForm.invalid || !this.changeEmailForm.dirty || this.changeEmailForm.get('email')?.value == loggedUser?.email">Save</button>
+            </form>
 
         </section>
 

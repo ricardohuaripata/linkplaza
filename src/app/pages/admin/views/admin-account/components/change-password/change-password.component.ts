@@ -49,6 +49,7 @@ export class ChangePasswordComponent implements OnDestroy {
     this.subscription.add(
       this.userService.changePassword(requestBody).subscribe({
         next: (response: any) => {
+          this.userService.setLoggedUser(response.data);
           this.closeModal.emit();
         },
         error: (event) => {

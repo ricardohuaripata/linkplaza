@@ -94,4 +94,14 @@ export class UserService {
       }
     );
   }
+  // authenticacion required
+  changeEmail(requestBody: any): Observable<any> {
+    return this.http.patch<any>(
+      this.API_URL + this.ENDPOINT + '/account/email',
+      requestBody,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

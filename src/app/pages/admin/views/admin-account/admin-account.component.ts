@@ -10,15 +10,16 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { User } from '../../../../interfaces/user';
-import { UserService } from '../../../../services/user/user.service';
-import { Page } from '../../../../interfaces/page';
-import { PageService } from '../../../../services/page/page.service';
 import {
   characterPatternValidator,
   noDotAtEdgesValidator,
 } from '../../../../validators/url-validators';
+import { emailValidator } from '../../../../validators/user-validators';
 
+import { User } from '../../../../interfaces/user';
+import { UserService } from '../../../../services/user/user.service';
+import { Page } from '../../../../interfaces/page';
+import { PageService } from '../../../../services/page/page.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @Component({
@@ -38,6 +39,9 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   openDeleteAccountVerificationModal?: boolean;
   openAccountVerificationModal?: boolean;
   openChangePasswordModal?: boolean;
+
+  changeEmailForm: FormGroup;
+  changeEmailForm_submitFeedbackMessage?: string;
 
   changePageUrlForm: FormGroup;
   changePageUrlForm_submitFeedbackMessage?: string;
@@ -60,6 +64,9 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router
   ) {
+    this.changeEmailForm = this.fb.group({
+      email: ['', [Validators.required, emailValidator]],
+    });
     this.changePageUrlForm = this.fb.group({
       url: [
         '',
@@ -95,6 +102,9 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
       this.userService.loggedUser$.subscribe((user) => {
         console.log(user);
         this.loggedUser = user;
+        this.changeEmailForm.setValue({
+          email: user?.email,
+        });
       })
     );
     this.subscription.add(
@@ -114,6 +124,30 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
       url: page.url,
     });
     this.openPageOptionsModal = true;
+  }
+
+  onChangeEmailFormSubmit() {
+    this.disableForm = true;
+
+    const requestBody: any = {
+      email: this.changeEmailForm.value.email,
+    };
+
+    this.subscription.add(
+      this.userService.changeEmail(requestBody).subscribe({
+        next: (response: any) => {
+          if (this.changeEmailForm_submitFeedbackMessage) {
+            this.changeEmailForm_submitFeedbackMessage = undefined;
+          }
+          this.userService.setLoggedUser(response.data);
+          this.disableForm = false;
+        },
+        error: (event) => {
+          this.changeEmailForm_submitFeedbackMessage = event.error.message;
+          this.disableForm = false;
+        },
+      })
+    );
   }
 
   onChangePageUrlFormSubmit() {
