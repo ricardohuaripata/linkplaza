@@ -33,7 +33,12 @@ export class ChangePasswordComponent implements OnDestroy {
       oldPassword: ['', [Validators.required]],
       newPassword: [
         '',
-        [Validators.required, Validators.minLength(8), passwordValidator],
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(256),
+          passwordValidator,
+        ],
       ],
     });
   }

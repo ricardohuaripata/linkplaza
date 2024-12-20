@@ -29,16 +29,21 @@
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
                         autocomplete="current-password" placeholder="Password" class="input w-full">
                 </div>
-                <div class="flex gap-1"><input type="checkbox" (click)="togglePasswordVisibility()"><label
+                <div class="flex gap-1 mx-2"><input type="checkbox" (click)="togglePasswordVisibility()"><label
                         for="showPassword">Show password</label></div>
                 <button type="submit" class="button text-xl mt-4"
                     [disabled]="this.signInForm.invalid || this.disableForm">Sign in</button>
             </form>
 
             <div class="flex flex-wrap gap-1 items-center justify-center text-center">
+                <a routerLink="/forgot-password" class="text-purple-700 underline">Forgot password?</a>
+            </div>
+            
+            <div class="flex flex-wrap gap-1 items-center justify-center text-center">
                 <p>Don't have an account?</p>
                 <a routerLink="/signup" class="text-purple-700 underline">Sign up</a>
             </div>
+
         </div>
 
     </main>

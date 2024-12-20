@@ -1,33 +1,30 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth/auth.service';
-import {
-  emailValidator,
-  passwordValidator,
-} from '../../validators/user-validators';
+import { passwordValidator } from '../../validators/user-validators';
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgClass],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
+  imports: [ReactiveFormsModule, NgClass],
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.scss',
 })
-export class SignUpComponent implements OnDestroy {
-  showPassword: boolean = false;
-  signUpForm: FormGroup;
+export class ResetPasswordComponent implements OnDestroy {
+  resetPasswordForm: FormGroup;
   feedbackMessage?: string;
   disableForm: boolean = false;
-  urlParam?: string;
+  showPassword: boolean = false;
+  token: string = '';
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -36,11 +33,7 @@ export class SignUpComponent implements OnDestroy {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.signUpForm = this.fb.group({
-      email: [
-        '',
-        [Validators.required, Validators.maxLength(256), emailValidator],
-      ],
+    this.resetPasswordForm = this.fb.group({
       password: [
         '',
         [
@@ -53,7 +46,7 @@ export class SignUpComponent implements OnDestroy {
     });
 
     this.route.queryParams.subscribe((params) => {
-      this.urlParam = params['url'];
+      this.token = params['token'];
     });
   }
 
@@ -65,21 +58,18 @@ export class SignUpComponent implements OnDestroy {
     this.disableForm = true;
 
     const requestBody: any = {
-      email: this.signUpForm.value.email,
-      password: this.signUpForm.value.password,
+      token: this.token,
+      password: this.resetPasswordForm.value.password,
     };
 
     this.subscription.add(
-      this.authService.signUp(requestBody).subscribe({
+      this.authService.resetPassword(requestBody).subscribe({
         next: (response: any) => {
-          this.router.navigate(['/new-page']);
-          console.log(response);
+          this.router.navigate(['/signin']);
         },
         error: (event) => {
-          this.feedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.feedbackMessage = 'Invalid request.';
+          this.disableForm = false;
         },
       })
     );

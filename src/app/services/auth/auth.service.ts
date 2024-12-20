@@ -30,4 +30,18 @@ export class AuthService {
       { withCredentials: true }
     );
   }
+
+  forgotPassword(requestBody: any): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/forgot-password',
+      requestBody
+    );
+  }
+
+  resetPassword(requestBody: any): Observable<any> {
+    return this.http.post<any>(
+      this.API_URL + this.ENDPOINT + '/reset-password',
+      requestBody
+    );
+  }
 }

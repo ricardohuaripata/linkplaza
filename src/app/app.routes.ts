@@ -9,6 +9,8 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AdminPageComponent } from './pages/admin/views/admin-page/admin-page.component';
 import { AdminAccountComponent } from './pages/admin/views/admin-account/admin-account.component';
 import { AdminAnalyticsComponent } from './pages/admin/views/admin-analytics/admin-analytics.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +57,16 @@ export const routes: Routes = [
   {
     path: 'page/:url',
     component: PageComponent,
+  },
+  {
+    path: 'forgot-password',
+    title: 'Forgot password | LinkPlaza',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'reset-password',
+    title: 'Reset password | LinkPlaza',
+    component: ResetPasswordComponent,
   },
   {
     path: '**',
