@@ -17,16 +17,15 @@ export class AnalyticService {
     this.API_KEY = environment.API_KEY;
   }
 
-  getPageVisitsByDateRange(
+  getPageAnalyticsByDateRange(
     pageId: number,
     startDate: string,
     endDate: string
   ): Observable<any> {
     const params = { pageId, startDate, endDate };
-    const headers = { Authorization: this.API_KEY };
     return this.http.get<any>(this.API_URL + this.ENDPOINT, {
       params,
-      headers,
+      withCredentials: true,
     });
   }
 

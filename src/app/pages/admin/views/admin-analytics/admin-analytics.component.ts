@@ -75,7 +75,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
           this.analyticService
-            .getPageVisitsByDateRange(
+            .getPageAnalyticsByDateRange(
               this.targetPage.id,
               this.formatDate(startDate),
               this.formatDate(today)
@@ -199,7 +199,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
     if (this.targetPage) {
       this.subscription.add(
         this.analyticService
-          .getPageVisitsByDateRange(
+          .getPageAnalyticsByDateRange(
             this.targetPage.id,
             this.formatDate(startDate),
             this.formatDate(today)
