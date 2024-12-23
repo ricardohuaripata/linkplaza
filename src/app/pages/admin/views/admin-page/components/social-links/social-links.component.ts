@@ -102,9 +102,7 @@ export class SocialLinksComponent implements OnDestroy {
         },
         error: (event) => {
           this.addSocialLinkFormSubmitFeedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );
@@ -127,9 +125,7 @@ export class SocialLinksComponent implements OnDestroy {
           this.openEditSocialLinkModal = false;
         },
         error: (event) => {
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );

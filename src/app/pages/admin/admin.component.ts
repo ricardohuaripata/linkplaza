@@ -34,7 +34,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.userService.getUserInfo().subscribe({
           next: (response: any) => {
-            console.log(response);
             this.loggedUser = response.data;
             this.userService.setLoggedUser(response.data);
             this.userService.setTargetPage(response.data.pages[0]);

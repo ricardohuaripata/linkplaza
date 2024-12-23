@@ -58,13 +58,10 @@ export class NewPageComponent implements OnDestroy {
       this.pageService.createPage(requestBody).subscribe({
         next: (response: any) => {
           this.router.navigate(['/admin']);
-          console.log(response);
         },
         error: (event) => {
           this.feedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );

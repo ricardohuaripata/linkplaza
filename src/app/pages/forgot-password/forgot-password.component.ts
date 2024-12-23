@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
 
@@ -26,11 +26,7 @@ export class ForgotPasswordComponent implements OnDestroy {
   disableForm: boolean = false;
   private subscription: Subscription = new Subscription();
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.forgotPasswordForm = this.fb.group({
       email: [
         '',
@@ -56,9 +52,7 @@ export class ForgotPasswordComponent implements OnDestroy {
         },
         error: (event) => {
           this.feedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );

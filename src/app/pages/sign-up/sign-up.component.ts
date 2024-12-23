@@ -73,13 +73,10 @@ export class SignUpComponent implements OnDestroy {
       this.authService.signUp(requestBody).subscribe({
         next: (response: any) => {
           this.router.navigate(['/new-page']);
-          console.log(response);
         },
         error: (event) => {
           this.feedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );

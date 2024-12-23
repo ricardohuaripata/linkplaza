@@ -45,18 +45,13 @@ export class PageComponent implements OnInit, OnDestroy {
           this.pageService.getPageByUrl(this.pageUrl).subscribe({
             next: (response: any) => {
               this.page = response.data;
-
+              // configurar SEO
               if (this.page) {
                 const seoConfig: SeoConfig = {
-                  page_title: this.page.title
-                    ? this.page.title + ' | LinkPlaza'
-                    : this.page.url + ' | LinkPlaza',
-                  page_description: this.page.bio
-                    ? this.page.bio
-                    : 'Hey visit now my page and check my bio!',
+                  page_title: this.page.title ? this.page.title + ' | LinkPlaza' : this.page.url + ' | LinkPlaza',
+                  page_description: this.page.bio ? this.page.bio : 'Hey visit my page now and check my bio!',
                   page_url: environment.BASE_URL,
-                  page_image_url:
-                    environment.BASE_URL + '/img/LinkPlaza-Preview.jpg',
+                  page_image_url: environment.BASE_URL + '/img/LinkPlaza-Preview.jpg',
                 };
 
                 this.seo.setPageTitle(seoConfig.page_title);
@@ -64,8 +59,6 @@ export class PageComponent implements OnInit, OnDestroy {
                 this.seo.setIndexFollow(true);
                 this.seo.setSocialMetaTags(seoConfig);
               }
-
-              console.log(response);
             },
             error: (event) => {
               this.seo.setPageTitle('Not found | LinkPlaza');

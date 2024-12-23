@@ -100,7 +100,6 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.userService.loggedUser$.subscribe((user) => {
-        console.log(user);
         this.loggedUser = user;
         this.changeEmailForm.setValue({
           email: user?.email,
@@ -109,7 +108,6 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.userService.targetPage$.subscribe((page) => {
-        console.log(page);
         this.targetPage = page;
       })
     );

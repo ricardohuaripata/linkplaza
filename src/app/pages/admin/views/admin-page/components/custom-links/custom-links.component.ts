@@ -93,9 +93,7 @@ export class CustomLinksComponent implements OnDestroy {
         },
         error: (event) => {
           this.addCustomLinkFormSubmitFeedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );
@@ -119,9 +117,7 @@ export class CustomLinksComponent implements OnDestroy {
           this.openEditCustomLinkModal = false;
         },
         error: (event) => {
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );

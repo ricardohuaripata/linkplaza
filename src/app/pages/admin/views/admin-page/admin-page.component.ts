@@ -18,7 +18,7 @@ import { SocialLinksComponent } from './components/social-links/social-links.com
     CustomLinksComponent,
     CustomizationComponent,
     InfoComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss',
@@ -32,7 +32,6 @@ export class AdminPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.userService.targetPage$.subscribe((page) => {
-        console.log(page);
         this.targetPage = page;
       })
     );

@@ -68,9 +68,7 @@ export class InfoComponent implements OnInit, OnDestroy {
         },
         error: (event) => {
           this.editPageFormSubmitFeedbackMessage = event.error.message;
-          setTimeout(() => {
-            this.disableForm = false;
-          }, 3000);
+          this.disableForm = false;
         },
       })
     );
