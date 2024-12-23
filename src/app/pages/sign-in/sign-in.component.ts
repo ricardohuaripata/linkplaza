@@ -9,11 +9,12 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '../../services/auth/auth.service';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, LoadingComponent],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })

@@ -11,11 +11,12 @@ import { NgClass } from '@angular/common';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { emailValidator } from '../../validators/user-validators';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, RouterLink],
+  imports: [ReactiveFormsModule, NgClass, RouterLink, LoadingComponent],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
@@ -49,6 +50,7 @@ export class ForgotPasswordComponent implements OnDestroy {
             this.feedbackMessage = undefined;
           }
           this.successResponse = true;
+          this.disableForm = false;
         },
         error: (event) => {
           this.feedbackMessage = event.error.message;

@@ -14,11 +14,12 @@ import {
   emailValidator,
   passwordValidator,
 } from '../../validators/user-validators';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgClass],
+  imports: [ReactiveFormsModule, RouterLink, NgClass, LoadingComponent],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })

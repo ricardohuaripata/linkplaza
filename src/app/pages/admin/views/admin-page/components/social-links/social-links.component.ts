@@ -14,11 +14,12 @@ import { PageService } from '../../../../../../services/page/page.service';
 import { SocialLink } from '../../../../../../interfaces/social-link';
 import { UserService } from '../../../../../../services/user/user.service';
 import { urlValidator } from '../../../../../../validators/url-validators';
+import { LoadingComponent } from "../../../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-social-links',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, NgFor],
+  imports: [ReactiveFormsModule, NgClass, NgFor, LoadingComponent],
   templateUrl: './social-links.component.html',
   styleUrl: './social-links.component.scss',
 })

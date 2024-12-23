@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth/auth.service';
 import { passwordValidator } from '../../validators/user-validators';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, LoadingComponent],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
 })

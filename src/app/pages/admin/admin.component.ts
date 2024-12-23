@@ -12,11 +12,12 @@ import { RouterOutlet } from '@angular/router';
 import { User } from '../../interfaces/user';
 import { UserService } from '../../services/user/user.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [RouterOutlet, NavigationComponent],
+  imports: [RouterOutlet, NavigationComponent, LoadingComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })

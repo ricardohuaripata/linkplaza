@@ -49,8 +49,13 @@
                 <div class="flex gap-1 mx-2"><input type="checkbox" (click)="togglePasswordVisibility()"><label
                         for="showPassword">Show password</label></div>
                 <button type="submit" class="button text-xl mt-4"
-                    [disabled]="this.signUpForm.invalid || this.disableForm">Create
-                    account</button>
+                    [disabled]="this.signUpForm.invalid || this.disableForm">
+                    @if (this.disableForm) {
+                    <app-loading [small]="true" />
+                    } @else {
+                    Create account
+                    }
+                </button>
             </form>
 
             <div class="flex flex-wrap gap-1 items-center justify-center text-center">
