@@ -14,11 +14,12 @@ import {
   characterPatternValidator,
   noDotAtEdgesValidator,
 } from '../../validators/url-validators';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-new-page',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, LoadingComponent],
   templateUrl: './new-page.component.html',
   styleUrl: './new-page.component.scss',
 })
