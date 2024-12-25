@@ -80,7 +80,13 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editPageForm.invalid || this.disableForm">Save</button>
+                [disabled]="this.editPageForm.invalid || this.disableForm">
+                @if (this.disableForm) {
+                <app-loading [small]="true" />
+                } @else {
+                Save
+                }
+            </button>
         </form>
 
     </div>

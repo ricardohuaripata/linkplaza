@@ -11,7 +11,7 @@
                 <span class="sr-only">Info</span>
                 <h3 class="font-medium">Account not verified</h3>
             </div>
-            <div class="my-2 text-sm">You will need to <button class="underline font-medium"
+            <div class="my-2 text-sm">You will need to <button class="underline font-medium disabled:hover:cursor-not-allowed"
                     (click)="sendAccountVerificationCode()"
                     [disabled]="this.disableForm || this.resendCodeCooldown">verify your
                     account</button> to publish your pages and make them visible
@@ -48,8 +48,14 @@
                     }
                 </div>
 
-                <button type="submit" class="button w-full mt-3"
-                    [disabled]="this.disableForm  || this.changeEmailForm.invalid || !this.changeEmailForm.dirty || this.changeEmailForm.get('email')?.value == loggedUser?.email">Save</button>
+                <button type="submit" class="button w-full text-lg mt-3"
+                    [disabled]="this.disableForm || this.disableChangeEmailForm || this.changeEmailForm.invalid || !this.changeEmailForm.dirty || this.changeEmailForm.get('email')?.value == loggedUser?.email">
+                    @if (this.disableChangeEmailForm) {
+                    <app-loading [small]="true" />
+                    } @else {
+                    Save
+                    }
+                </button>
             </form>
 
         </section>
@@ -96,7 +102,7 @@
             </div>
             }
 
-            <a routerLink="/new-page" class="button-secondary text-center w-full">Create a new page</a>
+            <a routerLink="/new-page" class="button-secondary text-center w-full text-lg">Create a new page</a>
 
         </section>
 
@@ -106,14 +112,14 @@
                 <div class="bg-white p-6 rounded-lg">
                     <p class="font-medium">Change password</p>
                     <p>You can change the password for this account here.</p>
-                    <button type="button" class="button-secondary w-full mt-6"
+                    <button type="button" class="button-secondary w-full text-lg mt-6"
                         (click)="openChangePasswordModal = true">Change password</button>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg">
                     <p class="font-medium">Delete forever</p>
                     <p>Permanently delete your account and all your LinkPlaza pages.</p>
-                    <button type="button" class="button-danger w-full mt-6"
+                    <button type="button" class="button-danger w-full text-lg mt-6"
                         (click)="openDeleteAccountWarningModal = true">Delete account</button>
                 </div>
             </div>
@@ -183,19 +189,29 @@
                             }
                         </div>
 
-                        <button type="submit" class="button w-full" [disabled]="this.changePageUrlForm.invalid || this.disableForm 
-                            || this.changePageUrlForm.get('url')?.value == selectedPage?.url">Change URL</button>
+                        <button type="submit" class="button w-full text-lg" [disabled]="this.changePageUrlForm.invalid || this.disableForm || this.disableChangePageUrlForm || this.changePageUrlForm.get('url')?.value == selectedPage?.url">
+                            @if (this.disableChangePageUrlForm) {
+                            <app-loading [small]="true" />
+                            } @else {
+                            Change URL
+                            }
+                        </button>
                     </form>
 
-                    <button type="button" class="button-secondary w-full" (click)="switchPage()"
+                    <button type="button" class="button-secondary w-full text-lg" (click)="switchPage()"
                         [disabled]="this.disableForm">Switch to this
                         page</button>
 
                     <a [href]="'page/' + selectedPage?.url" target="_blank"
-                        class="button-secondary w-full text-center">Go to page</a>
+                        class="button-secondary w-full text-center text-lg">Go to page</a>
 
-                    <button type="button" class="button-danger w-full" (click)="deletePage()"
-                        [disabled]="this.disableForm">Delete page</button>
+                    <button type="button" class="button-danger w-full text-lg" (click)="deletePage()"
+                        [disabled]="this.disableForm || this.disableDeletePageButton">
+                        @if (this.disableDeletePageButton) {
+                        <app-loading [small]="true" />
+                        } @else {
+                        Delete page
+                        }</button>
                 </div>
 
             </div>
@@ -312,9 +328,14 @@
                         </button>
                     </div>
 
-                    <button type="submit" class="button-danger w-full"
-                        [disabled]=" this.deleteAccountVerificationForm.invalid || this.disableForm">Delete
-                        account</button>
+                    <button type="submit" class="button-danger w-full text-lg"
+                        [disabled]="this.deleteAccountVerificationForm.invalid || this.disableForm || this.disableDeleteAccountForm">
+                        @if (this.disableDeleteAccountForm) {
+                        <app-loading [small]="true" />
+                        } @else {
+                        Delete account
+                        }
+                    </button>
                 </form>
 
             </div>
@@ -379,8 +400,14 @@
                         </button>
                     </div>
 
-                    <button type="submit" class="button w-full"
-                        [disabled]=" this.accountVerificationForm.invalid || this.disableForm">Verify</button>
+                    <button type="submit" class="button w-full text-lg"
+                        [disabled]=" this.accountVerificationForm.invalid || this.disableForm || this.disableVerifyAccountForm">
+                        @if (this.disableVerifyAccountForm) {
+                        <app-loading [small]="true" />
+                        } @else {
+                        Verify
+                        }
+                    </button>
                 </form>
 
             </div>

@@ -13,17 +13,21 @@ import { PageService } from '../../../../../../services/page/page.service';
 import { CustomLink } from '../../../../../../interfaces/custom-link';
 import { UserService } from '../../../../../../services/user/user.service';
 import { urlValidator } from '../../../../../../validators/url-validators';
+import { LoadingComponent } from "../../../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-custom-links',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, NgFor],
+  imports: [ReactiveFormsModule, NgClass, NgFor, LoadingComponent],
   templateUrl: './custom-links.component.html',
   styleUrl: './custom-links.component.scss',
 })
 export class CustomLinksComponent implements OnDestroy {
   @Input() page!: Page;
   disableForm: boolean = false;
+  disableAddCustomLinkForm: boolean = false;
+  disableEditCustomLinkForm: boolean = false;
+  disableRemoveCustomLinkButton: boolean = false;
 
   addCustomLinkForm: FormGroup;
   editCustomLinkForm: FormGroup;
@@ -66,6 +70,7 @@ export class CustomLinksComponent implements OnDestroy {
 
   onAddCustomLinkFormSubmit(pageId: number) {
     this.disableForm = true;
+    this.disableAddCustomLinkForm = true;
 
     let url = this.addCustomLinkForm.value.url;
 
@@ -84,6 +89,7 @@ export class CustomLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableAddCustomLinkForm = false;
           this.openAddCustomLinkModal = false;
           this.addCustomLinkForm.get('url')?.setValue('');
           this.addCustomLinkForm.get('title')?.setValue('');
@@ -94,6 +100,7 @@ export class CustomLinksComponent implements OnDestroy {
         error: (event) => {
           this.addCustomLinkFormSubmitFeedbackMessage = event.error.message;
           this.disableForm = false;
+          this.disableAddCustomLinkForm = false;
         },
       })
     );
@@ -101,6 +108,7 @@ export class CustomLinksComponent implements OnDestroy {
 
   onEditCustomLinkFormSubmit() {
     this.disableForm = true;
+    this.disableEditCustomLinkForm = true;
 
     const customLinkId = this.editCustomLinkForm.value.customLink.id;
 
@@ -114,10 +122,12 @@ export class CustomLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableEditCustomLinkForm = false;
           this.openEditCustomLinkModal = false;
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableEditCustomLinkForm = false;
         },
       })
     );
@@ -180,6 +190,7 @@ export class CustomLinksComponent implements OnDestroy {
 
   removeCustomLink() {
     this.disableForm = true;
+    this.disableRemoveCustomLinkButton = true;
 
     const customLinkId = this.editCustomLinkForm.value.customLink.id;
 
@@ -188,10 +199,12 @@ export class CustomLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableRemoveCustomLinkButton = false;
           this.openEditCustomLinkModal = false;
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableRemoveCustomLinkButton = false;
         },
       })
     );

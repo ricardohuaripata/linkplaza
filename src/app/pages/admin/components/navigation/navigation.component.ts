@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 
 import { Page } from '../../../../interfaces/page';
 import { UserService } from '../../../../services/user/user.service';
+import { LoadingComponent } from "../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, LoadingComponent],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })

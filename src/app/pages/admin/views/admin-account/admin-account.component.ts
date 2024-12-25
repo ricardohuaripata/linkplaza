@@ -21,11 +21,12 @@ import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
 import { PageService } from '../../../../services/page/page.service';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { LoadingComponent } from "../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, RouterLink, ChangePasswordComponent],
+  imports: [NgClass, ReactiveFormsModule, RouterLink, ChangePasswordComponent, LoadingComponent],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })
@@ -53,6 +54,12 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   accountVerificationForm_submitFeedbackMessage?: string;
 
   disableForm: boolean = false;
+  disableChangeEmailForm: boolean = false;
+  disableChangePageUrlForm: boolean = false;
+  disableDeletePageButton: boolean = false;
+  disableDeleteAccountForm: boolean = false;
+  disableVerifyAccountForm: boolean = false;
+
   resendCodeCooldown: boolean = false;
   resendCodeCooldownRemainingTime: number = 20;
 
@@ -126,6 +133,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   onChangeEmailFormSubmit() {
     this.disableForm = true;
+    this.disableChangeEmailForm = true;
 
     const requestBody: any = {
       email: this.changeEmailForm.value.email,
@@ -139,10 +147,13 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           }
           this.userService.setLoggedUser(response.data);
           this.disableForm = false;
+          this.disableChangeEmailForm = false;
         },
         error: (event) => {
           this.changeEmailForm_submitFeedbackMessage = event.error.message;
           this.disableForm = false;
+          this.disableChangeEmailForm = false;
+
         },
       })
     );
@@ -150,6 +161,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   onChangePageUrlFormSubmit() {
     this.disableForm = true;
+    this.disableChangePageUrlForm = true;
 
     const pageId = this.selectedPage!.id;
 
@@ -170,11 +182,13 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           }
 
           this.disableForm = false;
+          this.disableChangePageUrlForm = false;
           this.openPageOptionsModal = false;
         },
         error: (event) => {
           this.changePageUrlForm_submitFeedbackMessage = event.error.message;
           this.disableForm = false;
+          this.disableChangePageUrlForm = false;
         },
       })
     );
@@ -187,6 +201,8 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   deletePage() {
     this.disableForm = true;
+    this.disableDeletePageButton = true;
+
     const pageId = this.selectedPage!.id;
 
     this.subscription.add(
@@ -195,10 +211,12 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           this.userService.setLoggedUser(response.data);
           this.userService.setTargetPage(response.data.pages[0]);
           this.disableForm = false;
+          this.disableDeletePageButton = false;
           this.openPageOptionsModal = false;
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableDeletePageButton = false;
         },
       })
     );
@@ -233,6 +251,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   deleteAccount() {
     this.disableForm = true;
+    this.disableDeleteAccountForm = true;
 
     const verificationCode = Object.values(
       this.deleteAccountVerificationForm.value
@@ -253,6 +272,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
             event.error.message;
           this.deleteAccountVerificationForm.reset();
           this.disableForm = false;
+          this.disableDeleteAccountForm = false;
         },
       })
     );
@@ -286,6 +306,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   verifyAccount() {
     this.disableForm = true;
+    this.disableVerifyAccountForm = true;
 
     const verificationCode = Object.values(
       this.accountVerificationForm.value
@@ -300,6 +321,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
         next: (response: any) => {
           this.userService.setLoggedUser(response.data);
           this.disableForm = false;
+          this.disableVerifyAccountForm = false;
           this.openAccountVerificationModal = false;
         },
         error: (event) => {
@@ -307,6 +329,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
             event.error.message;
           this.accountVerificationForm.reset();
           this.disableForm = false;
+          this.disableVerifyAccountForm = false;
         },
       })
     );

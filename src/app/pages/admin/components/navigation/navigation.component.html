@@ -135,8 +135,13 @@
          <p class="text-gray-700 text-sm my-2">Are you sure you want to sign out? You'll need to sign in again.</p>
 
          <div class="flex max-sm:flex-col gap-2 ">
-            <button type="button" class="button-danger w-full" (click)="signOut()"
-               [disabled]="this.disableForm">Yes</button>
+            <button type="button" class="button-danger w-full text-lg" (click)="signOut()" [disabled]="this.disableForm">
+               @if (this.disableForm) {
+               <app-loading [small]="true" />
+               } @else {
+               Sign out
+               }
+            </button>
             <button type="button" class="button-secondary w-full" (click)="openSignOutModal = false"
                [disabled]="this.disableForm">Cancel</button>
          </div>

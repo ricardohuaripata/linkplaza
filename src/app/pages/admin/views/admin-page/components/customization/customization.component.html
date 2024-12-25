@@ -56,8 +56,13 @@
 
         </div>
 
-        <button type="submit" class="button w-full mt-8 text-lg sm:text-xl" [disabled]="this.disableForm">Apply
-            changes</button>
+        <button type="submit" class="button w-full mt-8 text-lg sm:text-xl" [disabled]="this.disableForm">
+            @if (this.disableForm) {
+            <app-loading [small]="true" />
+            } @else {
+            Apply changes
+            }
+        </button>
 
     </form>
 

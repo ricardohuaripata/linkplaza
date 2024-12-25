@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs';
 import { Page } from '../../../../../../interfaces/page';
 import { PageService } from '../../../../../../services/page/page.service';
 import { UserService } from '../../../../../../services/user/user.service';
+import { LoadingComponent } from "../../../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-info',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, LoadingComponent],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
 })

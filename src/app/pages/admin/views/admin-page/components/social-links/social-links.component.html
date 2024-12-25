@@ -114,7 +114,13 @@
             }
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.addSocialLinkForm.invalid || this.disableForm">Add</button>
+                [disabled]="this.addSocialLinkForm.invalid || this.disableForm || this.disableAddSocialLinkForm">
+                @if (this.disableAddSocialLinkForm) {
+                <app-loading [small]="true" />
+                } @else {
+                Add
+                }
+            </button>
         </form>
 
     </div>
@@ -164,9 +170,21 @@
             }
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editSocialLinkForm.invalid || this.disableForm">Edit</button>
-            <button type="button" class="button-secondary w-full text-lg" [disabled]="this.disableForm"
-                (click)="removeSocialLink()">Remove</button>
+                [disabled]="this.editSocialLinkForm.invalid || this.disableForm || this.disableEditSocialLinkForm">
+                @if (this.disableEditSocialLinkForm) {
+                <app-loading [small]="true" />
+                } @else {
+                Edit
+                }
+            </button>
+            <button type="button" class="button-secondary w-full text-lg"
+                [disabled]="this.disableForm || this.disableRemoveSocialLinkButton" (click)="removeSocialLink()">
+                @if (this.disableRemoveSocialLinkButton) {
+                <app-loading [small]="true" />
+                } @else {
+                Remove
+                }
+            </button>
         </form>
 
     </div>

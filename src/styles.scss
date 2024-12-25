@@ -15,11 +15,11 @@
 }
 
 .button-secondary {
-  @apply p-3 bg-white border text-black font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
+  @apply p-3 bg-white border border-neutral-200 text-black font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
 }
 
 .button-danger {
-  @apply p-3 bg-white border border-red-700 text-red-700 font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400;
+  @apply p-3 bg-white border border-red-700 text-red-700 font-semibold rounded-full disabled:bg-neutral-200 disabled:text-neutral-400 disabled:border-neutral-200;
 }
 
 .invalid-input {

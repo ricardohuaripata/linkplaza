@@ -99,7 +99,13 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.addCustomLinkForm.invalid || this.disableForm">Add</button>
+                [disabled]="this.addCustomLinkForm.invalid || this.disableForm || this.disableAddCustomLinkForm">
+                @if (this.disableAddCustomLinkForm) {
+                <app-loading [small]="true" />
+                } @else {
+                Add
+                }
+            </button>
         </form>
 
     </div>
@@ -154,9 +160,21 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editCustomLinkForm.invalid || this.disableForm">Edit</button>
-            <button type="button" class="button-secondary w-full text-lg" [disabled]="this.disableForm"
-                (click)="removeCustomLink()">Remove</button>
+                [disabled]="this.editCustomLinkForm.invalid || this.disableForm || this.disableEditCustomLinkForm">
+                @if (this.disableEditCustomLinkForm) {
+                <app-loading [small]="true" />
+                } @else {
+                Edit
+                }
+            </button>
+            <button type="button" class="button-secondary w-full text-lg"
+                [disabled]="this.disableForm || this.disableRemoveCustomLinkButton" (click)="removeCustomLink()">
+                @if (this.disableRemoveCustomLinkButton) {
+                <app-loading [small]="true" />
+                } @else {
+                Remove
+                }
+            </button>
         </form>
 
     </div>

@@ -26,6 +26,9 @@ import { LoadingComponent } from "../../../../../../shared/loading/loading.compo
 export class SocialLinksComponent implements OnDestroy {
   @Input() page!: Page;
   disableForm: boolean = false;
+  disableAddSocialLinkForm: boolean = false;
+  disableEditSocialLinkForm: boolean = false;
+  disableRemoveSocialLinkButton: boolean = false;
 
   addSocialLinkForm: FormGroup;
   editSocialLinkForm: FormGroup;
@@ -83,6 +86,7 @@ export class SocialLinksComponent implements OnDestroy {
 
   onAddSocialLinkFormSubmit(pageId: number) {
     this.disableForm = true;
+    this.disableAddSocialLinkForm = true;
 
     const requestBody: any = {
       socialPlatformId: this.addSocialLinkForm.value.socialPlatform.id,
@@ -94,6 +98,7 @@ export class SocialLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableAddSocialLinkForm = false;
           this.openAddSocialLinkModal = false;
           this.addSocialLinkForm.get('socialPlatform')?.setValue(null);
           this.addSocialLinkForm.get('url')?.setValue('');
@@ -104,6 +109,8 @@ export class SocialLinksComponent implements OnDestroy {
         error: (event) => {
           this.addSocialLinkFormSubmitFeedbackMessage = event.error.message;
           this.disableForm = false;
+          this.disableAddSocialLinkForm = false;
+
         },
       })
     );
@@ -111,6 +118,7 @@ export class SocialLinksComponent implements OnDestroy {
 
   onEditSocialLinkFormSubmit() {
     this.disableForm = true;
+    this.disableEditSocialLinkForm = true;
 
     const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
 
@@ -123,10 +131,12 @@ export class SocialLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableEditSocialLinkForm = false;
           this.openEditSocialLinkModal = false;
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableEditSocialLinkForm = false;
         },
       })
     );
@@ -189,6 +199,7 @@ export class SocialLinksComponent implements OnDestroy {
 
   removeSocialLink() {
     this.disableForm = true;
+    this.disableRemoveSocialLinkButton = true;
 
     const socialLinkId = this.editSocialLinkForm.value.socialLink.id;
 
@@ -197,10 +208,12 @@ export class SocialLinksComponent implements OnDestroy {
         next: (response: any) => {
           this.userService.setTargetPage(response.data);
           this.disableForm = false;
+          this.disableRemoveSocialLinkButton = false;
           this.openEditSocialLinkModal = false;
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableRemoveSocialLinkButton = false;
         },
       })
     );

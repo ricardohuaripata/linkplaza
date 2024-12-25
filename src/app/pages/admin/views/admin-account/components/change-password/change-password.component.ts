@@ -9,11 +9,12 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../../../../../services/user/user.service';
 import { passwordValidator } from '../../../../../../validators/user-validators';
+import { LoadingComponent } from "../../../../../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, LoadingComponent],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',
 })
@@ -43,7 +44,7 @@ export class ChangePasswordComponent implements OnDestroy {
     });
   }
 
-  onSumbit() {
+  onSubmit() {
     this.disableForm = true;
 
     const requestBody: any = {
