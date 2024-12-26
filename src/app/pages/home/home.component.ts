@@ -12,6 +12,9 @@ import { isPlatformBrowser } from '@angular/common';
 
 import { UserService } from '../../services/user/user.service';
 import { User } from '../../interfaces/user';
+import { environment } from '../../../environments/environment';
+import { SeoConfig } from '../../interfaces/seo-config';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -29,8 +32,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private seo: SeoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    const seoConfig: SeoConfig = {
+      page_title: 'Everything you are, in one simple link | LinkPlaza',
+      page_description: 'Join LinkPlaza and link to everything you create, share and sell online. All from the one bio link.',
+      page_url: environment.BASE_URL,
+      page_image_url: environment.BASE_URL + '/img/LinkPlaza-Preview.jpg',
+    };
+
+    this.seo.setPageTitle(seoConfig.page_title);
+    this.seo.setCanonicalURL(seoConfig.page_url);
+    this.seo.setIndexFollow(true);
+    this.seo.setSocialMetaTags(seoConfig);
+
     this.form = this.fb.group({
       url: [''],
     });

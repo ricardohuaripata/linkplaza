@@ -15,7 +15,6 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 export const routes: Routes = [
   {
     path: '',
-    title: 'Welcome | LinkPlaza',
     component: HomeComponent,
   },
   {

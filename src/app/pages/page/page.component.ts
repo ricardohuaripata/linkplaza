@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { SeoConfig } from '../../interfaces/seo-config';
 import { SeoService } from '../../services/seo.service';
 
