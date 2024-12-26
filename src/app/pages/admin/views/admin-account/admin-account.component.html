@@ -452,16 +452,16 @@
                     <div class="text-sm">
                         <input [type]="showOldPassword ? 'text' : 'password'" placeholder="Old password"
                             formControlName="oldPassword" autocomplete="current-password" class="input w-full">
-                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox"
+                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox" [checked]="showOldPassword"
                                 (click)="toggleOldPasswordVisibility()"><label for="showPassword">Show password</label>
                         </div>
                     </div>
 
                     <div class="text-sm">
-                        <input [type]="showNewPassword ? 'text' : 'password'" placeholder="New password"
-                            formControlName="newPassword" autocomplete="new-password" class="input w-full"
+                        <input [type]="showNewPassword ? 'text' : 'password'" placeholder="New password" formControlName="newPassword"
+                            autocomplete="new-password" class="input w-full"
                             [ngClass]="{'invalid-input': (changePasswordForm.get('newPassword')?.hasError('minlength') || changePasswordForm.get('newPassword')?.hasError('invalidPassword')) && changePasswordForm.get('newPassword')?.touched}">
-                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox"
+                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox" [checked]="showNewPassword"
                                 (click)="toggleNewPasswordVisibility()"><label for="showPassword">Show password</label>
                         </div>
                         @if (changePasswordForm.get('newPassword')?.hasError('minlength') &&
@@ -476,7 +476,7 @@
                             letter,
                             one number, and one special character.</p>
                         }
-
+                    
                     </div>
 
                     <button type="submit" class="button w-full text-lg"

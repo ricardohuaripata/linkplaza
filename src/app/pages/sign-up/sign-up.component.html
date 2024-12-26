@@ -35,6 +35,8 @@
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
                         autocomplete="new-password" placeholder="Password" class="input w-full"
                         [ngClass]="{'invalid-input': (signUpForm.get('password')?.hasError('minlength') || signUpForm.get('password')?.hasError('invalidPassword')) && signUpForm.get('password')?.touched}">
+                    <div class="flex gap-1 mt-1 mx-2"><input type="checkbox" [checked]="showPassword" (click)="togglePasswordVisibility()"><label
+                            for="showPassword">Show password</label></div>
                     @if (signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched)
                     {
                     <p class="invalid-input-message">* Password must be at least 8 characters long.</p>
@@ -46,8 +48,7 @@
                         one number, and one special character.</p>
                     }
                 </div>
-                <div class="flex gap-1 mx-2"><input type="checkbox" (click)="togglePasswordVisibility()"><label
-                        for="showPassword">Show password</label></div>
+
                 <button type="submit" class="button text-xl mt-4"
                     [disabled]="this.signUpForm.invalid || this.disableForm">
                     @if (this.disableForm) {
