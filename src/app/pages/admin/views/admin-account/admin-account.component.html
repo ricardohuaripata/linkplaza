@@ -260,10 +260,15 @@
                     </p>
 
                     <div class="flex max-sm:flex-col gap-2 ">
-                        <button type="button" class="button-danger w-full" (click)="sendDeleteAccountVerificationCode()"
-                            [disabled]="this.disableForm || this.resendCodeCooldown">Continue</button>
-                        <button type="button" class="button-secondary w-full"
-                            (click)="openDeleteAccountWarningModal = false"
+                        <button type="button" class="button-danger w-full text-lg" (click)="sendDeleteAccountVerificationCode()"
+                            [disabled]="this.disableForm || this.disableDeleteAccountWarningButton || this.resendCodeCooldown">
+                            @if (this.disableDeleteAccountWarningButton) {
+                            <app-loading [small]="true" />
+                            } @else {
+                            Continue
+                            }
+                        </button>
+                        <button type="button" class="button-secondary w-full text-lg" (click)="openDeleteAccountWarningModal = false"
                             [disabled]="this.disableForm">Cancel</button>
                     </div>
                 </div>

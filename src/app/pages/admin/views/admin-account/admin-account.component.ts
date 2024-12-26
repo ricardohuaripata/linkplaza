@@ -37,11 +37,11 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   targetPage?: Page;
   selectedPage?: Page;
 
-  openPageOptionsModal?: boolean;
-  openDeleteAccountWarningModal?: boolean;
-  openDeleteAccountVerificationModal?: boolean;
-  openAccountVerificationModal?: boolean;
-  openChangePasswordModal?: boolean;
+  openPageOptionsModal: boolean = false;
+  openDeleteAccountWarningModal: boolean = false;
+  openDeleteAccountVerificationModal: boolean = false;
+  openAccountVerificationModal: boolean = false;
+  openChangePasswordModal: boolean = false;
 
   changeEmailForm: FormGroup;
   changePageUrlForm: FormGroup;
@@ -61,6 +61,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   disableChangePasswordForm: boolean = false;
   disableDeletePageButton: boolean = false;
   disableDeleteAccountForm: boolean = false;
+  disableDeleteAccountWarningButton: boolean = false;
   disableVerifyAccountForm: boolean = false;
 
   showOldPassword: boolean = false;
@@ -279,6 +280,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
 
   sendDeleteAccountVerificationCode() {
     this.disableForm = true;
+    this.disableDeleteAccountWarningButton = true;
     this.resendCodeCooldown = true;
     this.resendCodeCooldownRemainingTime = 20;
 
@@ -286,6 +288,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
       this.userService.sendDeleteAccountVerificationCode().subscribe({
         next: (response: any) => {
           this.disableForm = false;
+          this.disableDeleteAccountWarningButton = false;
           this.openDeleteAccountWarningModal = false;
           this.openDeleteAccountVerificationModal = true;
 
@@ -299,6 +302,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
         },
         error: (event) => {
           this.disableForm = false;
+          this.disableDeleteAccountWarningButton = false;
         },
       })
     );
@@ -319,6 +323,7 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.userService.deleteAccount(requestBody).subscribe({
         next: (response: any) => {
+          this.userService.setTargetPage(undefined);
           this.userService.setLoggedUser(undefined);
           this.router.navigate(['/']);
         },
