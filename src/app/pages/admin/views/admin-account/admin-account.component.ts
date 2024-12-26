@@ -14,19 +14,21 @@ import {
   characterPatternValidator,
   noDotAtEdgesValidator,
 } from '../../../../validators/url-validators';
-import { emailValidator } from '../../../../validators/user-validators';
+import {
+  emailValidator,
+  passwordValidator,
+} from '../../../../validators/user-validators';
 
 import { User } from '../../../../interfaces/user';
 import { UserService } from '../../../../services/user/user.service';
 import { Page } from '../../../../interfaces/page';
 import { PageService } from '../../../../services/page/page.service';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { LoadingComponent } from "../../../../shared/loading/loading.component";
+import { LoadingComponent } from '../../../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-admin-account',
   standalone: true,
-  imports: [NgClass, ReactiveFormsModule, RouterLink, ChangePasswordComponent, LoadingComponent],
+  imports: [NgClass, ReactiveFormsModule, RouterLink, LoadingComponent],
   templateUrl: './admin-account.component.html',
   styleUrl: './admin-account.component.scss',
 })
@@ -42,23 +44,27 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
   openChangePasswordModal?: boolean;
 
   changeEmailForm: FormGroup;
-  changeEmailForm_submitFeedbackMessage?: string;
-
   changePageUrlForm: FormGroup;
-  changePageUrlForm_submitFeedbackMessage?: string;
-
+  changePasswordForm: FormGroup;
   deleteAccountVerificationForm: FormGroup;
-  deleteAccountVerificationForm_submitFeedbackMessage?: string;
-
   accountVerificationForm: FormGroup;
+
+  changeEmailForm_submitFeedbackMessage?: string;
+  changePageUrlForm_submitFeedbackMessage?: string;
+  changePasswordForm_submitFeedbackMessage?: string;
+  deleteAccountVerificationForm_submitFeedbackMessage?: string;
   accountVerificationForm_submitFeedbackMessage?: string;
 
   disableForm: boolean = false;
   disableChangeEmailForm: boolean = false;
   disableChangePageUrlForm: boolean = false;
+  disableChangePasswordForm: boolean = false;
   disableDeletePageButton: boolean = false;
   disableDeleteAccountForm: boolean = false;
   disableVerifyAccountForm: boolean = false;
+
+  showOldPassword: boolean = false;
+  showNewPassword: boolean = false;
 
   resendCodeCooldown: boolean = false;
   resendCodeCooldownRemainingTime: number = 20;
@@ -83,6 +89,18 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           Validators.maxLength(64),
           characterPatternValidator,
           noDotAtEdgesValidator,
+        ],
+      ],
+    });
+    this.changePasswordForm = this.fb.group({
+      oldPassword: ['', [Validators.required]],
+      newPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(256),
+          passwordValidator,
         ],
       ],
     });
@@ -120,6 +138,14 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
     );
   }
 
+  toggleOldPasswordVisibility() {
+    this.showOldPassword = !this.showOldPassword;
+  }
+
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
   onOpenPageOptionsModal(page: Page) {
     if (this.changePageUrlForm_submitFeedbackMessage) {
       this.changePageUrlForm_submitFeedbackMessage = undefined;
@@ -153,7 +179,6 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
           this.changeEmailForm_submitFeedbackMessage = event.error.message;
           this.disableForm = false;
           this.disableChangeEmailForm = false;
-
         },
       })
     );
@@ -217,6 +242,36 @@ export class AdminAccountComponent implements OnInit, OnDestroy {
         error: (event) => {
           this.disableForm = false;
           this.disableDeletePageButton = false;
+        },
+      })
+    );
+  }
+
+  onChangePasswordFormSubmit() {
+    this.disableForm = true;
+    this.disableChangePasswordForm = true;
+
+    const requestBody: any = {
+      oldPassword: this.changePasswordForm.value.oldPassword,
+      newPassword: this.changePasswordForm.value.newPassword,
+    };
+
+    this.subscription.add(
+      this.userService.changePassword(requestBody).subscribe({
+        next: (response: any) => {
+          this.userService.setLoggedUser(response.data);
+          this.disableForm = false;
+          this.disableChangePasswordForm = false;
+          this.openChangePasswordModal = false;
+          this.changePasswordForm.reset();
+          if (this.changePasswordForm_submitFeedbackMessage) {
+            this.changePasswordForm_submitFeedbackMessage = undefined;
+          }
+        },
+        error: (event) => {
+          this.changePasswordForm_submitFeedbackMessage = event.error.message;
+          this.disableForm = false;
+          this.disableChangePasswordForm = false;
         },
       })
     );

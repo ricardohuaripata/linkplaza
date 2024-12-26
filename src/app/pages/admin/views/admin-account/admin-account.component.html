@@ -11,7 +11,8 @@
                 <span class="sr-only">Info</span>
                 <h3 class="font-medium">Account not verified</h3>
             </div>
-            <div class="my-2 text-sm">You will need to <button class="underline font-medium disabled:hover:cursor-not-allowed"
+            <div class="my-2 text-sm">You will need to <button
+                    class="underline font-medium disabled:hover:cursor-not-allowed"
                     (click)="sendAccountVerificationCode()"
                     [disabled]="this.disableForm || this.resendCodeCooldown">verify your
                     account</button> to publish your pages and make them visible
@@ -189,7 +190,8 @@
                             }
                         </div>
 
-                        <button type="submit" class="button w-full text-lg" [disabled]="this.changePageUrlForm.invalid || this.disableForm || this.disableChangePageUrlForm || this.changePageUrlForm.get('url')?.value == selectedPage?.url">
+                        <button type="submit" class="button w-full text-lg"
+                            [disabled]="this.changePageUrlForm.invalid || this.disableForm || this.disableChangePageUrlForm || this.changePageUrlForm.get('url')?.value == selectedPage?.url">
                             @if (this.disableChangePageUrlForm) {
                             <app-loading [small]="true" />
                             } @else {
@@ -416,7 +418,81 @@
         }
 
         @if (openChangePasswordModal) {
-        <app-change-password (closeModal)="openChangePasswordModal = false" />
+        <!-- Modal -->
+        <div class="modal">
+            <div class="modal-content">
+
+                <form [formGroup]="changePasswordForm" (submit)="onChangePasswordFormSubmit()"
+                    class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
+                    <div class="flex justify-between items-center gap-2">
+                        <h2 class="text-lg font-medium">Change password</h2>
+                        <button type="button" (click)="openChangePasswordModal = false" [disabled]="this.disableForm"
+                            class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg></button>
+
+                    </div>
+
+                    @if (changePasswordForm_submitFeedbackMessage) {
+                    <div class="alert-error flex items-center" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div class="text-sm">
+                            <span class="font-medium">Error: </span> {{changePasswordForm_submitFeedbackMessage}}
+                        </div>
+                    </div>
+                    }
+
+                    <div class="text-sm">
+                        <input [type]="showOldPassword ? 'text' : 'password'" placeholder="Old password"
+                            formControlName="oldPassword" autocomplete="current-password" class="input w-full">
+                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox"
+                                (click)="toggleOldPasswordVisibility()"><label for="showPassword">Show password</label>
+                        </div>
+                    </div>
+
+                    <div class="text-sm">
+                        <input [type]="showNewPassword ? 'text' : 'password'" placeholder="New password"
+                            formControlName="newPassword" autocomplete="new-password" class="input w-full"
+                            [ngClass]="{'invalid-input': (changePasswordForm.get('newPassword')?.hasError('minlength') || changePasswordForm.get('newPassword')?.hasError('invalidPassword')) && changePasswordForm.get('newPassword')?.touched}">
+                        <div class="flex gap-1 mt-1 mx-2"><input type="checkbox"
+                                (click)="toggleNewPasswordVisibility()"><label for="showPassword">Show password</label>
+                        </div>
+                        @if (changePasswordForm.get('newPassword')?.hasError('minlength') &&
+                        changePasswordForm.get('newPassword')?.touched)
+                        {
+                        <p class="invalid-input-message">* Password must be at least 8 characters long.</p>
+                        }
+                        @if (changePasswordForm.get('newPassword')?.hasError('invalidPassword') &&
+                        changePasswordForm.get('newPassword')?.touched)
+                        {
+                        <p class="invalid-input-message">* Password include at least one uppercase letter, one lowercase
+                            letter,
+                            one number, and one special character.</p>
+                        }
+
+                    </div>
+
+                    <button type="submit" class="button w-full text-lg"
+                        [disabled]="this.changePasswordForm.invalid || this.disableForm || this.disableChangePasswordForm">
+                        @if (this.disableChangePasswordForm) {
+                        <app-loading [small]="true" />
+                        } @else {
+                        Change password
+                        }
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+
         }
 
     </main>
