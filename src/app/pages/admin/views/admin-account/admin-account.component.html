@@ -76,11 +76,11 @@
                     <div class="flex items-center gap-2">
                         @if (page.pictureUrl) {
                         <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
-                            class="aspect-square min-w-10 w-10 object-cover rounded-full">
+                            class="aspect-square min-w-10 min-h-10 w-10 h-10 object-cover rounded-full">
 
                         } @else {
                         <div
-                            class="bg-gray-500 aspect-square w-10 rounded-full flex justify-center items-center text-base text-white font-medium">
+                            class="bg-gray-500 aspect-square w-10 h-10 rounded-full flex justify-center items-center text-base text-white font-medium">
                             {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
                         }
                         <span>{{'@' + page.url}}</span>
@@ -162,29 +162,29 @@
                             <div class="relative">
                                 <input type="text" formControlName="url" placeholder="URL" class="input w-full"
                                     style="padding-left: 9rem;"
-                                    [ngClass]="{'invalid-input': (changePageUrlForm.get('url')?.hasError('minlength') || changePageUrlForm.get('url')?.hasError('maxlength') || changePageUrlForm.get('url')?.hasError('invalidCharacterPattern') || changePageUrlForm.get('url')?.hasError('invalidDotAtEdges')) && changePageUrlForm.get('url')?.touched}">
+                                    [ngClass]="{'invalid-input': (changePageUrlForm.get('url')?.hasError('minlength') || changePageUrlForm.get('url')?.hasError('maxlength') || changePageUrlForm.get('url')?.hasError('invalidCharacterPattern') || changePageUrlForm.get('url')?.hasError('invalidDotAtEdges')) && changePageUrlForm.get('url')?.dirty}">
                                 <span
                                     class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">linkplaza.com/page/</span>
                             </div>
                             @if (changePageUrlForm.get('url')?.hasError('minlength') &&
-                            changePageUrlForm.get('url')?.touched)
+                            changePageUrlForm.get('url')?.dirty)
                             {
                             <p class="invalid-input-message">* URL cannot be shorter than 3 characters.</p>
                             }
                             @if (changePageUrlForm.get('url')?.hasError('maxlength') &&
-                            changePageUrlForm.get('url')?.touched)
+                            changePageUrlForm.get('url')?.dirty)
                             {
                             <p class="invalid-input-message">* URL cannot be longer than 64 characters.</p>
                             }
                             @if (changePageUrlForm.get('url')?.hasError('invalidCharacterPattern') &&
-                            changePageUrlForm.get('url')?.touched)
+                            changePageUrlForm.get('url')?.dirty)
                             {
                             <p class="invalid-input-message">* URL may only contain letters, numbers, underscores, and
                                 periods.
                             </p>
                             }
                             @if (changePageUrlForm.get('url')?.hasError('invalidDotAtEdges') &&
-                            changePageUrlForm.get('url')?.touched)
+                            changePageUrlForm.get('url')?.dirty)
                             {
                             <p class="invalid-input-message">* URL cannot start or end with a period.</p>
                             }

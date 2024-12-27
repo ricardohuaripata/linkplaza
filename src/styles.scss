@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .input {
-  @apply p-3 bg-neutral-100 rounded-lg text-black placeholder:text-black border focus:outline-offset-4;
+  @apply p-3 bg-neutral-100 rounded-lg text-black placeholder:text-black border border-neutral-100 focus:outline-offset-4;
 }
 
 .input-digit {
