@@ -2,11 +2,11 @@
     <div class="mb-4">
         @if (page.pictureUrl) {
         <img [src]="page.pictureUrl" [alt]="page.url + ' profile picture'"
-            class="aspect-square w-24 object-cover rounded-full">
+            class="aspect-square w-24 object-cover rounded-full cursor-pointer" (click)="openUploadPictureModal = true">
 
         } @else {
-        <div
-            class="bg-gray-500 aspect-square w-24 rounded-full flex justify-center items-center text-3xl text-white font-medium">
+        <div class="bg-gray-500 aspect-square w-24 rounded-full flex justify-center items-center text-3xl text-white font-medium cursor-pointer"
+            (click)="openUploadPictureModal = true">
             {{page.url.substring(0,1).toLocaleUpperCase()}}</div>
         }
     </div>
@@ -29,7 +29,7 @@
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Name, bio and picture to display</h2>
-                <button type="button" (click)="openEditPageModal = false" [disabled]="this.disableForm"
+                <button type="button" (click)="openEditPageModal = false" [disabled]="this.disableEditPageForm"
                     class="hover:bg-slate-200 rounded-md p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-7">
@@ -69,25 +69,84 @@
                 }
             </div>
 
-            <div>
-                <input type="text" placeholder="Enter picture URL" formControlName="pictureUrl" class="input w-full"
-                    [ngClass]="{'invalid-input': editPageForm.get('pictureUrl')?.hasError('maxlength') && editPageForm.get('pictureUrl')?.touched}">
-                @if (editPageForm.get('pictureUrl')?.hasError('maxlength') &&
-                editPageForm.get('pictureUrl')?.touched)
-                {
-                <p class="invalid-input-message">* URL cannot be longer than 3200 characters.</p>
-                }
-            </div>
-
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editPageForm.invalid || this.disableForm">
-                @if (this.disableForm) {
+                [disabled]="this.editPageForm.invalid || this.disableEditPageForm">
+                @if (this.disableEditPageForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Save
                 }
             </button>
         </form>
+
+    </div>
+</div>
+
+}
+
+@if (openUploadPictureModal) {
+<!-- Modal -->
+<div class="modal">
+    <div class="modal-content">
+
+        <div class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
+            <div class="flex justify-between items-center gap-2">
+                <h2 class="text-lg font-medium">Upload image</h2>
+                <button type="button" (click)="openUploadPictureModal = false"
+                    [disabled]="this.disableUploadPictureButton" class="hover:bg-slate-200 rounded-md p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg></button>
+
+            </div>
+
+            @if (!selectedFile) {
+            <div class="flex items-center justify-center w-full" (dragover)="onDragOver($event)"
+                (drop)="onDrop($event)">
+                <label for="dropzone-file"
+                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-neutral-300 border-dashed rounded-lg cursor-pointer bg-neutral-100 hover:bg-neutral-200">
+                    <div class="flex flex-col items-center justify-center text-center pt-5 pb-6 px-3">
+                        <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click
+                                to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500">JPG, JPEG, PNG or WEBP (MAX 5MB)
+                        </p>
+                        @if (invalidFileMessage) {
+                        <p class="text-red-700 text-sm mt-2 font-medium">
+                            {{invalidFileMessage}}
+                        </p>
+                        }
+                    </div>
+                    <input id="dropzone-file" type="file" class="hidden"
+                        accept="image/jpg, image/jpeg, image/png, image/webp" (change)="onFileSelected($event)" />
+                </label>
+            </div>
+            } @else {
+            <div class="flex justify-center">
+                <img [src]="selectedFileUrl" alt="selected image" class="picture-preview">
+            </div>
+            }
+
+            <div class="flex max-sm:flex-col gap-2 ">
+                <button type="button" class="button-secondary w-full" [disabled]="this.disableUploadPictureButton"
+                    (click)="clearFile()">Clear</button>
+                <button type="submit" class="button-danger w-full text-lg"
+                    [disabled]="!selectedFile || this.disableUploadPictureButton" (click)="onUploadPicture()">
+                    @if (this.disableUploadPictureButton) {
+                    <app-loading [small]="true" />
+                    } @else {
+                    Upload
+                    }
+                </button>
+
+            </div>
+        </div>
 
     </div>
 </div>

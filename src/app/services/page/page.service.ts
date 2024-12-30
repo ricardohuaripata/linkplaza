@@ -38,6 +38,17 @@ export class PageService {
     );
   }
   // authenticacion required
+  uploadPicture(id: number, picture: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('picture', picture);
+
+    return this.http.patch<any>(
+      this.API_URL + this.ENDPOINT + '/' + id + '/picture',
+      formData,
+      { withCredentials: true }
+    );
+  }
+  // authenticacion required
   deletePage(id: number): Observable<any> {
     return this.http.delete<any>(this.API_URL + this.ENDPOINT + '/' + id, {
       withCredentials: true,
