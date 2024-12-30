@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
 
     this.seo.setPageTitle(seoConfig.page_title);
+    this.seo.setPageDescription(seoConfig.page_description);
     this.seo.setCanonicalURL(seoConfig.page_url);
     this.seo.setIndexFollow(true);
     this.seo.setSocialMetaTags(seoConfig);

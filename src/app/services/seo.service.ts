@@ -18,6 +18,13 @@ export class SeoService {
     this.title.setTitle(title);
   }
 
+  setPageDescription(description: string): void {
+    this.meta.updateTag({
+      name: 'description',
+      content: description,
+    });
+  }
+
   setCanonicalURL(url: string): void {
     const CANONICAL_URL = url == undefined ? this._document.URL : url;
     const HEAD = this._document.getElementsByTagName('head')[0];
@@ -41,15 +48,7 @@ export class SeoService {
 
   setSocialMetaTags(config: SeoConfig): void {
     this.meta.updateTag({
-      name: 'description',
-      content: config.page_description,
-    });
-    this.meta.updateTag({
-      name: 'apple-mobile-web-app-title',
-      content: environment.APP_NAME,
-    });
-    this.meta.updateTag({
-      name: 'application-name',
+      name: 'twitter:domain',
       content: environment.APP_NAME,
     });
     this.meta.updateTag({

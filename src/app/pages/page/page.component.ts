@@ -50,11 +50,12 @@ export class PageComponent implements OnInit, OnDestroy {
                 const seoConfig: SeoConfig = {
                   page_title: this.page.title ? this.page.title + ' | LinkPlaza' : this.page.url + ' | LinkPlaza',
                   page_description: this.page.bio ? this.page.bio : 'Hey visit my page now and check my bio!',
-                  page_url: environment.BASE_URL,
+                  page_url: environment.BASE_URL + '/page/' + this.pageUrl,
                   page_image_url: environment.BASE_URL + '/img/LinkPlaza-Preview.jpg',
                 };
 
                 this.seo.setPageTitle(seoConfig.page_title);
+                this.seo.setPageDescription(seoConfig.page_description);
                 this.seo.setCanonicalURL(seoConfig.page_url);
                 this.seo.setIndexFollow(true);
                 this.seo.setSocialMetaTags(seoConfig);
