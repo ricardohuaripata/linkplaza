@@ -49,3 +49,5 @@
 .alert-success {
   @apply p-4 text-green-800 rounded-lg bg-green-50;
 }
+
+@import "../node_modules/cropperjs/dist/cropper.css";

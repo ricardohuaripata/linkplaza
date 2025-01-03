@@ -21,7 +21,6 @@ import { UserService } from '../../../../../../services/user/user.service';
 import { LoadingComponent } from '../../../../../../shared/loading/loading.component';
 
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
 
 @Component({
   selector: 'app-info',
