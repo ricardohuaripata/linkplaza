@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +19,9 @@ import { Page } from '../../../../../../interfaces/page';
 import { PageService } from '../../../../../../services/page/page.service';
 import { UserService } from '../../../../../../services/user/user.service';
 import { LoadingComponent } from '../../../../../../shared/loading/loading.component';
+
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 @Component({
   selector: 'app-info',
@@ -30,11 +40,17 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   editPageForm: FormGroup;
 
-  selectedFile: File | null = null;
-  selectedFileUrl: string | null = null;
-  invalidFileMessage?: string;
+  @ViewChild('image', { static: false })
+  imageElement!: ElementRef<HTMLImageElement>;
+  @ViewChild('imageContainer', { static: false })
+  imageContainer!: ElementRef<HTMLDivElement>;
+  selectedFile: string | null = null;
+  cropper: Cropper | null = null;
+  croppedImage: string | null = null;
+  outputFileType: string = 'image/jpeg';
 
-  editPageFormSubmitFeedbackMessage?: string;
+  editPageFormSubmitFeedbackMessage: string | null = null;
+  invalidFileMessage: string | null = null;
 
   private subscription: Subscription = new Subscription();
 
@@ -70,6 +86,9 @@ export class InfoComponent implements OnInit, OnDestroy {
           this.userService.setTargetPage(response.data);
           this.disableEditPageForm = false;
           this.openEditPageModal = false;
+          if (this.editPageFormSubmitFeedbackMessage) {
+            this.editPageFormSubmitFeedbackMessage = null;
+          }
         },
         error: (event) => {
           this.editPageFormSubmitFeedbackMessage = event.error.message;
@@ -112,9 +131,17 @@ export class InfoComponent implements OnInit, OnDestroy {
     // validar tipo de archivo
     if (fileExtension && validExtensions.includes(fileExtension)) {
       if (file.size <= maxSizeInBytes) {
-        this.selectedFile = file;
-        this.selectedFileUrl = URL.createObjectURL(file);
-        console.log('file processed', this.selectedFile);
+        console.log('file processed', file);
+
+        this.outputFileType = file.type;
+
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.selectedFile = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
       } else {
         this.invalidFileMessage = 'File size exceeds the maximum limit.';
       }
@@ -124,36 +151,90 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   clearFile() {
-    if (this.selectedFileUrl) {
-      URL.revokeObjectURL(this.selectedFileUrl);
-    }
-    this.invalidFileMessage = undefined;
+    this.invalidFileMessage = null;
     this.selectedFile = null;
-    this.selectedFileUrl = null;
+    this.croppedImage = null;
+    if (this.cropper) {
+      this.cropper.destroy();
+      this.cropper = null;
+    }
   }
 
-  onUploadPicture() {
-    if (!this.selectedFile) {
-      return;
-    }
-
+  onUploadPicture(base64Image: string) {
     this.disableUploadPictureButton = true;
 
+    const base64String = base64Image;
+    const fileName = 'cropped-image';
+    const mimeType = this.outputFileType;
+
+    const file = this.base64ToFile(base64String, fileName, mimeType);
+
+    console.log('uploading file: ', file);
+
     this.subscription.add(
-      this.pageService
-        .uploadPicture(this.page.id, this.selectedFile)
-        .subscribe({
-          next: (response: any) => {
-            this.userService.setTargetPage(response.data);
-            this.disableUploadPictureButton = false;
-            this.openUploadPictureModal = false;
-            this.clearFile();
-          },
-          error: (event) => {
-            this.disableUploadPictureButton = false;
-          },
-        })
+      this.pageService.uploadPicture(this.page.id, file).subscribe({
+        next: (response: any) => {
+          this.userService.setTargetPage(response.data);
+          this.disableUploadPictureButton = false;
+          this.openUploadPictureModal = false;
+          this.clearFile();
+        },
+        error: (event) => {
+          this.disableUploadPictureButton = false;
+        },
+      })
     );
+  }
+
+  initCropper() {
+    const image = this.imageElement.nativeElement;
+    this.cropper = new Cropper(image, {
+      aspectRatio: 1 / 1,
+      center: true,
+      autoCrop: true,
+      autoCropArea: 1,
+      viewMode: 2,
+      restore: false,
+      minCropBoxWidth: 100,
+      minCropBoxHeight: 100,
+    });
+  }
+
+  cropImage() {
+    if (this.cropper) {
+      const canvas = this.cropper.getCroppedCanvas();
+      if (canvas) {
+        this.croppedImage = canvas.toDataURL(this.outputFileType, 0.75);
+      }
+    }
+  }
+
+  resetCropper() {
+    if (this.cropper) {
+      console.log('resetting cropper');
+      this.cropper.reset();
+    }
+    if (this.croppedImage) {
+      console.log('resetting cropped image');
+      this.croppedImage = null;
+    }
+  }
+
+  base64ToFile(
+    base64String: string,
+    fileName: string,
+    mimeType: string = ''
+  ): File {
+    const byteString = atob(base64String.split(',')[1]);
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new File([arrayBuffer], fileName, { type: mimeType });
   }
 
   ngOnDestroy(): void {

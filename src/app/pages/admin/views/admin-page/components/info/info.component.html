@@ -29,7 +29,7 @@
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Name, bio and picture to display</h2>
-                <button type="button" (click)="openEditPageModal = false" [disabled]="this.disableEditPageForm"
+                <button type="button" (click)="openEditPageModal = false" [disabled]="disableEditPageForm"
                     class="hover:bg-slate-200 rounded-md p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-7">
@@ -70,8 +70,8 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editPageForm.invalid || this.disableEditPageForm">
-                @if (this.disableEditPageForm) {
+                [disabled]="editPageForm.invalid || disableEditPageForm">
+                @if (disableEditPageForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Save
@@ -92,8 +92,8 @@
         <div class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Upload image</h2>
-                <button type="button" (click)="openUploadPictureModal = false"
-                    [disabled]="this.disableUploadPictureButton" class="hover:bg-slate-200 rounded-md p-1">
+                <button type="button" (click)="openUploadPictureModal = false" [disabled]="disableUploadPictureButton"
+                    class="hover:bg-slate-200 rounded-md p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -128,24 +128,64 @@
                 </label>
             </div>
             } @else {
-            <div class="flex justify-center">
-                <img [src]="selectedFileUrl" alt="selected image" class="picture-preview">
+
+            <div class="border">
+                <div class="flex justify-end m-2">
+                    <button type="button" class="button-secondary" [disabled]="disableUploadPictureButton"
+                        (click)="resetCropper()">
+                        <div class="flex justify-center items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                <path fill-rule="evenodd"
+                                    d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                            </svg>
+                            <span>Reset</span>
+                        </div>
+                    </button>
+                </div>
+
+                @if (croppedImage) {
+                <img [src]="croppedImage" alt="cropped image">
+
+                } @else {
+                <div #imageContainer>
+                    <img #image [src]="selectedFile" alt="image to crop" (load)="initCropper()" />
+                </div>
+                }
             </div>
             }
 
             <div class="flex max-sm:flex-col gap-2 ">
-                <button type="button" class="button-secondary w-full" [disabled]="this.disableUploadPictureButton"
-                    (click)="clearFile()">Clear</button>
-                <button type="submit" class="button-danger w-full text-lg"
-                    [disabled]="!selectedFile || this.disableUploadPictureButton" (click)="onUploadPicture()">
-                    @if (this.disableUploadPictureButton) {
+                <button type="button" class="button-secondary w-full text-lg"
+                    [disabled]="disableUploadPictureButton || !cropper" (click)="clearFile()">Clear</button>
+
+                @if (croppedImage) {
+                <button type="submit" class="button w-full text-lg" [disabled]="disableUploadPictureButton"
+                    (click)="onUploadPicture(croppedImage)">
+                    @if (disableUploadPictureButton) {
                     <app-loading [small]="true" />
                     } @else {
-                    Upload
+                    <div class="flex justify-center items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708z" />
+                            <path
+                                d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
+                        </svg>
+                        <span>Upload</span>
+                    </div>
                     }
                 </button>
+                } @else {
+                <button type="button" class="button w-full text-lg" (click)="cropImage()"
+                    [disabled]="!cropper">Crop</button>
+                }
 
             </div>
+
         </div>
 
     </div>
