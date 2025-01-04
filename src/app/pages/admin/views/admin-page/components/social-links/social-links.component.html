@@ -11,7 +11,7 @@
             </select>
 
             <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full"
-                (click)="onOpenEditSocialLinkModal(socialLink)" [disabled]="this.disableForm">
+                (click)="onOpenEditSocialLinkModal(socialLink)" [disabled]="disableForm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="min-w-8 w-8" viewBox="0 0 16 16">
                     <path [attr.d]="socialLink.socialPlatform.icon"></path>
                 </svg>
@@ -31,7 +31,7 @@
     </div>
 
     <button type="button" class="button w-full mt-5 text-lg sm:text-xl" (click)="onOpenAddSocialLinkModal()"
-        [disabled]="this.disableForm">Add social link</button>
+        [disabled]="disableForm">Add social link</button>
 
 </section>
 
@@ -40,24 +40,22 @@
 <div class="modal">
     <div class="modal-content">
 
-        <form [formGroup]="addSocialLinkForm" (submit)="onAddSocialLinkFormSubmit(this.page.id)"
+        <form [formGroup]="addSocialLinkForm" (submit)="onAddSocialLinkFormSubmit(page.id)"
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Add social link</h2>
-                <button type="button" (click)="openAddSocialLinkModal = false" [disabled]="this.disableForm"
-                    class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg></button>
+                <button type="button" (click)="openAddSocialLinkModal = false" [disabled]="disableForm"
+                    class="hover:bg-slate-200 rounded-md p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
 
             </div>
             @if (addSocialLinkFormSubmitFeedbackMessage) {
             <div class="alert-error flex items-center" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
                 <span class="sr-only">Info</span>
                 <div class="text-sm">
@@ -75,6 +73,7 @@
                     <app-loading [small]="false" />
 
                     } @else {
+
                     @for (socialPlatform of socialPlatforms; track $index) {
                     <button type="button" class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full"
                         (click)="addSocialLinkForm.get('socialPlatform')?.setValue(socialPlatform)"
@@ -85,6 +84,7 @@
                         <p class="text-sm sm:text-lg font-medium">{{socialPlatform.name}}</p>
                     </button>
                     }
+
                     }
 
                 </div>
@@ -114,8 +114,8 @@
             }
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.addSocialLinkForm.invalid || this.disableForm || this.disableAddSocialLinkForm">
-                @if (this.disableAddSocialLinkForm) {
+                [disabled]="addSocialLinkForm.invalid || disableForm || disableAddSocialLinkForm">
+                @if (disableAddSocialLinkForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Add
@@ -137,12 +137,12 @@
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Edit social link</h2>
-                <button type="button" (click)="openEditSocialLinkModal = false" [disabled]="this.disableForm"
-                    class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg></button>
+                <button type="button" (click)="openEditSocialLinkModal = false" [disabled]="disableForm"
+                    class="hover:bg-slate-200 rounded-md p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
 
             </div>
 
@@ -164,22 +164,20 @@
             </div>
 
             @if (editSocialLinkForm.get('socialLink')?.value) {
-            <p class="text-sm overflow-auto">{{editSocialLinkForm.get('socialLink')?.value.socialPlatform.domainUrl
-                +
-                editSocialLinkForm.get('url')?.value}}</p>
+            <p class="text-sm overflow-auto">{{editSocialLinkForm.get('socialLink')?.value.socialPlatform.domainUrl + editSocialLinkForm.get('url')?.value}}</p>
             }
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editSocialLinkForm.invalid || this.disableForm || this.disableEditSocialLinkForm">
-                @if (this.disableEditSocialLinkForm) {
+                [disabled]="editSocialLinkForm.invalid || disableForm || disableEditSocialLinkForm">
+                @if (disableEditSocialLinkForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Edit
                 }
             </button>
-            <button type="button" class="button-secondary w-full text-lg"
-                [disabled]="this.disableForm || this.disableRemoveSocialLinkButton" (click)="removeSocialLink()">
-                @if (this.disableRemoveSocialLinkButton) {
+            <button type="button" class="button-secondary w-full text-lg" [disabled]="disableForm || disableRemoveSocialLinkButton"
+                (click)="removeSocialLink()">
+                @if (disableRemoveSocialLinkButton) {
                 <app-loading [small]="true" />
                 } @else {
                 Remove

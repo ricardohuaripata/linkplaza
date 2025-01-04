@@ -1,7 +1,6 @@
 <section class="mt-10">
     <h2 class="text-xl sm:text-2xl font-semibold mb-2">Customization</h2>
-    <p class="text-pretty">Completely customize your LinkPlaza page. Change your background with colors, gradients and
-        images. Choose a button style, change the typeface and more.</p>
+    <p class="text-pretty">Completely customize your page. Change your background with colors, choose a button style or change the font color.</p>
 
     <form [formGroup]="customizationForm" (submit)="onCustomizationFormSubmit()" class="mt-8">
         <div class="flex flex-col gap-4 p-1 overflow-auto ">
@@ -56,8 +55,8 @@
 
         </div>
 
-        <button type="submit" class="button w-full mt-8 text-lg sm:text-xl" [disabled]="this.disableForm">
-            @if (this.disableForm) {
+        <button type="submit" class="button w-full mt-8 text-lg sm:text-xl" [disabled]="disableForm">
+            @if (disableForm) {
             <app-loading [small]="true" />
             } @else {
             Apply changes

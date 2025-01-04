@@ -15,11 +15,9 @@
 
                 } @else {
                 <a routerLink="/signin"
-                    class="px-4 py-3 sm:px-6 sm:py-5 bg-neutral-200 hover:bg-neutral-300 rounded-lg font-semibold sm:text-lg text-nowrap">Sign
-                    in</a>
+                    class="px-4 py-3 sm:px-6 sm:py-5 bg-neutral-200 hover:bg-neutral-300 rounded-lg font-semibold sm:text-lg text-nowrap">Sign in</a>
                 <a routerLink="/signup"
-                    class="px-4 py-3 sm:px-6 sm:py-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-full font-semibold sm:text-lg text-nowrap">Sign
-                    up free</a>
+                    class="px-4 py-3 sm:px-6 sm:py-5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-full font-semibold sm:text-lg text-nowrap">Sign up free</a>
                 }
             </div>
         </div>
@@ -29,23 +27,17 @@
         <div
             class="lg:px-6 py-44 max-w-screen-2xl w-full mx-auto flex flex-col lg:flex-row justify-between lg:items-center gap-12">
             <div class="max-w-screen-lg space-y-4 sm:space-y-8 overflow-auto p-6">
-                <h1 class="text-4xl sm:text-7xl lg:text-8xl text-pretty tracking-tight font-extrabold text-lime-400">
-                    Everything you are. In one, simple link in bio.
-                </h1>
+                <h1 class="text-4xl sm:text-7xl lg:text-8xl text-pretty tracking-tight font-extrabold text-lime-400">Everything you are. In one, simple link in bio.</h1>
                 <p class="text-lg sm:text-xl md:text-2xl text-lime-400 font-medium">Join LinkPlaza to create your personal link in bio landing page. One link to help you share everything you create, curate and sell from your Instagram, TikTok, Twitter, YouTube and other social media profiles.</p>
 
-                <form [formGroup]="form" (submit)="onSubmit()" class="flex flex-wrap justify-start items-center gap-3">
+                <form [formGroup]="claimUrlform" (submit)="onSubmit()" class="flex flex-wrap justify-start items-center gap-3">
                     <div class="relative">
                         <input type="text" formControlName="url" placeholder="URL"
-                            class="py-5 pr-3 bg-neutral-100 rounded-lg text-black placeholder:text-black border focus:outline-offset-4 max-w-80 w-full"
+                            class="py-5 pr-3 bg-neutral-100 rounded-lg text-black placeholder:text-black focus:outline-offset-4 max-w-80 w-full"
                             style="padding-left: 10.25rem;">
-                        <span
-                            class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">linkplaza.com/page/</span>
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">linkplaza.com/page/</span>
                     </div>
-                    <button type="submit"
-                        class="px-6 py-5 rounded-full bg-purple-400 hover:bg-purple-500 transition-colors font-medium text-nowrap">
-                        Claim your URL
-                    </button>
+                    <button type="submit" class="px-6 py-5 rounded-full bg-purple-400 hover:bg-purple-500 transition-colors font-medium text-nowrap">Claim your URL</button>
                 </form>
 
             </div>
@@ -60,20 +52,12 @@
         <div
             class="lg:px-6 py-44 max-w-screen-2xl w-full mx-auto flex flex-col lg:flex-row justify-between lg:items-center gap-12">
             <div class="max-w-screen-lg space-y-4 sm:space-y-8 overflow-auto p-6 lg:order-2">
-                <h1 class="text-4xl sm:text-7xl text-pretty tracking-tight font-extrabold text-purple-950">
-                    Create
-                    and customize your page in minutes</h1>
-                <p class="text-lg sm:text-xl md:text-2xl text-purple-950 font-medium">Connect your TikTok, Instagram,
-                    Twitter,
-                    website, store, videos, music, podcast, events and more. It all comes together in a link in bio
-                    landing
-                    page designed to convert.</p>
+                <h1 class="text-4xl sm:text-7xl text-pretty tracking-tight font-extrabold text-purple-950">Create and customize your page in minutes</h1>
+                <p class="text-lg sm:text-xl md:text-2xl text-purple-950 font-medium">Connect your TikTok, Instagram, Twitter, website, store, videos, music, podcast, events and more. It all comes together in a link in bio landing page designed to convert.</p>
 
                 <div class="flex flex-wrap justify-start items-center gap-2">
                     <a routerLink="/signup"
-                        class="px-6 py-5 rounded-full bg-purple-950 hover:bg-purple-800 transition-colors font-medium text-nowrap text-white">Get
-                        started for
-                        free</a>
+                        class="px-6 py-5 rounded-full bg-purple-950 hover:bg-purple-800 transition-colors font-medium text-nowrap text-white">Get started for free</a>
                 </div>
             </div>
             <div class="px-6 max-w-72 w-full mx-auto">

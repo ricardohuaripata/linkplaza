@@ -10,10 +10,8 @@
 
             @if (feedbackMessage) {
             <div class="alert-error flex items-center" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
@@ -25,8 +23,7 @@
             <form [formGroup]="signUpForm" (submit)="onSubmit()" class="flex flex-col gap-4">
                 <div>
                     <input type="text" formControlName="email" autocomplete="email" placeholder="Email"
-                        class="input w-full"
-                        [ngClass]="{'invalid-input': signUpForm.get('email')?.hasError('invalidEmail') && signUpForm.get('email')?.touched}">
+                        class="input w-full" [ngClass]="{'invalid-input': signUpForm.get('email')?.hasError('invalidEmail') && signUpForm.get('email')?.touched}">
                     @if (signUpForm.get('email')?.hasError('invalidEmail') && signUpForm.get('email')?.touched) {
                     <p class="invalid-input-message">* Please enter a valid email.</p>
                     }
@@ -35,23 +32,22 @@
                     <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
                         autocomplete="new-password" placeholder="Password" class="input w-full"
                         [ngClass]="{'invalid-input': (signUpForm.get('password')?.hasError('minlength') || signUpForm.get('password')?.hasError('invalidPassword')) && signUpForm.get('password')?.touched}">
-                    <div class="flex gap-1 mt-1 mx-2"><input type="checkbox" [checked]="showPassword" (click)="togglePasswordVisibility()"><label
-                            for="showPassword">Show password</label></div>
+                    <div class="flex gap-1 mt-1 mx-2">
+                        <input type="checkbox" [checked]="showPassword" (click)="togglePasswordVisibility()">
+                        <label for="showPassword">Show password</label>
+                    </div>
                     @if (signUpForm.get('password')?.hasError('minlength') && signUpForm.get('password')?.touched)
                     {
                     <p class="invalid-input-message">* Password must be at least 8 characters long.</p>
                     }
                     @if (signUpForm.get('password')?.hasError('invalidPassword') && signUpForm.get('password')?.touched)
                     {
-                    <p class="invalid-input-message">* Password include at least one uppercase letter, one lowercase
-                        letter,
-                        one number, and one special character.</p>
+                    <p class="invalid-input-message">* Password include at least one uppercase letter, one lowercase letter, one number, and one special character.</p>
                     }
                 </div>
 
-                <button type="submit" class="button text-xl mt-4"
-                    [disabled]="this.signUpForm.invalid || this.disableForm">
-                    @if (this.disableForm) {
+                <button type="submit" class="button text-xl mt-4" [disabled]="signUpForm.invalid || disableForm">
+                    @if (disableForm) {
                     <app-loading [small]="true" />
                     } @else {
                     Create account

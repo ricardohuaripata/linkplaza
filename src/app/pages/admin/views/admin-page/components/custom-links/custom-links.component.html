@@ -11,13 +11,11 @@
             </select>
 
             <button class="flex items-center gap-2 hover:bg-neutral-200 p-3 rounded-xl w-full overflow-auto text-start"
-                (click)="onOpenEditCustomLinkModal(customLink)" [disabled]="this.disableForm">
+                (click)="onOpenEditCustomLinkModal(customLink)" [disabled]="disableForm">
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="min-w-8 w-8" fill="currentColor" viewBox="0 0 16 16">
-                    <path
-                        d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9q-.13 0-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
-                    <path
-                        d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4 4 0 0 1-.82 1H12a3 3 0 1 0 0-6z" />
+                    <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9q-.13 0-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
+                    <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4 4 0 0 1-.82 1H12a3 3 0 1 0 0-6z" />
                 </svg>
                 <p class="text-sm sm:text-lg font-medium">{{customLink.title}}</p>
             </button>
@@ -25,8 +23,7 @@
             <label class="cursor-pointer">
                 <input type="checkbox" [value]="customLink.active" class="sr-only peer" [checked]="customLink.active"
                     (click)="toggleCustomLinkActiveStatus(customLink)" [disabled]="disableForm">
-                <div
-                    class="relative w-11 h-6 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-900">
+                <div class="relative w-11 h-6 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-900">
                 </div>
             </label>
 
@@ -35,7 +32,7 @@
     </div>
 
     <button type="button" class="button w-full mt-5 text-lg sm:text-xl" (click)="openAddCustomLinkModal = true"
-        [disabled]="this.disableForm">Add custom link</button>
+        [disabled]="disableForm">Add custom link</button>
 
 </section>
 
@@ -44,24 +41,22 @@
 <div class="modal">
     <div class="modal-content">
 
-        <form [formGroup]="addCustomLinkForm" (submit)="onAddCustomLinkFormSubmit(this.page.id)"
+        <form [formGroup]="addCustomLinkForm" (submit)="onAddCustomLinkFormSubmit(page.id)"
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Add custom link</h2>
-                <button type="button" (click)="openAddCustomLinkModal = false" [disabled]="this.disableForm"
-                    class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg></button>
+                <button type="button" (click)="openAddCustomLinkModal = false" [disabled]="disableForm"
+                    class="hover:bg-slate-200 rounded-md p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
 
             </div>
             @if (addCustomLinkFormSubmitFeedbackMessage) {
             <div class="alert-error flex items-center" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                 </svg>
                 <span class="sr-only">Info</span>
                 <div class="text-sm">
@@ -99,8 +94,8 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.addCustomLinkForm.invalid || this.disableForm || this.disableAddCustomLinkForm">
-                @if (this.disableAddCustomLinkForm) {
+                [disabled]="addCustomLinkForm.invalid || disableForm || disableAddCustomLinkForm">
+                @if (disableAddCustomLinkForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Add
@@ -122,12 +117,12 @@
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
                 <h2 class="text-lg font-medium">Edit custom link</h2>
-                <button type="button" (click)="openEditCustomLinkModal = false" [disabled]="this.disableForm"
-                    class="hover:bg-slate-200 rounded-md p-1"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg></button>
+                <button type="button" (click)="openEditCustomLinkModal = false" [disabled]="disableForm"
+                    class="hover:bg-slate-200 rounded-md p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </button>
 
             </div>
 
@@ -160,16 +155,16 @@
             </div>
 
             <button type="submit" class="button w-full text-lg"
-                [disabled]="this.editCustomLinkForm.invalid || this.disableForm || this.disableEditCustomLinkForm">
-                @if (this.disableEditCustomLinkForm) {
+                [disabled]="editCustomLinkForm.invalid || disableForm || disableEditCustomLinkForm">
+                @if (disableEditCustomLinkForm) {
                 <app-loading [small]="true" />
                 } @else {
                 Edit
                 }
             </button>
-            <button type="button" class="button-secondary w-full text-lg"
-                [disabled]="this.disableForm || this.disableRemoveCustomLinkButton" (click)="removeCustomLink()">
-                @if (this.disableRemoveCustomLinkButton) {
+            <button type="button" class="button-secondary w-full text-lg" [disabled]="disableForm || disableRemoveCustomLinkButton"
+                (click)="removeCustomLink()">
+                @if (disableRemoveCustomLinkButton) {
                 <app-loading [small]="true" />
                 } @else {
                 Remove

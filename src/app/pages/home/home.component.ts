@@ -24,7 +24,7 @@ import { SeoService } from '../../services/seo.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  claimUrlform: FormGroup;
   loggedUser?: User;
   private subscription: Subscription = new Subscription();
 
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.seo.setIndexFollow(true);
     this.seo.setSocialMetaTags(seoConfig);
 
-    this.form = this.fb.group({
+    this.claimUrlform = this.fb.group({
       url: [''],
     });
   }
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const urlValue = this.form.value.url;
+    const urlValue = this.claimUrlform.value.url;
     if (urlValue && urlValue.trim() !== '') {
       this.router.navigate(['/signup'], { queryParams: { url: urlValue } });
     } else {
