@@ -8,7 +8,7 @@
 </h1>
 <h4>A link management platform, allowing users to centralize and customize their web and social media links.</h4>
 
-<a href="https://github.com/ricardohuaripata/linkplaza">
+<a href="https://github.com/ricardohuaripata/linkplaza-api">
     <img src="https://github.com/user-attachments/assets/0c8c0d35-8b0b-4fb6-8f24-11e3c157a3ec" alt="linkplaza thumbnail" width="100%" height="auto">
 </a>
 
@@ -16,17 +16,17 @@
 
 - [**Angular**](https://angular.io/) - Angular is a TypeScript-based frontend development framework, ideal for building dynamic and high-quality web applications. This framework enables us to structure the code modularly, facilitating the reuse and maintenance of components. Additionally, it provides excellent support for integrating REST services, optimizing communication with the backend.
 
-- [**Tailwind CSS**](https://getbootstrap.com/) - For the design and styling of the user interface, we use Tailwind CSS, a highly customizable utility-first CSS framework. This approach allows us to create consistent and responsive designs efficiently, reducing the need for custom CSS and speeding up the development process.
+- [**Tailwind CSS**](https://tailwindcss.com/) - For the design and styling of the user interface, we use Tailwind CSS, a highly customizable utility-first CSS framework. This approach allows us to create consistent and responsive designs efficiently, reducing the need for custom CSS and speeding up the development process.
 
 - [**Spring Boot**](https://spring.io/) - On the backend side, we implement Spring Boot, a Java framework that simplifies the development of enterprise-level applications. With its streamlined configuration approach and extensive integration with popular libraries, Spring Boot enables us to develop scalable and secure RESTful APIs, ensuring a strong connection between the frontend and the database.
 
-- [**MySQL**](https://www.postgresql.org/) - As a relational database, MySQL handles and stores the application's data. We chose MySQL for its reliability, high performance, and seamless integration with Spring Boot. Its robust structure and support for advanced SQL queries guarantee efficient data management.
+- [**MySQL**](https://www.mysql.com/) - As a relational database, MySQL handles and stores the application's data. We chose MySQL for its reliability, high performance, and seamless integration with Spring Boot. Its robust structure and support for advanced SQL queries guarantee efficient data management.
 
 ## 📚 Libraries
 
-- [**Highcharts**](https://primeng.org/) - Highcharts is a powerful JavaScript library for creating interactive and responsive data visualizations. It enables us to present complex datasets in an engaging way through charts, graphs, and other visual elements. With its extensive customization options and ease of integration, Highcharts helps us deliver insights effectively to the end-user.
+- [**Highcharts**](https://www.highcharts.com/) - Highcharts is a powerful JavaScript library for creating interactive and responsive data visualizations. It enables us to present complex datasets in an engaging way through charts, graphs, and other visual elements. With its extensive customization options and ease of integration, Highcharts helps us deliver insights effectively to the end-user.
 
-- [**CropperJS**](https://sweetalert2.github.io/) - CropperJS is a lightweight JavaScript library for image cropping. It allows users to easily manipulate images, offering functionalities like zooming, rotating, and scaling with precision. This library ensures a seamless user experience when handling image-related tasks, making it an essential component for features that involve image uploads or edits.
+- [**CropperJS**](https://fengyuanchen.github.io/cropperjs/) - CropperJS is a lightweight JavaScript library for image cropping. It allows users to easily manipulate images, offering functionalities like zooming, rotating, and scaling with precision. This library ensures a seamless user experience when handling image-related tasks, making it an essential component for features that involve image uploads or edits.
 
 ## Gallery
 ![159shots_so](https://github.com/user-attachments/assets/3e8c8642-d33c-413e-9c74-d85982f5af0e)
