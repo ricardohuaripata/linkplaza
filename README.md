@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <h1 align="center">
-  <a href="https://github.com/ricardohuaripata/linkplaza-api">
+  <a href="https://github.com/ricardohuaripata/linkplaza">
     <img src="https://github.com/user-attachments/assets/cb8ef255-cdeb-4c78-9aa7-550bf88d8185" alt="linkplaza logo" width="100" height="100">
   </a>
   <h1 align="center">LinkPlaza</h1>
@@ -29,6 +29,7 @@
 - [**CropperJS**](https://fengyuanchen.github.io/cropperjs/) - CropperJS is a lightweight JavaScript library for image cropping. It allows users to easily manipulate images, offering functionalities like zooming, rotating, and scaling with precision. This library ensures a seamless user experience when handling image-related tasks, making it an essential component for features that involve image uploads or edits.
 
 ## Gallery
-![159shots_so](https://github.com/user-attachments/assets/3e8c8642-d33c-413e-9c74-d85982f5af0e)
-![954shots_so](https://github.com/user-attachments/assets/835037a5-4140-46ef-84bb-80b6b33e6b23)
+![159shots_so-min](https://github.com/user-attachments/assets/714f1ac6-d19f-46e0-ba1a-4e782cbd9c2e)
+![954shots_so-min](https://github.com/user-attachments/assets/502216ca-9804-4e1d-84d3-28ec3aa9e8ec)
+
 
