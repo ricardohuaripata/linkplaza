@@ -1,27 +1,34 @@
-# Linkplaza
+<!-- PROJECT LOGO -->
+<br />
+<h1 align="center">
+  <a href="https://github.com/ricardohuaripata/linkplaza-api">
+    <img src="https://github.com/user-attachments/assets/cb8ef255-cdeb-4c78-9aa7-550bf88d8185" alt="linkplaza logo" width="100" height="100">
+  </a>
+  <h1 align="center">LinkPlaza</h1>
+</h1>
+<h4>A link management platform, allowing users to centralize and customize their web and social media links.</h4>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+<a href="https://github.com/ricardohuaripata/linkplaza">
+    <img src="https://github.com/user-attachments/assets/0c8c0d35-8b0b-4fb6-8f24-11e3c157a3ec" alt="linkplaza thumbnail" width="100%" height="auto">
+</a>
 
-## Development server
+## 🛠️ Stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- [**Angular**](https://angular.io/) - Angular is a TypeScript-based frontend development framework, ideal for building dynamic and high-quality web applications. This framework enables us to structure the code modularly, facilitating the reuse and maintenance of components. Additionally, it provides excellent support for integrating REST services, optimizing communication with the backend.
 
-## Code scaffolding
+- [**Tailwind CSS**](https://getbootstrap.com/) - For the design and styling of the user interface, we use Tailwind CSS, a highly customizable utility-first CSS framework. This approach allows us to create consistent and responsive designs efficiently, reducing the need for custom CSS and speeding up the development process.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- [**Spring Boot**](https://spring.io/) - On the backend side, we implement Spring Boot, a Java framework that simplifies the development of enterprise-level applications. With its streamlined configuration approach and extensive integration with popular libraries, Spring Boot enables us to develop scalable and secure RESTful APIs, ensuring a strong connection between the frontend and the database.
 
-## Build
+- [**MySQL**](https://www.postgresql.org/) - As a relational database, MySQL handles and stores the application's data. We chose MySQL for its reliability, high performance, and seamless integration with Spring Boot. Its robust structure and support for advanced SQL queries guarantee efficient data management.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 📚 Libraries
 
-## Running unit tests
+- [**Highcharts**](https://primeng.org/) - Highcharts is a powerful JavaScript library for creating interactive and responsive data visualizations. It enables us to present complex datasets in an engaging way through charts, graphs, and other visual elements. With its extensive customization options and ease of integration, Highcharts helps us deliver insights effectively to the end-user.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [**CropperJS**](https://sweetalert2.github.io/) - CropperJS is a lightweight JavaScript library for image cropping. It allows users to easily manipulate images, offering functionalities like zooming, rotating, and scaling with precision. This library ensures a seamless user experience when handling image-related tasks, making it an essential component for features that involve image uploads or edits.
 
-## Running end-to-end tests
+## Gallery
+![159shots_so](https://github.com/user-attachments/assets/3e8c8642-d33c-413e-9c74-d85982f5af0e)
+![954shots_so](https://github.com/user-attachments/assets/835037a5-4140-46ef-84bb-80b6b33e6b23)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
