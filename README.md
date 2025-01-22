@@ -6,7 +6,7 @@
   </a>
   <h1 align="center">LinkPlaza</h1>
 </h1>
-<p>A link management platform, allowing users to centralize and customize their web and social media links.</p>
+<p>A link management platform, allowing users to centralize and customize their web and social media links. Built with Angular 18, TailwindCSS, and libraries like CropperJS and HighchartsJS.</p>
 
 <a href="https://github.com/ricardohuaripata/linkplaza-api">Backend repository</a>
 
@@ -18,7 +18,7 @@
 
 - [**Angular**](https://angular.io/) - Angular is a TypeScript-based frontend development framework, ideal for building dynamic and high-quality web applications. This framework enables us to structure the code modularly, facilitating the reuse and maintenance of components. Additionally, it provides excellent support for integrating REST services, optimizing communication with the backend.
 
-- [**Tailwind CSS**](https://tailwindcss.com/) - For the design and styling of the user interface, we use Tailwind CSS, a highly customizable utility-first CSS framework. This approach allows us to create consistent and responsive designs efficiently, reducing the need for custom CSS and speeding up the development process.
+- [**TailwindCSS**](https://tailwindcss.com/) - For the design and styling of the user interface, we use Tailwind CSS, a highly customizable utility-first CSS framework. This approach allows us to create consistent and responsive designs efficiently, reducing the need for custom CSS and speeding up the development process.
 
 - [**Spring Boot**](https://spring.io/) - On the backend side, we implement Spring Boot, a Java framework that simplifies the development of enterprise-level applications. With its streamlined configuration approach and extensive integration with popular libraries, Spring Boot enables us to develop scalable and secure RESTful APIs, ensuring a strong connection between the frontend and the database.
 
