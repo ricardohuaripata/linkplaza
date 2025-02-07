@@ -1,56 +1,122 @@
 <section class="mt-10">
     <h2 class="text-xl sm:text-2xl font-semibold mb-2">Customization</h2>
-    <p class="text-pretty">Completely customize your page. Change your background with colors, choose a button style or change the font color.</p>
+    <p class="text-pretty">Completely customize your page. Change your background with colors, gradients and images. Choose a button style, change the typeface and more.</p>
 
     <form [formGroup]="customizationForm" (submit)="onCustomizationFormSubmit()" class="mt-8">
-        <div class="flex flex-col gap-4 p-1 overflow-auto ">
+        <div class="space-y-8">
 
-            <div class="flex flex-col gap-2 font-medium">
-                <label for="backgroundColor">Background color</label>
-                <div class="flex items-center gap-2">
-                    <input type="color" class="input-color" formControlName="backgroundColor">
-                    <input type="text" class="input" [value]="customizationForm.get('backgroundColor')?.value" readonly>
+            <div class="space-y-2">
+                <h4 class="text-lg sm:text-xl font-semibold">Font</h4>
+
+                <div class="bg-white rounded-2xl p-3 space-y-4">
+                    <div class="space-y-2">
+                        <label for="fontStyle" class="font-medium">Style</label>
+                        <div class="flex flex-col gap-2">
+                            <button type="button" class="text-left p-3 hover:bg-neutral-200 rounded-lg font-sans"
+                                (click)="selectFontStyle('sans')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('fontStyle')?.value == 'sans'}">
+                                Sans
+                            </button>
+                            <button type="button" class="text-left p-3 hover:bg-neutral-200 rounded-lg font-serif"
+                                (click)="selectFontStyle('serif')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('fontStyle')?.value == 'serif'}">
+                                Serif
+                            </button>
+                            <button type="button" class="text-left p-3 hover:bg-neutral-200 rounded-lg font-mono"
+                                (click)="selectFontStyle('mono')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('fontStyle')?.value == 'mono'}">
+                                Monospace
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 overflow-auto">
+                        <label for="fontColor" class="font-medium">Color</label>
+                        <div class="flex items-center gap-2">
+                            <input type="color" class="input-color" formControlName="fontColor">
+                            <input type="text" class="input" [value]="customizationForm.get('fontColor')?.value"
+                                readonly>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-2 font-medium">
-                <label for="backgroundColor">Font color</label>
-                <div class="flex items-center gap-2">
-                    <input type="color" class="input-color" formControlName="fontColor">
-                    <input type="text" class="input" [value]="customizationForm.get('fontColor')?.value" readonly>
+            <div class="space-y-2">
+                <h4 class="text-lg sm:text-xl font-semibold">Background</h4>
+
+                <div class="bg-white rounded-2xl p-3 space-y-4">
+                    <div class="space-y-2">
+                        <label for="backgroundStyle" class="font-medium">Style</label>
+                        <div class="flex flex-col gap-2">
+                            <button type="button" class="flex items-center gap-2 p-2 hover:bg-neutral-200 rounded-lg"
+                                (click)="selectBackgroundStyle('flat')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('backgroundStyle')?.value == 'flat'}">
+                                <div class="min-w-12 min-h-12 rounded-lg bg-gray-800"></div>
+                                <p>Flat color</p>
+                            </button>
+                            <button type="button" class="flex items-center gap-2 p-2 hover:bg-neutral-200 rounded-lg"
+                                (click)="selectBackgroundStyle('gradient-up')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('backgroundStyle')?.value == 'gradient-up'}">
+                                <div class="min-w-12 min-h-12 rounded-lg bg-gradient-to-t from-gray-800 to-white"></div>
+                                <p>Gradient up</p>
+                            </button>
+                            <button type="button" class="flex items-center gap-2 p-2 hover:bg-neutral-200 rounded-lg"
+                                (click)="selectBackgroundStyle('gradient-down')"
+                                [ngClass]="{'bg-neutral-200': customizationForm.get('backgroundStyle')?.value == 'gradient-down'}">
+                                <div class="min-w-12 min-h-12 rounded-lg bg-gradient-to-b from-gray-800 to-white"></div>
+                                <p>Gradient down</p>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="space-y-2 overflow-auto">
+                        <label for="backgroundColor" class="font-medium">Color</label>
+                        <div class="flex items-center gap-2">
+                            <input type="color" class="input-color" formControlName="backgroundColor">
+                            <input type="text" class="input" [value]="customizationForm.get('backgroundColor')?.value"
+                                readonly>
+                        </div>
+                    </div>
                 </div>
+
             </div>
 
-            <div class="flex flex-col gap-2 font-medium">
-                <label for="backgroundColor">Button background color</label>
-                <div class="flex items-center gap-2">
-                    <input type="color" class="input-color" formControlName="buttonBackgroundColor">
-                    <input type="text" class="input" [value]="customizationForm.get('buttonBackgroundColor')?.value"
-                        readonly>
+            <div class="space-y-2">
+                <h4 class="text-lg sm:text-xl font-semibold">Buttons</h4>
+
+                <div class="bg-white rounded-2xl p-3 space-y-4">
+                    <div class="space-y-2 overflow-auto">
+                        <label for="buttonBackgroundColor" class="font-medium">Color</label>
+                        <div class="flex items-center gap-2">
+                            <input type="color" class="input-color" formControlName="buttonBackgroundColor">
+                            <input type="text" class="input"
+                                [value]="customizationForm.get('buttonBackgroundColor')?.value" readonly>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 overflow-auto">
+                        <label for="buttonFontColor" class="font-medium">Font color</label>
+                        <div class="flex items-center gap-2">
+                            <input type="color" class="input-color" formControlName="buttonFontColor">
+                            <input type="text" class="input" [value]="customizationForm.get('buttonFontColor')?.value"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 overflow-auto">
+                        <label for="buttonRounded" class="font-medium">Style</label>
+
+                        <div class="flex items-center gap-4 p-2">
+                            <button type="button" class="bg-black text-white py-4 px-6 w-full"
+                                (click)="selectButtonStyle(false)"
+                                [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == false}">Straight</button>
+                            <button type="button" class="bg-black text-white py-4 px-6 w-full rounded-full"
+                                (click)="selectButtonStyle(true)"
+                                [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == true}">Rounded</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="flex flex-col gap-2 font-medium">
-                <label for="backgroundColor">Button font color</label>
-                <div class="flex items-center gap-2">
-                    <input type="color" class="input-color" formControlName="buttonFontColor">
-                    <input type="text" class="input" [value]="customizationForm.get('buttonFontColor')?.value" readonly>
-                </div>
-            </div>
-
-            <div class="flex flex-col gap-2 font-medium">
-                <label for="buttonRounded">Button style</label>
-
-                <div class="flex items-center gap-4">
-                    <button type="button" class="bg-black text-white py-4 px-6 w-full"
-                        (click)="selectButtonStyle(false)"
-                        [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == false}">Straight</button>
-                    <button type="button" class="bg-black text-white py-4 px-6 w-full rounded-full"
-                        (click)="selectButtonStyle(true)"
-                        [ngClass]="{'ring-4 ring-purple-700 ring-opacity-50': customizationForm.get('buttonRounded')?.value == true}">Rounded</button>
-
-                </div>
-
+                
             </div>
 
         </div>
@@ -64,6 +130,5 @@
         </button>
 
     </form>
-
 
 </section>

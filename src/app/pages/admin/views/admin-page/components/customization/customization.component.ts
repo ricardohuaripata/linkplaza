@@ -34,6 +34,8 @@ export class CustomizationComponent implements OnInit, OnDestroy {
       buttonBackgroundColor: [''],
       buttonFontColor: [''],
       buttonRounded: [null],
+      fontStyle: [''],
+      backgroundStyle: [''],
     });
   }
 
@@ -44,11 +46,21 @@ export class CustomizationComponent implements OnInit, OnDestroy {
       buttonBackgroundColor: this.page.buttonBackgroundColor,
       buttonFontColor: this.page.buttonFontColor,
       buttonRounded: this.page.buttonRounded,
+      fontStyle: this.page.fontStyle,
+      backgroundStyle: this.page.backgroundStyle
     });
   }
 
   selectButtonStyle(buttonRounded: boolean) {
     this.customizationForm.get('buttonRounded')?.setValue(buttonRounded);
+  }
+
+  selectFontStyle(fontStyle: string) {
+    this.customizationForm.get('fontStyle')?.setValue(fontStyle);
+  }
+
+  selectBackgroundStyle(backgroundStyle: string) {
+    this.customizationForm.get('backgroundStyle')?.setValue(backgroundStyle);
   }
 
   onCustomizationFormSubmit() {
@@ -60,6 +72,8 @@ export class CustomizationComponent implements OnInit, OnDestroy {
       buttonBackgroundColor: this.customizationForm.value.buttonBackgroundColor,
       buttonFontColor: this.customizationForm.value.buttonFontColor,
       buttonRounded: this.customizationForm.value.buttonRounded,
+      fontStyle: this.customizationForm.value.fontStyle,
+      backgroundStyle: this.customizationForm.value.backgroundStyle,
     };
 
     this.subscription.add(

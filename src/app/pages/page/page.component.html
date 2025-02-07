@@ -1,7 +1,7 @@
 @if (page) {
 @if (page.userVerified) {
-<main class="min-h-screen py-16 px-6" [style]="{ backgroundColor: page.backgroundColor || '#ffffff', color: page.fontColor || '#000000' }">
-    <div class="max-w-screen-sm mx-auto text-center">
+<main class="min-h-screen py-16 px-6" [ngStyle]="{ background: page.backgroundStyle === 'gradient-up' ? 'linear-gradient(to top, ' + (page.backgroundColor || '#ffffff') + ', #ffffff)' : page.backgroundStyle === 'gradient-down' ? 'linear-gradient(to bottom, ' + (page.backgroundColor || '#ffffff') + ', #ffffff)' : page.backgroundColor || '#ffffff', color: page.fontColor || '#000000' }">
+    <div class="max-w-screen-sm mx-auto text-center" [ngClass]="{'font-sans': page.fontStyle === 'sans', 'font-serif': page.fontStyle === 'serif', 'font-mono': page.fontStyle === 'mono'}">
         <!-- Profile info section -->
         <section class="flex flex-col items-center">
             <div class="mb-4">
@@ -18,7 +18,7 @@
             <h1 class="text-xl sm:text-2xl font-bold">{{page.title ? page.title : '@' + page.url}}</h1>
 
             @if (page.bio) {
-            <p class="text-base sm:text-lg font-medium text-balance mt-1">{{page.bio}}</p>
+            <p class="text-base sm:text-lg text-balance mt-1">{{page.bio}}</p>
             }
 
         </section>
@@ -46,7 +46,7 @@
             @for (customLink of page.customLinks; track $index) {
             @if (customLink.active) {
             <a (click)="onClickCustomLink(customLink.id)" [href]="customLink.url" title="Go to site"
-                class="py-5 px-10 text-base sm:text-lg font-medium break-words hover:scale-105"
+                class="py-5 px-10 text-base sm:text-lg break-words hover:scale-105"
                 [ngClass]="page.buttonRounded? 'rounded-full': ''" target="_blank" 
                 [style]="{ backgroundColor: page.buttonBackgroundColor || '#000000', color: page.buttonFontColor || '#ffffff' }">{{customLink.title}}</a>
             }

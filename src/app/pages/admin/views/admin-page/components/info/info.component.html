@@ -12,7 +12,7 @@
 
     <h1 class="text-xl sm:text-2xl font-bold">{{page.title ? page.title : '@' + page.url}}</h1>
 
-    <p class="text-base sm:text-lg font-medium text-balance mt-1">{{page.bio? page.bio : 'No bio'}}</p>
+    <p class="text-base sm:text-lg text-balance mt-1">{{page.bio? page.bio : 'No bio'}}</p>
 
     <button type="button" class="button w-full mt-5 text-lg sm:text-xl" (click)="openEditPageModal = true">Edit</button>
 </section>
@@ -25,7 +25,7 @@
         <form [formGroup]="editPageForm" (submit)="onEditPageFormSubmit()"
             class="bg-white p-5 rounded-3xl flex flex-col gap-4 max-w-lg w-full">
             <div class="flex justify-between items-center gap-2">
-                <h2 class="text-lg font-medium">Name, bio and picture to display</h2>
+                <h2 class="text-lg font-medium">Display name and bio</h2>
                 <button type="button" (click)="openEditPageModal = false" [disabled]="disableEditPageForm" class="hover:bg-slate-200 rounded-md p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -131,7 +131,7 @@
                 </div>
 
                 @if (croppedImage) {
-                <img [src]="croppedImage" alt="cropped image">
+                <img [src]="croppedImage" alt="cropped image" class="mx-auto">
 
                 } @else {
                 <div #imageContainer>

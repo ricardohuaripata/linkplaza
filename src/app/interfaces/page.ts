@@ -12,6 +12,8 @@ export interface Page {
   buttonBackgroundColor?: string;
   buttonFontColor?: string;
   buttonRounded: boolean;
+  fontStyle?: string;
+  backgroundStyle?: string;
   dateCreated?: string;
   dateLastModified?: string;
   socialLinks?: SocialLink[];

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser, NgClass, NgStyle } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
 import { SeoConfig } from '../../interfaces/seo-config';
@@ -21,7 +21,7 @@ import { AnalyticService } from '../../services/analytic/analytic.service';
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [NotFoundComponent, NgClass],
+  imports: [NotFoundComponent, NgClass, NgStyle],
   templateUrl: './page.component.html',
   styleUrl: './page.component.scss',
 })
