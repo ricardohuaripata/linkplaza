@@ -71,7 +71,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
       if (this.targetPage) {
         const today = new Date();
         const startDate = new Date(today);
-        startDate.setDate(today.getDate() - 7);
+        startDate.setDate(today.getDate() - (7 - 1));
 
         this.subscription.add(
           this.analyticService
@@ -194,7 +194,7 @@ export class AdminAnalyticsComponent implements OnInit, OnDestroy {
 
     const today = new Date();
     const startDate = new Date(today);
-    startDate.setDate(today.getDate() - parseInt(value));
+    startDate.setDate(today.getDate() - (parseInt(value) - 1));
 
     if (this.targetPage) {
       this.subscription.add(
